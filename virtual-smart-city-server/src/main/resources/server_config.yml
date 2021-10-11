@@ -4,10 +4,10 @@ url: "jdbc:postgresql://172.31.249.242:5432/vscdb"
 username: "postgres"
 
 
-create : "insert into Person (name, age) values (?,?)"
-delete : "delete from Person where id=?"
+create : "insert into Person (firstname, age) values (?,?)"
+delete : "delete from Person where id_person=?"
 read : "select * from Person order by id"
-update : "update Person set name=?, age=? where id=?"
+update : "update Person set firstname=?, age=? where id_person=?"
 
 listenPort: 3344
 soTimeout: 2000
