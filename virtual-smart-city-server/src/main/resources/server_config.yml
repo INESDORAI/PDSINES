@@ -3,6 +3,12 @@ password: "admin"
 url: "jdbc:postgresql://172.31.249.242:5432/vscdb"
 username: "postgres"
 
+
+create : "insert into Person (name, age) values (?,?)"
+delete : "delete from Person where id=?"
+read : "select * from Person order by id"
+update : "update Person set name=?, age=? where id=?"
+
 listenPort: 3344
 soTimeout: 2000
 ip: 172.31.249.198
