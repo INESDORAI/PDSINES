@@ -1,29 +1,29 @@
 [
   {
-    "id": 16,
-    "name": "nom_test1",
+    "id_person": 16,
+    "firstname": "nom_test1",
     "age": 25
   },
   {
-    "id": 16,
-    "name": "nom_test2",
+    "id_person": 16,
+    "firstname": "nom_test2",
     "age": 29
   }, {
-  "id": 16,
-  "name": "nom_test3",
+  "id_person": 16,
+  "firstname": "nom_test3",
   "age": 20
 }, {
-  "id": 16,
-  "name": "nom_test4",
+  "id_person": 16,
+  "firstname": "nom_test4",
   "age": 27
 },
   {
-    "id": 16,
+    "id_person": 16,
     "name": "nom_test5",
     "age": 38
   }, {
-  "id": 16,
-  "name": "nom_test6",
+  "id_person": 16,
+  "firstname": "nom_test6",
   "age": 14
 }
 ]
