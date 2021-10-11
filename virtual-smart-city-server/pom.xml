@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>edu.ing1.pds.vsc.server.SmartCityAppServer</mainClass>
+                            <mainClass>edu.si.ing1.pds.vsc.server.SmartCityAppServer</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
