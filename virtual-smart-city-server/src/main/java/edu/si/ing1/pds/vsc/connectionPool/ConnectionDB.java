@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 public class ConnectionDB {
 
     private static final String data_smart_city_enVar = "SMART_CITY_SERVER";
+    private static final String data_smart_vr = "CRUD";
     private Config config = null;
     public Connection connection;
     //the builder
