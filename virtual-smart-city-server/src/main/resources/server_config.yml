@@ -6,7 +6,7 @@ username: "postgres"
 
 create : "insert into Person (firstname, age) values (?,?)"
 delete : "delete from Person where id_person=?"
-read : "select * from Person order by id"
+read : "select * from Person order by id_person"
 update : "update Person set firstname=?, age=? where id_person=?"
 
 listenPort: 3344
