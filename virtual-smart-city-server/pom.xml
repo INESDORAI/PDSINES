@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>edu.episen.si.ing1.fise.pds.backend.server.BackendService</mainClass>
+                            <mainClass>edu.ing1.pds.vsc.server.SmartCityAppServer</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
