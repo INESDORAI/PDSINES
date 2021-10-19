@@ -10,9 +10,10 @@ public class Client {
     private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());
 
     public static void main(String[] args) throws Exception {
-
+System.out.print("ddddddddddddddddddddddddddddddd");
         // ConnectionServer con=new ConnectionServer();
         try {
+        	ClientToServer connection = new ClientToServer();
             Options options = new Options();
             CommandLineParser parser = new DefaultParser();
             HelpFormatter formatter = new HelpFormatter();
@@ -27,7 +28,12 @@ public class Client {
                 operation_name_i = commandLine.getOptionValue("connectionDuration");
             }
 
-            String msg = "";
+            CrudPersonne crudPersonne = new CrudPersonne();
+            crudPersonne.insertPersonne(connection, 1, "Ines DORAI", 20);
+//            crudPersonne.updatePersonne(connection, 1, "Ines DORAI", 20);
+//            crudPersonne.deletePersonne(connection, 1);
+//            crudPersonne.selectPersonne(connection, 1);
+            String msg = "je suis bete";
             switch (operation_name_i) {
                 case "add":
                     //msg=con.create_person(0);
