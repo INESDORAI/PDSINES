@@ -34,7 +34,7 @@ public class SmartCityAppServer extends Thread {
     public Socket client;
     public static ServerConfig serverConfig;
     boolean m_bRunThread = true;
-    public static int max_connection_i = 0, connection_duration_i = 0;
+    public static int max_connection_i = 10, connection_duration_i = 1000;
 
     static ServerSocket myServerSocket;
     static boolean ServerOn = true;
