@@ -57,7 +57,6 @@ public class SmartCityAppServer extends Thread {
                 String operation = in.readLine();
                 ObjectMapper mapper = new ObjectMapper();
                 logger.info(operation);
-                System.out.println("----"+operation+"-------");
                 Request request = mapper.readValue(operation, Request.class);
                 String response = connection.SendResponse(request);
                 out = new PrintWriter(client.getOutputStream(), true);

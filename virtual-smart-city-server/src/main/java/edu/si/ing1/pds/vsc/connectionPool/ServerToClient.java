@@ -29,7 +29,9 @@ public class ServerToClient {
         System.out.println("++++++++++++++++++++++++++"+request_name+"++++++++++++++++++");
         if (request_name.equals("insert_personne")) {
             Map data_loading = (Map) request.getData();
-            int i = connection.createStatement().executeUpdate("INSERT INTO public.personne(id, \"name\", age) VALUES("+(Integer) data_loading.get("id_personne")+", "+(String) data_loading.get("name_personne")+", "+(Integer) data_loading.get("age_personne")+");");
+            String req = "INSERT INTO public.personne(id, \"name\", age) VALUES("+(Integer) data_loading.get("id_personne")+", "+(String) data_loading.get("name_personne")+", "+(Integer) data_loading.get("age_personne")+");";
+            System.out.println("req---"+req);
+            int i = connection.createStatement().executeUpdate(req);
             
             Map<String, Object> response = new HashMap<String, Object>();
             response.put("name_request", request_name);
