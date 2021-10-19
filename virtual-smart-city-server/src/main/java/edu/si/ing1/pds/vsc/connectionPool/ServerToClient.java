@@ -29,7 +29,7 @@ public class ServerToClient {
         System.out.println("++++++++++++++++++++++++++"+request_name+"++++++++++++++++++");
         if (request_name.equals("insert_personne")) {
             Map data_loading = (Map) request.getData();
-            String req = "INSERT INTO public.personne(id, \"name\", age) VALUES("+(Integer) data_loading.get("id_personne")+", "+(String) data_loading.get("name_personne")+", "+(Integer) data_loading.get("age_personne")+");";
+            String req = "INSERT INTO public.personne(id, \"name\", age) VALUES("+(Integer) data_loading.get("id_personne")+", '"+(String) data_loading.get("name_personne")+"', "+(Integer) data_loading.get("age_personne")+");";
             System.out.println("req---"+req);
             int i = connection.createStatement().executeUpdate(req);
             
@@ -39,7 +39,7 @@ public class ServerToClient {
             response_string = mapper.writeValueAsString(response);
         }else if (request_name.equals("update_personne")) {
             Map data_loading = (Map) request.getData();
-            int i = connection.createStatement().executeUpdate("UPDATE public.personne SET \"name\"="+(String) data_loading.get("name_personne")+", age="+(Integer) data_loading.get("age_personne")+" WHERE id="+(Integer) data_loading.get("id_personne")+";");
+            int i = connection.createStatement().executeUpdate("UPDATE public.personne SET \"name\"='"+(String) data_loading.get("name_personne")+"', age="+(Integer) data_loading.get("age_personne")+" WHERE id="+(Integer) data_loading.get("id_personne")+";");
             
 
             Map<String, Object> response = new HashMap<String, Object>();
