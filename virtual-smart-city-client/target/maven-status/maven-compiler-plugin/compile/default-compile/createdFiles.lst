@@ -4,3 +4,4 @@ edu\ing1\pds\vsc\client\ClientCoreConfig.class
 edu\ing1\pds\vsc\client\ConnectionServer.class
 edu\ing1\pds\vsc\client\Request.class
 edu\ing1\pds\vsc\client\ClientConfig.class
+edu\ing1\pds\vsc\client\CrudPersonne.class

@@ -29,10 +29,10 @@ System.out.print("ddddddddddddddddddddddddddddddd");
             }
 
             CrudPersonne crudPersonne = new CrudPersonne();
-            crudPersonne.insertPersonne(connection, 1, "Ines DORAI", 20);
+//            crudPersonne.insertPersonne(connection, 1, "Ines DORAI", 20);
 //            crudPersonne.updatePersonne(connection, 1, "Ines DORAI", 20);
 //            crudPersonne.deletePersonne(connection, 1);
-//            crudPersonne.selectPersonne(connection, 1);
+            crudPersonne.selectPersonne(connection, 1);
             String msg = "je suis bete";
             switch (operation_name_i) {
                 case "add":

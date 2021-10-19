@@ -46,20 +46,19 @@ public class SmartCityAppServer extends Thread {
     public void run() {
         BufferedReader in = null;
         PrintWriter out = null;
-        System.out.println(
-                "Accepted Client Address - " + client.getInetAddress().getHostName());
+        System.out.println("Accepted Client Address - " + client.getInetAddress().getHostName());
         try {
             in = new BufferedReader(
                     new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-
+            System.out.println("1111111111111111111");
             while (ds.getUsedConnection() < max_connection_i) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation = in.readLine();
                 ObjectMapper mapper = new ObjectMapper();
                 logger.info(operation);
+                System.out.println("----"+operation+"-------");
                 Request request = mapper.readValue(operation, Request.class);
-                ServerToClient connection = new ServerToClient(ds);
                 String response = connection.SendResponse(request);
                 out = new PrintWriter(client.getOutputStream(), true);
                 out.println(response);

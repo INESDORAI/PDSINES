@@ -17,6 +17,8 @@ public class ServerToClient {
     private final static Logger logger = LoggerFactory.getLogger(ServerToClient.class.getName());
     private DataSource data_source;
     private ObjectMapper mapper = new ObjectMapper();
+    
+    
 
     public String SendResponse(Request request) throws Exception {
         ConnectionDB con = data_source.takeCon();
@@ -24,6 +26,7 @@ public class ServerToClient {
         String request_name = request.getName_request();
         System.out.println(request_name);
         String response_string = "";
+        System.out.println("++++++++++++++++++++++++++"+request_name+"++++++++++++++++++");
         if (request_name.equals("insert_personne")) {
             Map data_loading = (Map) request.getData();
             int i = connection.createStatement().executeUpdate("INSERT INTO public.personne(id, \"name\", age) VALUES("+(Integer) data_loading.get("id_personne")+", "+(String) data_loading.get("name_personne")+", "+(Integer) data_loading.get("age_personne")+");");

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CrudPersonne {
 
+
     private final static Logger logger = LoggerFactory.getLogger(CrudPersonne.class.getName());
     public CrudPersonne() {
     }
@@ -31,6 +32,7 @@ public class CrudPersonne {
             Request response = connection.SendRequest(request);
             personnes = (ArrayList<Map>) response.getData();
         } catch (Exception e) {
+            e.printStackTrace();
             logger.info("Server is maybe occupied");
         }
         return personnes;
@@ -49,6 +51,7 @@ public class CrudPersonne {
             Request response = connection.SendRequest(request);
             msg = (String) response.getData();
         } catch (Exception e) {
+            e.printStackTrace();
             logger.info("Server is maybe occupied");
         }
         return msg;
@@ -67,6 +70,7 @@ public class CrudPersonne {
             Request response = connection.SendRequest(request);
             msg = (String) response.getData();
         } catch (Exception e) {
+            e.printStackTrace();
             logger.info("Server is maybe occupied");
         }
         return msg;
