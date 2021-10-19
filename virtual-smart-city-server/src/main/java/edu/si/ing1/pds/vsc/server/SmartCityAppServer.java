@@ -46,7 +46,7 @@ public class SmartCityAppServer extends Thread {
     public void run() {
         BufferedReader in = null;
         PrintWriter out = null;
-        System.out.println("Accepted Client Address - " + client.getInetAddress().getHostName());
+        System.out.println("+++++ Accepted Client Address - " + client.getInetAddress().getHostName());
         try {
             in = new BufferedReader(
                     new InputStreamReader(client.getInputStream()));
@@ -128,7 +128,7 @@ public class SmartCityAppServer extends Thread {
                 Socket clientSocket = myServerSocket.accept();
                 SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
                 cliThread.start();
-                System.out.println("Serveur est en ecoute");
+                System.out.println("+++++ Serveur est en ecoute +++++");
             } catch (IOException ioe) {
                 System.out.println("Exception found on accept. Ignoring. Stack Trace :");
 
