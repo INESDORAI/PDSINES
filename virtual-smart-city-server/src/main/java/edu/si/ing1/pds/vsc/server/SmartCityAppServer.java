@@ -53,8 +53,10 @@ public class SmartCityAppServer extends Thread {
             Thread.sleep(4000);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-            logger.info("nbre connexion--->"+ds.getUsedConnection());
+            
             while (ds.getUsedConnection() < max_connection_i) {
+                logger.info("nbre connexion--->"+ds.getUsedConnection());
+            logger.info("nbre i--->"+i);
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation = in.readLine();
                 ObjectMapper mapper = new ObjectMapper();
