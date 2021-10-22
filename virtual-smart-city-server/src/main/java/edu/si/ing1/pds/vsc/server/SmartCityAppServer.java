@@ -23,7 +23,6 @@ import edu.si.ing1.pds.vsc.connectionPool.DataSource;
 import edu.si.ing1.pds.vsc.connectionPool.Request;
 import edu.si.ing1.pds.vsc.connectionPool.ServerToClient;
 
-
 public class SmartCityAppServer extends Thread {
 
     private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
@@ -49,14 +48,14 @@ public class SmartCityAppServer extends Thread {
         logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
         int i = 0;
         try {
-            
+
             Thread.sleep(4000);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-            
+
             while (ds.getUsedConnection() < max_connection_i) {
-                logger.info("nbre connexion--->"+ds.getUsedConnection());
-            logger.info("nbre i--->"+i);
+                logger.info("nbre+++connexion--->" + ds.getUsedConnection());
+                logger.info("nbre i--->" + i);
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation = in.readLine();
                 ObjectMapper mapper = new ObjectMapper();
@@ -131,10 +130,10 @@ public class SmartCityAppServer extends Thread {
         while (ServerOn) {
             try {
                 Socket clientSocket = myServerSocket.accept();
-                
+
                 SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
                 cliThread.start();
-                
+
                 logger.info("+++++ Serveur est en ecoute +++++");
             } catch (IOException ioe) {
                 logger.info("Exception found on accept. Ignoring. Stack Trace :");
