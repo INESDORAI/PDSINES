@@ -34,7 +34,7 @@ public class SmartCityAppServer extends Thread {
     public Socket client;
     public static ServerConfig serverConfig;
     boolean m_bRunThread = true;
-    public static int max_connection_i = 10, connection_duration_i = 1000;
+    public static int max_connection_i = 3, connection_duration_i = 10000;
 
     static ServerSocket myServerSocket;
     static boolean ServerOn = true;
@@ -46,12 +46,11 @@ public class SmartCityAppServer extends Thread {
     public void run() {
         BufferedReader in = null;
         PrintWriter out = null;
-        System.out.println("+++++ Accepted Client Address - " + client.getInetAddress().getHostName());
+        logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
         try {
             in = new BufferedReader(
                     new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-            System.out.println("1111111111111111111");
             while (ds.getUsedConnection() < max_connection_i) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation = in.readLine();
@@ -70,7 +69,7 @@ public class SmartCityAppServer extends Thread {
                 in.close();
                 out.close();
                 client.close();
-                System.out.println("...Stopped");
+                logger.error("...Stopped");
             } catch (IOException ioe) {
             }
         }
@@ -118,26 +117,28 @@ public class SmartCityAppServer extends Thread {
         try {
             myServerSocket = new ServerSocket(1099);
         } catch (IOException ioe) {
-            System.out.println("Could not create server socket on port 1099. Quitting.");
+            logger.info("Could not create server socket on port 1099. Quitting.");
             System.exit(-1);
         }
 
         while (ServerOn) {
             try {
                 Socket clientSocket = myServerSocket.accept();
+                Thread.sleep(4000);
                 SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
                 cliThread.start();
-                System.out.println("+++++ Serveur est en ecoute +++++");
+                
+                logger.info("+++++ Serveur est en ecoute +++++");
             } catch (IOException ioe) {
-                System.out.println("Exception found on accept. Ignoring. Stack Trace :");
+                logger.info("Exception found on accept. Ignoring. Stack Trace :");
 
             }
         }
         try {
             myServerSocket.close();
-            System.out.println("Server Stopped");
+            logger.info("Server Stopped");
         } catch (Exception ioe) {
-            System.out.println("Error Found stopping server socket");
+            logger.info("Error Found stopping server socket");
             System.exit(-1);
         }
     }
