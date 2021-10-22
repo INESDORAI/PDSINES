@@ -17,47 +17,53 @@ public class ServerToClient {
     private final static Logger logger = LoggerFactory.getLogger(ServerToClient.class.getName());
     private DataSource data_source;
     private ObjectMapper mapper = new ObjectMapper();
-    
-    
 
     public String SendResponse(Request request) throws Exception {
         ConnectionDB con = data_source.takeCon();
         Connection connection = con.connection;
         String request_name = request.getName_request();
-        System.out.println(request_name);
         String response_string = "";
-        System.out.println("++++++++++++++++++++++++++"+request_name+"++++++++++++++++++");
         if (request_name.equals("insert_personne")) {
             Map data_loading = (Map) request.getData();
-            String req = "INSERT INTO public.personne(id, \"name\", age) VALUES("+(Integer) data_loading.get("id_personne")+", '"+(String) data_loading.get("name_personne")+"', "+(Integer) data_loading.get("age_personne")+");";
-            System.out.println("req---"+req);
+            String req = "INSERT INTO public.personne(id, \"name\", age) VALUES(" + (Integer) data_loading.get("id_personne") + ", '" + (String) data_loading.get("name_personne") + "', " + (Integer) data_loading.get("age_personne") + ");";
             int i = connection.createStatement().executeUpdate(req);
-            
             Map<String, Object> response = new HashMap<String, Object>();
             response.put("name_request", request_name);
-            response.put("data", "Opération réussite, nombre ajouter = "+i);
+            response.put("data", "Opération réussite, nombre ajouter = " + i);
             response_string = mapper.writeValueAsString(response);
-        }else if (request_name.equals("update_personne")) {
+        } else if (request_name.equals("update_personne")) {
             Map data_loading = (Map) request.getData();
-            int i = connection.createStatement().executeUpdate("UPDATE public.personne SET \"name\"='"+(String) data_loading.get("name_personne")+"', age="+(Integer) data_loading.get("age_personne")+" WHERE id="+(Integer) data_loading.get("id_personne")+";");
-            
+            int i = connection.createStatement().executeUpdate("UPDATE public.personne SET \"name\"='" + (String) data_loading.get("name_personne") + "', age=" + (Integer) data_loading.get("age_personne") + " WHERE id=" + (Integer) data_loading.get("id_personne") + ";");
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("name_request", request_name);
+            response.put("data", "Opération réussite, nombre modifier = " + i);
+            response_string = mapper.writeValueAsString(response);
+        } else if (request_name.equals("delete_personne")) {
+            Map data_loading = (Map) request.getData();
+            int i = connection.createStatement().executeUpdate("DELETE FROM public.personne WHERE id=" + (Integer) data_loading.get("id_personne") + ";");
 
             Map<String, Object> response = new HashMap<String, Object>();
             response.put("name_request", request_name);
-            response.put("data", "Opération réussite, nombre modifier = "+i);
+            response.put("data", "Opération réussite, nombre supprimer = " + i);
             response_string = mapper.writeValueAsString(response);
-        }else if (request_name.equals("delete_personne")) {
+        } else if (request_name.equals("select_personne_id")) {
             Map data_loading = (Map) request.getData();
-            int i = connection.createStatement().executeUpdate("DELETE FROM public.personne WHERE id="+(Integer) data_loading.get("id_personne")+";");
-            
-
+            ResultSet rs1 = connection.createStatement().executeQuery("SELECT id, \"name\", age FROM public.personne WHERE id="+(Integer) data_loading.get("id_personne")+";");
+            List<Map> personnes = new ArrayList<Map>();
+            while (rs1.next()) {
+                Map<String, Object> hm = new HashMap<String, Object>();
+                hm.put("id_personne", rs1.getInt("id"));
+                hm.put("name_personne", rs1.getString("name"));
+                hm.put("age_personne", rs1.getInt("age"));
+                personnes.add(hm);
+            }
+            rs1.close();
             Map<String, Object> response = new HashMap<String, Object>();
             response.put("name_request", request_name);
-            response.put("data", "Opération réussite, nombre supprimer = "+i);
+            response.put("data", personnes);
             response_string = mapper.writeValueAsString(response);
         }else if (request_name.equals("select_personne")) {
             Map data_loading = (Map) request.getData();
-//            ResultSet rs1 = connection.createStatement().executeQuery("SELECT id, \"name\", age FROM public.personne WHERE id="+(Integer) data_loading.get("id_personne")+";");
             ResultSet rs1 = connection.createStatement().executeQuery("SELECT id, \"name\", age FROM public.personne;");
             List<Map> personnes = new ArrayList<Map>();
             while (rs1.next()) {

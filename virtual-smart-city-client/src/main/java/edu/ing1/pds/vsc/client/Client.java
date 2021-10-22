@@ -29,7 +29,7 @@ System.out.print("ddddddddddddddddddddddddddddddd");
             }
 
             CrudPersonne crudPersonne = new CrudPersonne();
-            crudPersonne.insertPersonne(connection, 1, "Ines DORAI", 20);
+            crudPersonne.insertPersonne(connection, 2, "KARIM ", 24);
 //            crudPersonne.insertPersonne(connection, 1, "Ines DORAI", 20);
 //            crudPersonne.updatePersonne(connection, 1, "Ines DORAI", 20);
 //            crudPersonne.deletePersonne(connection, 1);
