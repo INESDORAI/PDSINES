@@ -37,6 +37,7 @@ public class SmartCityAppServer extends Thread {
 
     static ServerSocket myServerSocket;
     static boolean ServerOn = true;
+    int i = 0;
 
     public SmartCityAppServer(Socket clientSocket) {
         client = clientSocket;
@@ -46,7 +47,7 @@ public class SmartCityAppServer extends Thread {
         BufferedReader in = null;
         PrintWriter out = null;
         logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
-        int i = 0;
+
         try {
 
             Thread.sleep(4000);
