@@ -47,11 +47,13 @@ public class SmartCityAppServer extends Thread {
         BufferedReader in = null;
         PrintWriter out = null;
         logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
+        int i = 0;
         try {
+            
             Thread.sleep(4000);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-            System.out.println("nbre connexion--->"+ds.getUsedConnection());
+            logger.info("nbre connexion--->"+ds.getUsedConnection());
             while (ds.getUsedConnection() < max_connection_i) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation = in.readLine();
@@ -61,7 +63,8 @@ public class SmartCityAppServer extends Thread {
                 String response = connection.SendResponse(request);
                 out = new PrintWriter(client.getOutputStream(), true);
                 out.println(response);
-                System.out.print("*******\n ");
+                ds.setUsedConnection(i++);
+                logger.info("*******\n ");
             }
         } catch (Exception e) {
             logger.info("Serveur est en attente de sa prochaine requete");
@@ -71,6 +74,7 @@ public class SmartCityAppServer extends Thread {
                 out.close();
                 client.close();
                 logger.error("...Stopped");
+                ds.setUsedConnection(i--);
             } catch (IOException ioe) {
             }
         }
