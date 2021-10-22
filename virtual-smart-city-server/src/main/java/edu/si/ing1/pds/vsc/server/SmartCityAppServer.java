@@ -48,8 +48,8 @@ public class SmartCityAppServer extends Thread {
         PrintWriter out = null;
         logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
         try {
-            in = new BufferedReader(
-                    new InputStreamReader(client.getInputStream()));
+            Thread.sleep(4000);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
             while (ds.getUsedConnection() < max_connection_i) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -124,7 +124,7 @@ public class SmartCityAppServer extends Thread {
         while (ServerOn) {
             try {
                 Socket clientSocket = myServerSocket.accept();
-                Thread.sleep(4000);
+                
                 SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
                 cliThread.start();
                 
