@@ -24,7 +24,7 @@ public class CrudPersonne {
     public ArrayList<Map> selectPersonne(ClientToServer connection) throws Exception {
         ArrayList<Map> personnes = new ArrayList<Map>();
         Request request = new Request();
-        request.setName_request("select_personne");
+        request.setNameRequest("select_personne");
         HashMap<String, Object> param = new HashMap<String, Object>();
         request.setData(param);
         Request response = connection.SendRequest(request);
@@ -36,7 +36,7 @@ public class CrudPersonne {
     public ArrayList<Map> selectPersonneById(ClientToServer connection, int id_personne) throws Exception {
         ArrayList<Map> personnes = new ArrayList<Map>();
         Request request = new Request();
-        request.setName_request("select_personne_id");
+        request.setNameRequest("select_personne_id");
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("id_personne", id_personne);
         request.setData(param);
@@ -49,7 +49,7 @@ public class CrudPersonne {
     public String insertPersonne(ClientToServer connection, int idPersonne, String namePersonne, int agePersonne) throws Exception {
         String msg = "";
         Request request = new Request();
-        request.setName_request("insert_personne");
+        request.setNameRequest("insert_personne");
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("id_personne", idPersonne);
         param.put("name_personne", namePersonne);
@@ -63,7 +63,7 @@ public class CrudPersonne {
     public String updatePersonne(ClientToServer connection, int idPersonne, String namePersonne, int agePersonne) throws Exception {
         String msg = "";
         Request request = new Request();
-        request.setName_request("update_personne");
+        request.setNameRequest("update_personne");
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("id_personne", idPersonne);
         param.put("name_personne", namePersonne);
@@ -78,7 +78,7 @@ public class CrudPersonne {
     public String deletePersonne(ClientToServer connection, int idPersonne) throws Exception {
         String msg = "";
         Request request = new Request();
-        request.setName_request("delete_personne");
+        request.setNameRequest("delete_personne");
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("id_personne", idPersonne);
         request.setData(param);

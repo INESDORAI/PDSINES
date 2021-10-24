@@ -27,57 +27,56 @@ public class SmartCityAppServer extends Thread {
 
     private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
 
-    public static DataSource ds = new DataSource(5, 5);
+    private static int nbreConnexion;
+    public static int maxConnectionInit = 3;
+    public static int connectionDurationInit = 5000;
+    public static DataSource ds = new DataSource(maxConnectionInit, connectionDurationInit);
     //ServerSocket server;
     public ServerToClient connection = new ServerToClient(ds);
     public Socket client;
     public static ServerConfig serverConfig;
-    boolean m_bRunThread = true;
-    public static int max_connection_i = 3, connection_duration_i = 10000;
 
     static ServerSocket myServerSocket;
     static boolean ServerOn = true;
-    int i = 0;
 
-    public SmartCityAppServer(Socket clientSocket) {
+    public SmartCityAppServer(Socket clientSocket, int nbreConn) {
         client = clientSocket;
+        nbreConnexion = nbreConn;
     }
 
+    @Override
     public void run() {
+        nbreConnexion++;
         BufferedReader in = null;
         PrintWriter out = null;
-        logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
-
+        System.out.println("Accepted Client Address - " + client.getInetAddress().getHostName());
         try {
-
-            Thread.sleep(4000);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-
-            while (ds.getUsedConnection() < max_connection_i) {
-                logger.info("nbre+++connexion--->" + ds.getUsedConnection());
-                logger.info("nbre i--->" + i);
+            while (ds.getUsedConnection() < maxConnectionInit) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation = in.readLine();
                 ObjectMapper mapper = new ObjectMapper();
-                logger.info(operation);
+                System.out.println(operation);
                 Request request = mapper.readValue(operation, Request.class);
                 String response = connection.SendResponse(request);
                 out = new PrintWriter(client.getOutputStream(), true);
                 out.println(response);
-                ds.setUsedConnection(i++);
-                logger.info("*******\n ");
+                System.out.println("*******\n ");
             }
         } catch (Exception e) {
-            logger.info("Serveur est en attente de sa prochaine requete");
+            e.printStackTrace();
+            logger.error("Erreur .......");
         } finally {
             try {
                 in.close();
                 out.close();
                 client.close();
-                logger.error("...Stopped");
-                ds.setUsedConnection(i--);
+                System.out.println("......Stopped");
+                nbreConnexion--;
             } catch (IOException ioe) {
+                logger.error("Erreur.....");
+                ioe.printStackTrace();
             }
         }
     }
@@ -87,65 +86,70 @@ public class SmartCityAppServer extends Thread {
 
         //   serverConfig = new ServerConfig();
         Options options = new Options();
-        Option max_connection = new Option("mc", "maxConnection", true, "the number of connections that we could possibly create to be used");
-        Option connection_duration = new Option("cd", "connectionDuration", true, "the duration accorded to the user to connect to the database");
+        Option maxConnection = new Option("mc", "maxConnection", true, "the number of connections that we could possibly create to be used");
+        Option connectionDuration = new Option("cd", "connectionDuration", true, "the duration accorded to the user to connect to the database");
 
-        Option id = new Option("i", "id", true, "id of the person");
-        Option name = new Option("n", "name", true, "name of the person");
-        Option age = new Option("a", "age", true, "age of the person");
-        options.addOption(id);
-        options.addOption(name);
-        options.addOption(age);
-        options.addOption(max_connection);
+        options.addOption(maxConnection);
 
-        options.addOption(connection_duration);
-        max_connection.setRequired(true);
-        connection_duration.setRequired(true);
+        options.addOption(connectionDuration);
+        maxConnection.setRequired(true);
+        connectionDuration.setRequired(true);
         //     operation.setRequired(true);
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
-        CommandLine commandLine;
-        commandLine = parser.parse(options, args);
+        CommandLine commandLine = parser.parse(options, args);
 
         if (commandLine.hasOption("maxConnection")) {
-            max_connection_i = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
+            maxConnectionInit = Integer.parseInt(commandLine.getOptionValue("maxConnection"));
         }
 
         if (commandLine.hasOption("connectionDuration")) {
-            connection_duration_i = Integer.parseInt(commandLine.getOptionValue("connectionDuration"));
+            connectionDurationInit = Integer.parseInt(commandLine.getOptionValue("connectionDuration"));
         }
 
-        logger.info("VSC Application is running, maximal_connection= " + max_connection_i + " & connection_duration = " + connection_duration_i + ".");
+        System.out.println("VSC Application is running, maximal_connection= " + maxConnectionInit + " & connectionDuration = " + connectionDurationInit + ".");
 
         //connection pool created
-        ds = new DataSource(max_connection_i, connection_duration_i);
+        ds = new DataSource(maxConnectionInit, connectionDurationInit);
 
         try {
             myServerSocket = new ServerSocket(1099);
+            System.out.println("port: " + myServerSocket.getLocalPort());
         } catch (IOException ioe) {
-            logger.info("Could not create server socket on port 1099. Quitting.");
+            ioe.printStackTrace();
+            logger.error("Could not create server socket on port " + myServerSocket.getLocalPort() + ". Quitting.");
             System.exit(-1);
         }
 
         while (ServerOn) {
+
             try {
+
                 Socket clientSocket = myServerSocket.accept();
 
-                SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
-                cliThread.start();
-
-                logger.info("+++++ Serveur est en ecoute +++++");
+                SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket, nbreConnexion);
+                if (nbreConnexion < maxConnectionInit) {
+                    cliThread.start();
+                    System.out.println("nbreConnexion : " + (nbreConnexion + 1));
+                    System.out.println("Serveur est en ecoute .......");
+                } else {
+                    cliThread.client.close();
+                    System.out.println("nbreConnexion : " + nbreConnexion);
+                    System.out.println("Serveur est maximum de connection");
+                }
             } catch (IOException ioe) {
-                logger.info("Exception found on accept. Ignoring. Stack Trace :");
-
+                ioe.printStackTrace();
+                logger.error("Exception found on accept. Ignoring. Stack Trace :" + ioe.getMessage());
             }
+
         }
         try {
             myServerSocket.close();
-            logger.info("Server Stopped");
+            System.out.println("Server Stopped...");
         } catch (Exception ioe) {
-            logger.info("Error Found stopping server socket");
+            logger.error("Error Found stopping server socket");
+            ioe.printStackTrace();
             System.exit(-1);
         }
     }

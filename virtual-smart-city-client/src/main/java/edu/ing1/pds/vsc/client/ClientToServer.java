@@ -4,8 +4,12 @@ import java.io.*;
 import java.net.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientToServer {
+
+    private final static Logger logger = LoggerFactory.getLogger(ClientToServer.class.getName());
 
     public Socket client;
     private PrintWriter out;
@@ -17,8 +21,8 @@ public class ClientToServer {
         out = new PrintWriter(client.getOutputStream(), true);
         out.println(request);
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        String response_string = in.readLine();
-        Request response = mapper.readValue(response_string, Request.class);
+        String responseString = in.readLine();
+        Request response = mapper.readValue(responseString, Request.class);
         return response;
     }
 
@@ -27,7 +31,7 @@ public class ClientToServer {
             String serverAdress = "172.31.249.198"; //InetAddress.getLocalHost();
             client = new Socket(serverAdress, 1099);
         } catch (Exception e) {
-
+            logger.error("erreur");
             e.printStackTrace();
         }
     }

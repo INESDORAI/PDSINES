@@ -2,12 +2,12 @@ package edu.si.ing1.pds.vsc.connectionPool;
 
 public class Person {
 
-    private int id_person;
+    private int idPerson;
     private String firstname;
     private int age;
 
-    public int getId_person() {
-        return this.id_person;
+    public int getIdPerson() {
+        return this.idPerson;
     }
 
     public String getFirstname() {
@@ -29,8 +29,8 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id_person, String fisrtname, int age) {
-        this.id_person = id_person;
+    public Person(int idPerson, String fisrtname, int age) {
+        this.idPerson = idPerson;
         this.firstname = firstname;
         this.age = age;
     }

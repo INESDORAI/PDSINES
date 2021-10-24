@@ -5,11 +5,14 @@ import java.sql.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConnectionDB {
 
-    private static final String data_smart_city_enVar = "SMART_CITY_SERVER";
-    private static final String data_smart_vr = "CRUD";
+    private final static Logger logger = LoggerFactory.getLogger(ConnectionDB.class.getName());
+
+    private static final String dataSmartCityEnVar = "SMART_CITY_SERVER";
     private Config config = null;
     public Connection connection;
     //the builder
@@ -17,11 +20,12 @@ public class ConnectionDB {
     public ConnectionDB() {
         try {
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-            config = mapper.readValue(new File(System.getenv(data_smart_city_enVar)), Config.class);
+            config = mapper.readValue(new File(System.getenv(dataSmartCityEnVar)), Config.class);
             mapper = new ObjectMapper();
             Class.forName(config.getDriver());
             this.connection = DriverManager.getConnection(config.getURL(),config.getUsername(), config.getPassword());
         } catch (Exception e) {
+            logger.error("Erreur.....");
             e.printStackTrace();
         }
     }

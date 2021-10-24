@@ -15,38 +15,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ServerToClient {
 
     private final static Logger logger = LoggerFactory.getLogger(ServerToClient.class.getName());
-    private DataSource data_source;
+    private DataSource dataSource;
     private ObjectMapper mapper = new ObjectMapper();
 
     public String SendResponse(Request request) throws Exception {
-        ConnectionDB con = data_source.takeCon();
+        ConnectionDB con = dataSource.takeCon();
         Connection connection = con.connection;
-        String request_name = request.getName_request();
-        String response_string = "";
-        if (request_name.equals("insert_personne")) {
+        String requestName = request.getNameRequest();
+        String responseString = "";
+        if (requestName.equals("insert_personne")) {
             Map data_loading = (Map) request.getData();
             String req = "INSERT INTO public.personne(id, \"name\", age) VALUES(" + (Integer) data_loading.get("id_personne") + ", '" + (String) data_loading.get("name_personne") + "', " + (Integer) data_loading.get("age_personne") + ");";
+            System.out.println("req---" + req);
             int i = connection.createStatement().executeUpdate(req);
+            System.out.println("reponse insert----" + i);
             Map<String, Object> response = new HashMap<String, Object>();
-            response.put("name_request", request_name);
+            response.put("nameRequest", requestName);
             response.put("data", "Opération réussite, nombre ajouter = " + i);
-            response_string = mapper.writeValueAsString(response);
-        } else if (request_name.equals("update_personne")) {
+            responseString = mapper.writeValueAsString(response);
+        } else if (requestName.equals("update_personne")) {
             Map data_loading = (Map) request.getData();
             int i = connection.createStatement().executeUpdate("UPDATE public.personne SET \"name\"='" + (String) data_loading.get("name_personne") + "', age=" + (Integer) data_loading.get("age_personne") + " WHERE id=" + (Integer) data_loading.get("id_personne") + ";");
             Map<String, Object> response = new HashMap<String, Object>();
-            response.put("name_request", request_name);
+            response.put("nameRequest", requestName);
             response.put("data", "Opération réussite, nombre modifier = " + i);
-            response_string = mapper.writeValueAsString(response);
-        } else if (request_name.equals("delete_personne")) {
+            responseString = mapper.writeValueAsString(response);
+        } else if (requestName.equals("delete_personne")) {
             Map data_loading = (Map) request.getData();
             int i = connection.createStatement().executeUpdate("DELETE FROM public.personne WHERE id=" + (Integer) data_loading.get("id_personne") + ";");
 
             Map<String, Object> response = new HashMap<String, Object>();
-            response.put("name_request", request_name);
+            response.put("nameRequest", requestName);
             response.put("data", "Opération réussite, nombre supprimer = " + i);
-            response_string = mapper.writeValueAsString(response);
-        } else if (request_name.equals("select_personne_id")) {
+            responseString = mapper.writeValueAsString(response);
+        } else if (requestName.equals("select_personne_id")) {
             Map data_loading = (Map) request.getData();
             ResultSet rs1 = connection.createStatement().executeQuery("SELECT id, \"name\", age FROM public.personne WHERE id="+(Integer) data_loading.get("id_personne")+";");
             List<Map> personnes = new ArrayList<Map>();
@@ -59,10 +61,10 @@ public class ServerToClient {
             }
             rs1.close();
             Map<String, Object> response = new HashMap<String, Object>();
-            response.put("name_request", request_name);
+            response.put("nameRequest", requestName);
             response.put("data", personnes);
-            response_string = mapper.writeValueAsString(response);
-        }else if (request_name.equals("select_personne")) {
+            responseString = mapper.writeValueAsString(response);
+        }else if (requestName.equals("select_personne")) {
             Map data_loading = (Map) request.getData();
             ResultSet rs1 = connection.createStatement().executeQuery("SELECT id, \"name\", age FROM public.personne;");
             List<Map> personnes = new ArrayList<Map>();
@@ -75,20 +77,21 @@ public class ServerToClient {
             }
             rs1.close();
             Map<String, Object> response = new HashMap<String, Object>();
-            response.put("name_request", request_name);
+            response.put("nameRequest", requestName);
             response.put("data", personnes);
-            response_string = mapper.writeValueAsString(response);
+            responseString = mapper.writeValueAsString(response);
         }
 
         //End Coumba's part
-        data_source.returnCon(con);
-        return response_string;
+        dataSource.returnCon(con);
+        return responseString;
     }
 
     public ServerToClient(DataSource ds) {
         try {
-            data_source = ds;
+            dataSource = ds;
         } catch (Exception e) {
+            logger.error("Erreur.....");
             e.printStackTrace();
         }
     }
