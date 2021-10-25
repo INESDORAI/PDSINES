@@ -77,7 +77,7 @@ public class SmartCityAppServer extends Thread {
                 System.out.println("nbreConnexion " +nbreConnexion);
             } catch (IOException ioe) {
                 logger.error("Erreur.....");
-                ioe.printStackTrace();
+                
             }
         }
     }
