@@ -74,7 +74,7 @@ public class SmartCityAppServer extends Thread {
                 client.close();
                 System.out.println("......Stopped");
                 nbreConnexion--;
-                System.out.println("nbreConnexion " +nbreConnexion);
+                System.out.println("nbreConnexion: " +nbreConnexion);
             } catch (IOException ioe) {
                 logger.error("Erreur.....");
                 
@@ -140,7 +140,7 @@ public class SmartCityAppServer extends Thread {
                     System.out.println("Serveur est maximum de connection");
                 }
             } catch (IOException ioe) {
-                ioe.printStackTrace();
+              
                 logger.error("Exception found on accept. Ignoring. Stack Trace :" + ioe.getMessage());
             }
 
