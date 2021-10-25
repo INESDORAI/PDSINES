@@ -74,7 +74,7 @@ public class SmartCityAppServer extends Thread {
                 client.close();
                 System.out.println("......Stopped");
                 nbreConnexion--;
-                System.out.println("nbreConnexion" +nbreConnexion);
+                System.out.println("nbreConnexion " +nbreConnexion);
             } catch (IOException ioe) {
                 logger.error("Erreur.....");
                 ioe.printStackTrace();
@@ -150,7 +150,7 @@ public class SmartCityAppServer extends Thread {
             System.out.println("Server Stopped...");
         } catch (Exception ioe) {
             logger.error("Error Found stopping server socket");
-            ioe.printStackTrace();
+            
             System.exit(-1);
         }
     }
