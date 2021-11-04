@@ -3,6 +3,7 @@ package edu.si.ing1.pds.vsc.connectionPool;
 import java.util.ArrayList;
 
 public class DataSource {
+
     //attributs
     static JDBCConnectionPool conPool = new JDBCConnectionPool();
 
@@ -16,7 +17,6 @@ public class DataSource {
 
     public void setMaxConnection(int maxCon) {
         conPool.setMaxConnection(maxCon);
-
     }
 
     public void setUsedConnection(int usedCon) {

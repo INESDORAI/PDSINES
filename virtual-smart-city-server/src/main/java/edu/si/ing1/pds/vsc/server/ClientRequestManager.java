@@ -45,8 +45,7 @@ public class ClientRequestManager implements Runnable {
             outputStream.write(mapper.writeValueAsBytes(result));
 
         } catch (IOException e) {
-            logger.error("Erreur.....");
-            e.printStackTrace();
+            logger.error("Erreur .....run.....");
         }
     }
 }

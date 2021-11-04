@@ -1,8 +1,14 @@
 package edu.ing1.pds.vsc.client;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
+import edu.ing1.pds.vsc.fenetre.FenetrePricipale;
+import java.awt.EventQueue;
+import java.awt.SystemColor;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,75 +17,26 @@ public class Client {
     private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());
 
     public static void main(String[] args) throws Exception {
-        // ConnectionServer con=new ConnectionServer();
+//        TestPersonne testPresonne = new TestPersonne();
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        logger.info("Starting Election ---->" + formater.format(new Date()));
+        UIManager.getDefaults().setDefaultLocale(new Locale("fr", "FR", ""));
         try {
-            ClientToServer connection = new ClientToServer();
-            System.out.println("Serveur connecté");
-            System.out.println("Pour executer une requette choisez :");
-            System.out.println("1 pour Ajouter");
-            System.out.println("2 pour Modifier");
-            System.out.println("3 pour Supprimer");
-            System.out.println("4 pour Afficher");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            CrudPersonne crudPersonne = new CrudPersonne();
-            switch (choix) {
-                case 1:
-                    System.out.println("Votre choix est ajouter");
-                    System.out.println("Id : ");
-                    int idAdd = sc.nextInt();
-                    System.out.println("Nom : ");
-                    String namePersonneAdd = sc.next();
-                    System.out.println("Age : ");
-                    int agePersonneAdd = sc.nextInt();
-                    String msgAdd = crudPersonne.insertPersonne(connection, idAdd, namePersonneAdd, agePersonneAdd);
-                    System.out.println(msgAdd);
-                    System.out.println("Opération effectuée avec succès.");
-                    break;
-                case 2:
-                    System.out.println("Votre choix est modifier");
-                    System.out.println("Id : ");
-                    int idUpd = sc.nextInt();
-                    System.out.println("Nom : ");
-                    String namePersonneUpd = sc.next();
-                    System.out.println("Age : ");
-                    int agePersonneUpd = sc.nextInt();
-                    String msgUpd = crudPersonne.updatePersonne(connection, idUpd, namePersonneUpd, agePersonneUpd);
-                    System.out.println(msgUpd);
-                    System.out.println("Opération effectuée avec succès.");
-                    break;
-                case 3:
-                    System.out.println("Votre choix est supprimer");
-                    System.out.println("Id : ");
-                    int idDel = sc.nextInt();
-                    String msgDel = crudPersonne.deletePersonne(connection, idDel);
-                    System.out.println(msgDel);
-                    System.out.println("Opération effectuée avec succès.");
-                    break;
-                case 4:
-                    System.out.println("Votre choix est afficher");
-                    ArrayList<Map> personnes = crudPersonne.selectPersonne(connection);
-                    System.out.println("id_personne  |  name_personne  |  age_personne");
-                    for (Map personne : personnes) {
-                        System.out.println(personne.get("id_personne")+"        |  "+personne.get("name_personne")+"  |  "+personne.get("age_personne"));
-                    }
-                    break;
-                default:
-                    System.out.println("Choix incorrect");
-                    break;
-            }
-
-            System.out.println("Fin de requette.");
-        } catch (Exception e) {
-            logger.error("error from the side of the client");
-            e.printStackTrace();
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("defautBase", SystemColor.inactiveCaption);
+            UIManager.put("defautBlueGrey", SystemColor.inactiveCaption);
+            UIManager.put("defautControl", SystemColor.control);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERREUR Théme!!", JOptionPane.ERROR_MESSAGE);
         }
-
-    }
-
-    private static void Switch(String operation_name_i) {
-        // TODO Auto-generated method stub
-
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Locale.setDefault(new Locale("fr", "FR", ""));
+                new FenetrePricipale().setVisible(true);
+            }
+        });
     }
 
 }

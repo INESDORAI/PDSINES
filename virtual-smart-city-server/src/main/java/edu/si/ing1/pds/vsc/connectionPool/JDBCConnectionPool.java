@@ -43,7 +43,6 @@ public class JDBCConnectionPool {
     }
 
     public synchronized ConnectionDB connectionEntity() {
-
         if (usedConnection < maxConnection && collection.size() > 0) {
             ConnectionDB con = collection.get(collection.size() - 1);
             usedConnection++;
@@ -64,8 +63,7 @@ public class JDBCConnectionPool {
             try {
                 c.connection.close();
             } catch (SQLException e) {
-                logger.error("Erreur.....");
-                e.printStackTrace();
+                logger.error("Erreur ......Close.....");
             }
         }
     }

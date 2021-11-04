@@ -25,8 +25,7 @@ public class ConnectionDB {
             Class.forName(config.getDriver());
             this.connection = DriverManager.getConnection(config.getURL(),config.getUsername(), config.getPassword());
         } catch (Exception e) {
-            logger.error("Erreur.....");
-            e.printStackTrace();
+            logger.error("Erreur .....ConnectionDB.....");
         }
     }
 }

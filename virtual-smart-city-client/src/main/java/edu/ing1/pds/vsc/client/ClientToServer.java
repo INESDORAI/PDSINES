@@ -16,23 +16,34 @@ public class ClientToServer {
     private BufferedReader in;
     private ObjectMapper mapper = new ObjectMapper();
 
-    public Request SendRequest(Request req) throws Exception {
+    public Request sendRequest(Request req) throws Exception {
         String request = mapper.writeValueAsString(req);
+        System.out.println("+++request++"+request);
         out = new PrintWriter(client.getOutputStream(), true);
         out.println(request);
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        String responseString = in.readLine();
+        String responseString = responseString = in.readLine();
+        System.out.println("+++request++"+request);
+        System.out.println("+++responseString++"+responseString);
         Request response = mapper.readValue(responseString, Request.class);
+        this.close();
         return response;
     }
 
     public ClientToServer() {
         try {
             String serverAdress = "172.31.249.198"; //InetAddress.getLocalHost();
+//            String serverAdress = "127.0.0.1"; //InetAddress.getLocalHost();
             client = new Socket(serverAdress, 1099);
         } catch (Exception e) {
             logger.error("erreur");
             e.printStackTrace();
         }
+    }
+
+    public void close() throws IOException {
+        out.close();
+        in.close();
+        client.close();
     }
 }

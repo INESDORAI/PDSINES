@@ -21,14 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.si.ing1.pds.vsc.connectionPool.DataSource;
 import edu.si.ing1.pds.vsc.connectionPool.Request;
-import edu.si.ing1.pds.vsc.connectionPool.ServerToClient;
+import edu.si.ing1.pds.vsc.service.ServerToClient;
 
 public class SmartCityAppServer extends Thread {
 
     private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
 
     private static int nbreConnexion;
-    public static int maxConnectionInit = 3;
+    public static int maxConnectionInit = 20;
     public static int connectionDurationInit = 5000;
     public static DataSource ds = new DataSource(maxConnectionInit, connectionDurationInit);
     //ServerSocket server;
@@ -53,20 +53,22 @@ public class SmartCityAppServer extends Thread {
         try {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
+            
             while (ds.getUsedConnection() < maxConnectionInit) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                String operation = in.readLine();
-                ObjectMapper mapper = new ObjectMapper();
-                System.out.println(operation);
-                Request request = mapper.readValue(operation, Request.class);
-                String response = connection.SendResponse(request);
-                out = new PrintWriter(client.getOutputStream(), true);
-                out.println(response);
-                System.out.println("*******\n ");
+                if (in.ready()) {
+                    String operation = in.readLine();
+                    ObjectMapper mapper = new ObjectMapper();
+                    System.out.println(operation);
+                    Request request = mapper.readValue(operation, Request.class);
+                    String response = connection.sendResponse(request);
+                    out = new PrintWriter(client.getOutputStream(), true);
+                    out.println(response);
+                    System.out.println("*******\n ");
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("Erreur .......");
+            logger.error("Erreur ...run SmartCityAppServer....");
         } finally {
             try {
                 in.close();
@@ -74,10 +76,9 @@ public class SmartCityAppServer extends Thread {
                 client.close();
                 System.out.println("......Stopped");
                 nbreConnexion--;
-                System.out.println("nbreConnexion: " +nbreConnexion);
+                System.out.println("nbreConnexion: " + nbreConnexion);
             } catch (IOException ioe) {
-                logger.error("Erreur.....");
-                
+                logger.error("Erreur...finally SmartCityAppServer...");
             }
         }
     }
@@ -118,7 +119,6 @@ public class SmartCityAppServer extends Thread {
             myServerSocket = new ServerSocket(1099);
             System.out.println("port: " + myServerSocket.getLocalPort());
         } catch (IOException ioe) {
-            ioe.printStackTrace();
             logger.error("Could not create server socket on port " + myServerSocket.getLocalPort() + ". Quitting.");
             System.exit(-1);
         }
@@ -129,18 +129,18 @@ public class SmartCityAppServer extends Thread {
 
                 Socket clientSocket = myServerSocket.accept();
 
-                SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket, nbreConnexion);
-                if (nbreConnexion < maxConnectionInit) {
+                SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket, ds.getUsedConnection());
+                if (ds.getUsedConnection() < maxConnectionInit) {
                     cliThread.start();
-                    System.out.println("nbreConnexion : " + (nbreConnexion + 1));
+                    System.out.println("nbreConnexion : " + (ds.getUsedConnection() + 1));
                     System.out.println("Serveur est en ecoute .......");
                 } else {
                     cliThread.client.close();
-                    System.out.println("nbreConnexion : " + nbreConnexion);
+                    System.out.println("nbreConnexion : " + ds.getUsedConnection());
                     System.out.println("Serveur est maximum de connection");
                 }
             } catch (IOException ioe) {
-              
+
                 logger.error("Exception found on accept. Ignoring. Stack Trace :" + ioe.getMessage());
             }
 
@@ -150,7 +150,7 @@ public class SmartCityAppServer extends Thread {
             System.out.println("Server Stopped...");
         } catch (Exception ioe) {
             logger.error("Error Found stopping server socket");
-            
+
             System.exit(-1);
         }
     }
