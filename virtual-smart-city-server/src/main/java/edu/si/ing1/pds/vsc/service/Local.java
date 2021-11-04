@@ -53,7 +53,7 @@ public class Local {
 
     public String findAll(Connection connection, String requestName) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "SELECT id, lib, batiment, etage, numero, id_enterprise, nbre_place, nbre_place_occupe, (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local WHERE b1.id =l.id ) AS nbre_capteur, (SELECT COUNT (a2.id) FROM public.materiel a2 INNER JOIN public.local b2 ON b2.id = a2.id_local WHERE b2.id =l.id ) AS nbre_materiel, (SELECT COUNT (a3.id) FROM public.materiel a3 INNER JOIN public.local b3 ON b3.id = a3.id_local WHERE b3.id =l.id ) AS nbre_mobilier FROM public.local AS l;";
+        String req = "SELECT id, lib, batiment, etage, numero, id_enterprise, nbre_place, nbre_place_occupe, (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local WHERE b1.id =l.id ) AS nbre_capteur, (SELECT COUNT (a2.id) FROM public.materiel a2 INNER JOIN public.local b2 ON b2.id = a2.id_local WHERE b2.id =l.id ) AS nbre_materiel, (SELECT COUNT (a3.id) FROM public.mobilier a3 INNER JOIN public.local b3 ON b3.id = a3.id_local WHERE b3.id =l.id ) AS nbre_mobilier FROM public.local AS l;";
         System.out.println("req---" + req);
         ResultSet rs = connection.createStatement().executeQuery(req);
         List<Map> enterprises = new ArrayList<Map>();
@@ -81,7 +81,7 @@ public class Local {
 
     public String findByIdEnterprise(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "SELECT id, lib, batiment, etage, numero, id_enterprise, nbre_place, nbre_place_occupe, (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local WHERE b1.id =l.id ) AS nbre_capteur, (SELECT COUNT (a2.id) FROM public.materiel a2 INNER JOIN public.local b2 ON b2.id = a2.id_local WHERE b2.id =l.id ) AS nbre_materiel, (SELECT COUNT (a3.id) FROM public.materiel a3 INNER JOIN public.local b3 ON b3.id = a3.id_local WHERE b3.id =l.id ) AS nbre_mobilier FROM public.local AS l WHERE id_enterprise =" + (Integer) dataLoading.get("id_enterprise")+";";
+        String req = "SELECT id, lib, batiment, etage, numero, id_enterprise, nbre_place, nbre_place_occupe, (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local WHERE b1.id =l.id ) AS nbre_capteur, (SELECT COUNT (a2.id) FROM public.materiel a2 INNER JOIN public.local b2 ON b2.id = a2.id_local WHERE b2.id =l.id ) AS nbre_materiel, (SELECT COUNT (a3.id) FROM public.mobilier a3 INNER JOIN public.local b3 ON b3.id = a3.id_local WHERE b3.id =l.id ) AS nbre_mobilier FROM public.local AS l WHERE id_enterprise =" + (Integer) dataLoading.get("id_enterprise")+";";
         System.out.println("req---" + req);
         ResultSet rs = connection.createStatement().executeQuery(req);
         List<Map> enterprises = new ArrayList<Map>();
