@@ -12,7 +12,6 @@ import java.awt.Frame;
  * @author aggoun.abdelkrim
  */
 public class SupprimerEnterprise extends javax.swing.JDialog {
-
     private final EnterpriseFrame enterpriseFrame;
     private CrudEnterprise crudEnterprise;
     private Enterprise enterprise;
@@ -244,8 +243,9 @@ public class SupprimerEnterprise extends javax.swing.JDialog {
         try {
             crudEnterprise.deleteEnterprise(enterprise.getId());
             enterpriseFrame.refrechEnterprise();
+            enterpriseFrame.fenetrePricipale.initComboBox();
             this.dispose();
-        } catch (Exception  ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             labelErreur.setText("Impossible de supprimer");
             labelErreur.setForeground(new Color(255, 51, 0));

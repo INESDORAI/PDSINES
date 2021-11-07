@@ -1,7 +1,6 @@
 package edu.ing1.pds.vsc.enterprise;
 
-import edu.ing1.pds.vsc.enterprise.ConsulterEnterprise;
-import edu.ing1.pds.vsc.enterprise.CrudEnterprise;
+import edu.ing1.pds.vsc.fenetre.FenetrePricipale;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,11 +18,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EnterpriseFrame extends javax.swing.JInternalFrame {
 
+    public FenetrePricipale fenetrePricipale;
+    
     private String[] titreEnterprise;
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
 
-    private List<Enterprise> enterpriseList;
+    public List<Enterprise> enterpriseList;
     private Enterprise enterpriseSelected;
     private CrudEnterprise crudEnterprise;
 
@@ -34,15 +35,17 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
     /**
      * Creates new form EnterpriseFrame
      */
-    public EnterpriseFrame() {
+    public EnterpriseFrame(FenetrePricipale fenetrePricipale) {
+        this.fenetrePricipale = fenetrePricipale;
         initFrame();
         initTableEnterprise();
         initComponents();
     }
+    
+    
 
     private void initFrame() {
         crudEnterprise = new CrudEnterprise();
-
     }
 
     private void initTableEnterprise() {

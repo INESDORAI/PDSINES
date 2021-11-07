@@ -22,29 +22,32 @@ public class CrudMateriel {
 
     public List<Materiel> findByIdEnterprise(int idEnterprise) throws Exception {
         ClientToServer connection = new ClientToServer();
-        ArrayList<Map> materielMap = new ArrayList<Map>();
+
+        List<Materiel> materielList = new ArrayList<>();
         Request request = new Request();
         request.setNameRequest("select_materiel_by_id_enterprise");
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("id_enterprise", idEnterprise);
         request.setData(param);
         Request response = connection.sendRequest(request);
-        materielMap = (ArrayList<Map>) response.getData();
-        List<Materiel> materielList = new ArrayList<>();
-        for (Map map : materielMap) {
-            Materiel materiel = new Materiel();
-            materiel.setId((Integer) map.get("id"));
-            materiel.setCode((String) map.get("code"));
-            materiel.setTypeMobilier((String) map.get("type_materiel"));
-            materiel.setLib((String) map.get("lib"));
-            materiel.setConsommation((Double) map.get("consommation"));
-            materiel.setUniteConsommation((String) map.get("unite_consommation"));
-            materiel.setNumero((String) map.get("numero"));
-            materiel.setEtage((String) map.get("etage"));
-            materiel.setBatiment((String) map.get("batiment"));
-            materiel.setIdLocal((Integer) map.get("id_local"));
-            materiel.setIdEnterprise((Integer) map.get("id_enterprise"));
-            materielList.add(materiel);
+        if (response != null && response.getData() != null) {
+            ArrayList<Map> materielMap = new ArrayList<Map>();
+            materielMap = (ArrayList<Map>) response.getData();
+            for (Map map : materielMap) {
+                Materiel materiel = new Materiel();
+                materiel.setId((Integer) map.get("id"));
+                materiel.setCode((String) map.get("code"));
+                materiel.setTypeMateriel((String) map.get("type_materiel"));
+                materiel.setLib((String) map.get("lib"));
+                materiel.setConsommation((Double) map.get("consommation"));
+                materiel.setUniteConsommation((String) map.get("unite_consommation"));
+                materiel.setNumero((String) map.get("numero"));
+                materiel.setEtage((String) map.get("etage"));
+                materiel.setBatiment((String) map.get("batiment"));
+                materiel.setIdLocal((Integer) map.get("id_local"));
+                materiel.setIdEnterprise((Integer) map.get("id_enterprise"));
+                materielList.add(materiel);
+            }
         }
         return materielList;
     }
@@ -63,7 +66,7 @@ public class CrudMateriel {
             Materiel materiel = new Materiel();
             materiel.setId((Integer) map.get("id"));
             materiel.setCode((String) map.get("code"));
-            materiel.setTypeMobilier((String) map.get("type_materiel"));
+            materiel.setTypeMateriel((String) map.get("type_materiel"));
             materiel.setLib((String) map.get("lib"));
             materiel.setConsommation((Double) map.get("consommation"));
             materiel.setUniteConsommation((String) map.get("unite_consommation"));
@@ -77,7 +80,7 @@ public class CrudMateriel {
         return materielList;
     }
 
-    public Materiel selectMobilierById(int id) throws Exception {
+    public Materiel selectMaterielById(int id) throws Exception {
         ClientToServer connection = new ClientToServer();
         Request request = new Request();
         request.setNameRequest("select_materiel_id");
@@ -89,7 +92,7 @@ public class CrudMateriel {
         Materiel materiel = new Materiel();
         materiel.setId((Integer) map.get("id"));
         materiel.setCode((String) map.get("code"));
-        materiel.setTypeMobilier((String) map.get("type_materiel"));
+        materiel.setTypeMateriel((String) map.get("type_materiel"));
         materiel.setLib((String) map.get("lib"));
         materiel.setConsommation((Double) map.get("consommation"));
         materiel.setUniteConsommation((String) map.get("unite_consommation"));
@@ -97,14 +100,14 @@ public class CrudMateriel {
         return materiel;
     }
 
-    public String insertMobilier(Materiel materiel) throws Exception {
+    public String insertMateriel(Materiel materiel) throws Exception {
         ClientToServer connection = new ClientToServer();
         String msg = "";
         Request request = new Request();
         request.setNameRequest("insert_materiel");
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("code", materiel.getCode());
-        param.put("type_materiel", materiel.getTypeMobilier());
+        param.put("type_materiel", materiel.getTypeMateriel());
         param.put("lib", materiel.getLib());
         param.put("consommation", materiel.getConsommation());
         param.put("unite_consommation", materiel.getUniteConsommation());
@@ -115,7 +118,7 @@ public class CrudMateriel {
         return msg;
     }
 
-    public String updateMobilier(Materiel materiel) throws Exception {
+    public String updateMateriel(Materiel materiel) throws Exception {
         ClientToServer connection = new ClientToServer();
         String msg = "";
         Request request = new Request();
@@ -123,7 +126,7 @@ public class CrudMateriel {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("id", materiel.getId());
         param.put("code", materiel.getCode());
-        param.put("type_materiel", materiel.getTypeMobilier());
+        param.put("type_materiel", materiel.getTypeMateriel());
         param.put("lib", materiel.getLib());
         param.put("consommation", materiel.getConsommation());
         param.put("unite_consommation", materiel.getUniteConsommation());
@@ -134,7 +137,7 @@ public class CrudMateriel {
         return msg;
     }
 
-    public String deleteMobilier(int id) throws Exception {
+    public String deleteMateriel(int id) throws Exception {
         ClientToServer connection = new ClientToServer();
         String msg = "";
         Request request = new Request();

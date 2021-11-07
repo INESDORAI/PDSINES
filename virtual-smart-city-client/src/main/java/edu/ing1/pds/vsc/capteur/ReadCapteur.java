@@ -19,7 +19,7 @@ import javax.swing.JFrame;
  * @author aggoun.abdelkrim
  */
 public class ReadCapteur extends javax.swing.JDialog {
-    
+
     private final String type;
     private String titre;
     private CapteurFrame capteurFrame;
@@ -54,7 +54,7 @@ public class ReadCapteur extends javax.swing.JDialog {
         initComponents();
         initDialog();
     }
-    
+
     private void initComboBox() {
         Vector<String> item = new Vector<>();
         item.add("");
@@ -68,13 +68,13 @@ public class ReadCapteur extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(ReadCapteur.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     private void initDialog() {
         activButton = true;
         buttonAjouter.setEnabled(activButton);
-        
+
         if (type.equals("add")) {
             capteur = new Capteur();
         }
@@ -85,7 +85,7 @@ public class ReadCapteur extends javax.swing.JDialog {
         this.setAlwaysOnTop(true);
         this.setVisible(true);
     }
-    
+
     private void initTitre() {
         switch (type) {
             case "add":
@@ -96,7 +96,7 @@ public class ReadCapteur extends javax.swing.JDialog {
                 break;
         }
     }
-    
+
     private void initCapteur(Capteur capteur) {
         buttonInit.setVisible(false);
         jTextFieldCode.setText(capteur.getCode());
@@ -312,56 +312,89 @@ public class ReadCapteur extends javax.swing.JDialog {
             localSelected = null;
         }
     }//GEN-LAST:event_jComboBoxlibLocalItemStateChanged
-    
+
     private void initButton() {
         buttonAjouter.setEnabled(true);
     }
-    
-    private void addCapteur() {
-        try {            
-            if (localSelected != null && localSelected.getId() != null) {
-                capteur.setCode(jTextFieldCode.getText());
-                capteur.setTypeCapteur(jTextFieldType.getText());
-                if (!jTextFieldvaleur.getText().isEmpty()) {
-                    capteur.setValeurCapteur(Double.valueOf(jTextFieldvaleur.getText()));
-                } else {
-                    capteur.setValeurCapteur(Double.valueOf(0));
+
+    private void initCatpeur() {
+        capteur.setCode(jTextFieldCode.getText());
+        capteur.setTypeCapteur(jTextFieldType.getText());
+        if (!jTextFieldvaleur.getText().isEmpty()) {
+            capteur.setValeurCapteur(Double.valueOf(jTextFieldvaleur.getText()));
+        } else {
+            capteur.setValeurCapteur(Double.valueOf(0));
+        }
+        if (jComboBoxlibLocal.getSelectedItem() == null) {
+            capteur.setIdLocal(null);
+        } else if (localSelected != null) {
+            capteur.setIdLocal(localSelected.getId());
+        }
+    }
+
+    private boolean verified() {
+        if (capteur.getCode() == null || (capteur.getCode() != null && capteur.getCode().isEmpty())) {
+            labelErreur.setText("Code est vide");
+            return false;
+        }
+        if (capteur.getTypeCapteur() == null || (capteur.getTypeCapteur() != null && capteur.getTypeCapteur().isEmpty())) {
+            labelErreur.setText("Type capteur est vide");
+            return false;
+        }
+        if (capteur.getValeurCapteur() == null) {
+            labelErreur.setText("Valeur capteur est vide");
+            return false;
+        }
+        if (capteur.getIdLocal() == null) {
+            labelErreur.setText("Local est vide");
+            return false;
+        }
+        if (capteurFrame.capteurList != null && !capteurFrame.capteurList.isEmpty()) {
+            if (capteur.getId() == null) {
+                for (Capteur cpt : capteurFrame.capteurList) {
+                    if (cpt.getCode().equals(capteur.getCode()) && cpt.getIdLocal() == capteur.getIdLocal()) {
+                        labelErreur.setText("Code existe déja");
+                        return false;
+                    }
                 }
-                capteur.setIdLocal(localSelected.getId());
+            } else {
+                for (Capteur cpt : capteurFrame.capteurList) {
+                    if (cpt.getCode().equals(capteur.getCode()) && !cpt.getId().equals(capteur.getId()) && cpt.getIdLocal() == capteur.getIdLocal()) {
+                        labelErreur.setText("Code existe déja");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void addCapteur() {
+        initCatpeur();
+        if (verified()) {
+            try {
                 crudCapteur.insertCapteur(capteur);
                 fermerButton();
-            } else {
-                labelErreur.setText("Erreur : Local obligatoire!!!!");
-            }            
-        } catch (Exception ex) {
-            labelErreur.setText(ex.getMessage());
-            Logger.getLogger(ReadCapteur.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                labelErreur.setText(ex.getMessage());
+                Logger.getLogger(ReadCapteur.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
     }
-    
+
     private void updateCapteur() {
-        try {
-            if (localSelected != null && localSelected.getId() != null) {
-                capteur.setCode(jTextFieldCode.getText());
-                capteur.setTypeCapteur(jTextFieldType.getText());
-                if (!jTextFieldvaleur.getText().isEmpty()) {
-                    capteur.setValeurCapteur(Double.valueOf(jTextFieldvaleur.getText()));
-                } else {
-                    capteur.setValeurCapteur(Double.valueOf(0));
-                }
-                capteur.setIdLocal(localSelected.getId());
+        initCatpeur();
+        if (verified()) {
+            try {
                 crudCapteur.updateCapteur(capteur);
                 fermerButton();
-            } else {
-                labelErreur.setText("Erreur : Local obligatoire!!!!");
-            }  
-        } catch (Exception ex) {
-            Logger.getLogger(ReadCapteur.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ReadCapteur.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fermerButton();
         }
-        fermerButton();
     }
-    
+
     private void fermerButton() {
         capteurFrame.refrechCapteur();
         this.dispose();

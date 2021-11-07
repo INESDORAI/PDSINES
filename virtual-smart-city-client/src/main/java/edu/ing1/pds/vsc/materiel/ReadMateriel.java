@@ -23,7 +23,7 @@ public class ReadMateriel extends javax.swing.JDialog {
     private final String type;
     private String titre;
     private MaterielFrame materielFrame;
-    private CrudMateriel crudMobilier;
+    private CrudMateriel crudMateriel;
     private CrudLocal crudLocal;
     private Enterprise enterprise;
     private Materiel materiel;
@@ -42,10 +42,10 @@ public class ReadMateriel extends javax.swing.JDialog {
      * @param materiel
      * @param type
      */
-    public ReadMateriel(JFrame parent, boolean modal, MaterielFrame materielFrame, Enterprise enterprise, Materiel materiel, String type, CrudMateriel crudMobilier) {
+    public ReadMateriel(JFrame parent, boolean modal, MaterielFrame materielFrame, Enterprise enterprise, Materiel materiel, String type, CrudMateriel crudMateriel) {
         super(parent, modal);
         this.type = type;
-        this.crudMobilier = crudMobilier;
+        this.crudMateriel = crudMateriel;
         this.enterprise = enterprise;
         this.materiel = materiel;
         this.materielFrame = materielFrame;
@@ -79,7 +79,7 @@ public class ReadMateriel extends javax.swing.JDialog {
             materiel = new Materiel();
         }
         if (type.equals("upd")) {
-            initMobilier(materiel);
+            initmateriel(materiel);
         }
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
@@ -97,10 +97,10 @@ public class ReadMateriel extends javax.swing.JDialog {
         }
     }
 
-    private void initMobilier(Materiel materiel) {
+    private void initmateriel(Materiel materiel) {
         buttonInit.setVisible(false);
         jTextFieldCode.setText(materiel.getCode());
-        jTextFieldType.setText(materiel.getTypeMobilier());
+        jTextFieldType.setText(materiel.getTypeMateriel());
         jTextFieldLib.setText(materiel.getLib());
         jTextFieldConsomation.setText(materiel.getConsommation() + "");
         jTextFieldUnite.setText(materiel.getUniteConsommation());
@@ -217,6 +217,15 @@ public class ReadMateriel extends javax.swing.JDialog {
 
         jLabelLocal.setText("Local");
 
+        jTextFieldConsomation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldConsomationKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldConsomationKeyReleased(evt);
+            }
+        });
+
         jLabelConsomation.setText("Consomation");
 
         jLabelUnite.setText("Unité");
@@ -304,10 +313,10 @@ public class ReadMateriel extends javax.swing.JDialog {
         // TODO add your handling code here:
         switch (type) {
             case "add":
-                addMobilier();
+                addmateriel();
                 break;
             case "upd":
-                updateMobilier();
+                updatemateriel();
                 break;
         }
     }//GEN-LAST:event_buttonAjouterActionPerformed
@@ -339,61 +348,114 @@ public class ReadMateriel extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jComboBoxlibLocalItemStateChanged
 
+    private void jTextFieldConsomationKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldConsomationKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
+            jTextFieldConsomation.setEditable(true);
+        } else {
+            jTextFieldConsomation.setEditable(false);
+        }
+    }//GEN-LAST:event_jTextFieldConsomationKeyPressed
+
+    private void jTextFieldConsomationKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldConsomationKeyReleased
+        // TODO add your handling code here:
+        jTextFieldConsomation.setEditable(true);
+    }//GEN-LAST:event_jTextFieldConsomationKeyReleased
+
     private void initButton() {
         buttonAjouter.setEnabled(true);
     }
 
-    private void addMobilier() {
-        try {
-            if (localSelected != null && localSelected.getId() != null) {
-                materiel.setCode(jTextFieldCode.getText());
-                materiel.setTypeMobilier(jTextFieldType.getText());
-                materiel.setLib(jTextFieldLib.getText());
-                if (!jTextFieldConsomation.getText().isEmpty()) {
-                    materiel.setConsommation(Double.valueOf(jTextFieldConsomation.getText()));
-                } else {
-                    materiel.setConsommation(Double.valueOf(0));
-                }
-                materiel.setUniteConsommation(jTextFieldUnite.getText());
-                materiel.setIdLocal(localSelected.getId());
-                crudMobilier.insertMobilier(materiel);
-                fermerButton();
-            } else {
-                labelErreur.setText("Erreur : Local obligatoire!!!!");
-            }
-        } catch (Exception ex) {
-            labelErreur.setText(ex.getMessage());
-            Logger.getLogger(ReadMateriel.class.getName()).log(Level.SEVERE, null, ex);
+    private void initMateriel() {
+        materiel.setCode(jTextFieldCode.getText());
+        materiel.setTypeMateriel(jTextFieldType.getText());
+        materiel.setLib(jTextFieldLib.getText());
+        if (!jTextFieldConsomation.getText().isEmpty()) {
+            materiel.setConsommation(Double.valueOf(jTextFieldConsomation.getText()));
+        } else {
+            materiel.setConsommation(Double.valueOf(0));
         }
-
+        materiel.setUniteConsommation(jTextFieldUnite.getText());
+        if (jComboBoxlibLocal.getSelectedItem() == null) {
+            materiel.setIdLocal(null);
+        } else if (localSelected != null){
+            materiel.setIdLocal(localSelected.getId());
+        }
     }
 
-    private void updateMobilier() {
-        try {
-            if (localSelected != null && localSelected.getId() != null) {
-                materiel.setCode(jTextFieldCode.getText());
-                materiel.setTypeMobilier(jTextFieldType.getText());
-                materiel.setLib(jTextFieldLib.getText());
-                if (!jTextFieldConsomation.getText().isEmpty()) {
-                    materiel.setConsommation(Double.valueOf(jTextFieldConsomation.getText()));
-                } else {
-                    materiel.setConsommation(Double.valueOf(0));
-                }
-                materiel.setUniteConsommation(jTextFieldUnite.getText());
-                materiel.setIdLocal(localSelected.getId());
-                crudMobilier.updateMobilier(materiel);
-                fermerButton();
-            } else {
-                labelErreur.setText("Erreur : Local obligatoire!!!!");
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ReadMateriel.class.getName()).log(Level.SEVERE, null, ex);
+    private boolean verified() {
+        if (materiel.getCode() == null || (materiel.getCode() != null && materiel.getCode().isEmpty())) {
+            labelErreur.setText("Code est vide");
+            return false;
         }
-        fermerButton();
+        if (materiel.getTypeMateriel() == null || (materiel.getTypeMateriel() != null && materiel.getTypeMateriel().isEmpty())) {
+            labelErreur.setText("Type materiel est vide");
+            return false;
+        }
+        if (materiel.getLib()== null || (materiel.getLib() != null && materiel.getLib().isEmpty())) {
+            labelErreur.setText("Libillé materiel est vide");
+            return false;
+        }
+        if (materiel.getIdLocal() == null) {
+            labelErreur.setText("Local est vide");
+            return false;
+        }
+        if (materielFrame.materielList != null && !materielFrame.materielList.isEmpty()) {
+            if (materiel.getId() == null) {
+                for (Materiel cpt : materielFrame.materielList) {
+                    if (cpt.getCode().equals(materiel.getCode()) && cpt.getIdLocal() == materiel.getIdLocal()) {
+                        labelErreur.setText("Code existe déja");
+                        return false;
+                    }
+                    if (cpt.getLib().equals(materiel.getLib()) && cpt.getIdLocal() == materiel.getIdLocal()) {
+                        labelErreur.setText("Libillé existe déja");
+                        return false;
+                    }
+                }
+            } else {
+                for (Materiel cpt : materielFrame.materielList) {
+                    if (cpt.getCode().equals(materiel.getCode()) && !cpt.getId().equals(materiel.getId()) && cpt.getIdLocal() == materiel.getIdLocal()) {
+                        labelErreur.setText("Code existe déja");
+                        return false;
+                    }
+                    if (cpt.getLib().equals(materiel.getLib()) && !cpt.getId().equals(materiel.getId()) && cpt.getIdLocal() == materiel.getIdLocal()) {
+                        labelErreur.setText("Libillé existe déja");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void addmateriel() {
+        initMateriel();
+        if (verified()) {
+            try {
+                crudMateriel.insertMateriel(materiel);
+                fermerButton();
+            } catch (Exception ex) {
+                labelErreur.setText(ex.getMessage());
+                Logger.getLogger(ReadMateriel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void updatemateriel() {
+        initMateriel();
+        if (verified()) {
+            try {
+                crudMateriel.updateMateriel(materiel);
+                fermerButton();
+            } catch (Exception ex) {
+                Logger.getLogger(ReadMateriel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fermerButton();
+        }
     }
 
     private void fermerButton() {
-        materielFrame.refrechMobilier();
+        materielFrame.refrechMateriel();
         this.dispose();
     }
 

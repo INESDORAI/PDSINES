@@ -34,12 +34,12 @@ public class ConsulterMateriel extends javax.swing.JDialog {
     }
 
     private void initConsulter(Materiel materiel) {
-        initMobilier(materiel);
+        initMateriel(materiel);
     }
 
-    private void initMobilier(Materiel materiel) {
+    private void initMateriel(Materiel materiel) {
         jTextFieldCode.setText(materiel.getCode());
-        jTextFieldType.setText(materiel.getTypeMobilier());
+        jTextFieldType.setText(materiel.getTypeMateriel());
         jTextFieldLib.setText(materiel.getLib());
         jTextFieldConsomation.setText(materiel.getConsommation()+"");
         jTextFieldUnite.setText(materiel.getUniteConsommation());

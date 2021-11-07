@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,13 +17,15 @@ import java.util.Map;
  */
 public class Materiel {
 
+    private final static Logger logger = Logger.getLogger(Materiel.class);
+
     public Materiel() {
     }
 
     public String add(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
         String req = "INSERT INTO public.materiel(type_materiel, lib, code, consommation, unite_consommation, id_local) VALUES('" + (String) dataLoading.get("type_materiel") + "', '" + (String) dataLoading.get("lib") + "', '" + (String) dataLoading.get("code") + "', " + (Double) dataLoading.get("consommation") + ", '" + (String) dataLoading.get("unite_consommation") + "', " + (Integer) dataLoading.get("id_local") + ");";
-        System.out.println("req---" + req);
+        logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("nameRequest", requestName);
@@ -33,7 +36,7 @@ public class Materiel {
     public String edit(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
         String req = "UPDATE public.materiel SET code ='" + (String) dataLoading.get("code") + "', lib='" + (String) dataLoading.get("lib") + "', type_materiel='" + (String) dataLoading.get("type_materiel") + "', consommation=" + (Double) dataLoading.get("consommation") + ", unite_consommation='" + (String) dataLoading.get("unite_consommation") + "', id_local=" + (Integer) dataLoading.get("id_local") + " WHERE id=" + (Integer) dataLoading.get("id") + ";";
-        System.out.println("req---" + req);
+        logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("nameRequest", requestName);
@@ -81,7 +84,7 @@ public class Materiel {
     public String findByIdEnterprise(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
         String req = "SELECT c.id AS id, c.code AS code, type_materiel, c.lib, consommation, unite_consommation, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.materiel AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id WHERE  e.id=" + (Integer) dataLoading.get("id_enterprise") + ";";
-        System.out.println("req---" + req);
+        logger.info("req---" + req);
         ResultSet rs = connection.createStatement().executeQuery(req);
         List<Map> enterprises = new ArrayList<Map>();
         while (rs.next()) {

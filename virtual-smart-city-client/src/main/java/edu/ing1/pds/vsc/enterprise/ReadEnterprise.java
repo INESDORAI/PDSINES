@@ -276,39 +276,79 @@ public class ReadEnterprise extends javax.swing.JDialog {
         buttonAjouter.setEnabled(true);
     }
 
-    private void addEnterprise() {
-        try {
-            enterprise.setCode(jTextFieldCode.getText());
-            enterprise.setLib(jTextFieldLib.getText());
-            enterprise.setAdresse(jTextFieldAdresse.getText());
-            enterprise.setCodePostal(jTextFieldCodePostal.getText());
-            enterprise.setPays(jTextFieldPays.getText());
-            crudEnterprise.insertEnterprise(enterprise);
-        } catch (Exception ex) {
-            Logger.getLogger(ReadEnterprise.class.getName()).log(Level.SEVERE, null, ex);
+    private void initEnterprise() {
+        enterprise.setCode(jTextFieldCode.getText());
+        enterprise.setLib(jTextFieldLib.getText());
+        enterprise.setAdresse(jTextFieldAdresse.getText());
+        enterprise.setCodePostal(jTextFieldCodePostal.getText());
+        enterprise.setPays(jTextFieldPays.getText());
+    }
+
+    private boolean verified() {
+        if (enterprise.getCode() == null || (enterprise.getCode() != null && enterprise.getCode().isEmpty())) {
+            labelErreur.setText("Code est vide");
+            return false;
         }
-        fermerButton();
+        if (enterprise.getLib() == null || (enterprise.getLib() != null && enterprise.getLib().isEmpty())) {
+            labelErreur.setText("Libillé est vide");
+            return false;
+        }
+        if (enterprise.getId() == null) {
+            for (Enterprise enter : enterpriseFrame.enterpriseList) {
+                if (enter.getCode().equals(enterprise.getCode())) {
+                    labelErreur.setText("Code existe déja");
+                    return false;
+                }
+                if (enter.getLib().equals(enterprise.getLib())) {
+                    labelErreur.setText("Libillé existe déja");
+                    return false;
+                }
+            }
+        } else {
+            for (Enterprise enter : enterpriseFrame.enterpriseList) {
+                if (enter.getCode().equals(enterprise.getCode()) && !enter.getId().equals(enterprise.getId())) {
+                    labelErreur.setText("Code existe déja");
+                    return false;
+                }
+                if (enter.getLib().equals(enterprise.getLib()) && !enter.getId().equals(enterprise.getId())) {
+                    labelErreur.setText("Libillé existe déja");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void addEnterprise() {
+        initEnterprise();
+        if (verified()) {
+            try {
+                crudEnterprise.insertEnterprise(enterprise);
+                enterpriseFrame.fenetrePricipale.initComboBox();
+            } catch (Exception ex) {
+                Logger.getLogger(ReadEnterprise.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fermerButton();
+        }
     }
 
     private void updateEnterprise() {
-        try {
-            enterprise.setCode(jTextFieldCode.getText());
-            enterprise.setLib(jTextFieldLib.getText());
-            enterprise.setAdresse(jTextFieldAdresse.getText());
-            enterprise.setCodePostal(jTextFieldCodePostal.getText());
-            enterprise.setPays(jTextFieldPays.getText());
-            crudEnterprise.updateEnterprise(enterprise);
-        } catch (Exception ex) {
-            Logger.getLogger(ReadEnterprise.class.getName()).log(Level.SEVERE, null, ex);
+        initEnterprise();
+        if (verified()) {
+            try {
+                crudEnterprise.updateEnterprise(enterprise);
+                enterpriseFrame.fenetrePricipale.initComboBox();
+            } catch (Exception ex) {
+                Logger.getLogger(ReadEnterprise.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fermerButton();
         }
-        fermerButton();
     }
 
-    private void fermerButton() {        
+    private void fermerButton() {
         enterpriseFrame.refrechEnterprise();
         this.dispose();
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAjouter;

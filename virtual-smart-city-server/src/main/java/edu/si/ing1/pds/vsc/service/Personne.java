@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,13 +17,15 @@ import java.util.Map;
  */
 public class Personne {
 
+    private final static Logger logger = Logger.getLogger(Personne.class);
+
     public Personne() {
     }
 
     public String add(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
         String req = "INSERT INTO public.personne(id, \"name\", age) VALUES(" + (Integer) dataLoading.get("id_personne") + ", '" + (String) dataLoading.get("name_personne") + "', " + (Integer) dataLoading.get("age_personne") + ");";
-        System.out.println("req---" + req);
+        logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("nameRequest", requestName);

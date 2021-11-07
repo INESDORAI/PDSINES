@@ -4,12 +4,11 @@ import java.io.*;
 import java.net.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class ClientToServer {
 
-    private final static Logger logger = LoggerFactory.getLogger(ClientToServer.class.getName());
+    private final static Logger logger = Logger.getLogger(ClientToServer.class);
 
     public Socket client;
     private PrintWriter out;
@@ -18,13 +17,13 @@ public class ClientToServer {
 
     public Request sendRequest(Request req) throws Exception {
         String request = mapper.writeValueAsString(req);
-        System.out.println("+++request++"+request);
+        logger.info("+++request++" + request);
         out = new PrintWriter(client.getOutputStream(), true);
         out.println(request);
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String responseString = responseString = in.readLine();
-        System.out.println("+++request++"+request);
-        System.out.println("+++responseString++"+responseString);
+        logger.info("+++request++" + request);
+        logger.info("+++responseString++" + responseString);
         Request response = mapper.readValue(responseString, Request.class);
         this.close();
         return response;

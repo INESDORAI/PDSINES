@@ -3,16 +3,16 @@ package edu.si.ing1.pds.vsc.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.sql.Connection;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import edu.si.ing1.pds.vsc.connectionPool.ConnectionDB;
 import edu.si.ing1.pds.vsc.connectionPool.DataSource;
 import edu.si.ing1.pds.vsc.connectionPool.Request;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 public class ServerToClient {
 
-    private final static Logger logger = LoggerFactory.getLogger(ServerToClient.class.getName());
+    private final static Logger logger = Logger.getLogger(ServerToClient.class);
+    
     private DataSource dataSource;
     private Personne personne = new Personne();
     private Enterprise enterprise = new Enterprise();
@@ -27,7 +27,7 @@ public class ServerToClient {
         String requestName = request.getNameRequest();
         Map data = (Map) request.getData();
         String responseString = "";
-        System.out.println("requestName---" + requestName);
+       logger.info("requestName---" + requestName);
         try {
             switch (requestName) {
                 case "insert_personne":
@@ -138,7 +138,7 @@ public class ServerToClient {
 
             //End Coumba's part
             dataSource.returnCon(con);
-            System.out.println("response---" + responseString);
+           logger.info("response---" + responseString);
             return responseString;
         } catch (JsonProcessingException ex) {
             ex.printStackTrace();

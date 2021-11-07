@@ -19,7 +19,7 @@ import javax.swing.JFrame;
  * @author aggoun.abdelkrim
  */
 public class ReadMobilier extends javax.swing.JDialog {
-    
+
     private final String type;
     private String titre;
     private MobilierFrame mobilierFrame;
@@ -54,7 +54,7 @@ public class ReadMobilier extends javax.swing.JDialog {
         initComponents();
         initDialog();
     }
-    
+
     private void initComboBox() {
         Vector<String> item = new Vector<>();
         item.add("");
@@ -68,13 +68,13 @@ public class ReadMobilier extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(ReadMobilier.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     private void initDialog() {
         activButton = true;
         buttonAjouter.setEnabled(activButton);
-        
+
         if (type.equals("add")) {
             mobilier = new Mobilier();
         }
@@ -85,7 +85,7 @@ public class ReadMobilier extends javax.swing.JDialog {
         this.setAlwaysOnTop(true);
         this.setVisible(true);
     }
-    
+
     private void initTitre() {
         switch (type) {
             case "add":
@@ -96,7 +96,7 @@ public class ReadMobilier extends javax.swing.JDialog {
                 break;
         }
     }
-    
+
     private void initMobilier(Mobilier mobilier) {
         buttonInit.setVisible(false);
         jTextFieldCode.setText(mobilier.getCode());
@@ -312,48 +312,97 @@ public class ReadMobilier extends javax.swing.JDialog {
             localSelected = null;
         }
     }//GEN-LAST:event_jComboBoxlibLocalItemStateChanged
-    
+
     private void initButton() {
         buttonAjouter.setEnabled(true);
     }
-    
-    private void addMobilier() {
-        try {            
-            if (localSelected != null && localSelected.getId() != null) {
-                mobilier.setCode(jTextFieldCode.getText());
-                mobilier.setTypeMobilier(jTextFieldType.getText());
-                mobilier.setLib(jTextFieldLib.getText());                
-                mobilier.setIdLocal(localSelected.getId());
-                crudMobilier.insertMobilier(mobilier);
-                fermerButton();
-            } else {
-                labelErreur.setText("Erreur : Local obligatoire!!!!");
-            }            
-        } catch (Exception ex) {
-            labelErreur.setText(ex.getMessage());
-            Logger.getLogger(ReadMobilier.class.getName()).log(Level.SEVERE, null, ex);
+
+    private void initMobilier() {
+        mobilier.setCode(jTextFieldCode.getText());
+        mobilier.setTypeMobilier(jTextFieldType.getText());
+        mobilier.setLib(jTextFieldLib.getText());
+        if (jComboBoxlibLocal.getSelectedItem() == null) {
+            mobilier.setIdLocal(null);
+        } else if (localSelected != null) {
+            mobilier.setIdLocal(localSelected.getId());
         }
-        
     }
-    
+
+    private boolean verified() {
+        if (mobilier.getCode() == null || (mobilier.getCode() != null && mobilier.getCode().isEmpty())) {
+            labelErreur.setText("Code est vide");
+            return false;
+        }
+        if (mobilier.getTypeMobilier() == null || (mobilier.getTypeMobilier() != null && mobilier.getTypeMobilier().isEmpty())) {
+            labelErreur.setText("Type mobilier est vide");
+            return false;
+        }
+        if (mobilier.getLib() == null || (mobilier.getLib() != null && mobilier.getLib().isEmpty())) {
+            labelErreur.setText("Libillé mobilier est vide");
+            return false;
+        }
+        if (mobilier.getIdLocal() == null) {
+            labelErreur.setText("Local est vide");
+            return false;
+        }
+        if (mobilierFrame.mobilierList != null && !mobilierFrame.mobilierList.isEmpty()) {
+            if (mobilier.getId() == null) {
+                for (Mobilier cpt : mobilierFrame.mobilierList) {
+                    if (cpt.getCode().equals(mobilier.getCode()) && cpt.getIdLocal() == mobilier.getIdLocal()) {
+                        labelErreur.setText("Code existe déja");
+                        return false;
+                    }
+                    if (cpt.getLib().equals(mobilier.getLib()) && cpt.getIdLocal() == mobilier.getIdLocal()) {
+                        labelErreur.setText("Libillé existe déja");
+                        return false;
+                    }
+                }
+            } else {
+                for (Mobilier cpt : mobilierFrame.mobilierList) {
+                    if (cpt.getCode().equals(mobilier.getCode()) && !cpt.getId().equals(mobilier.getId()) && cpt.getIdLocal() == mobilier.getIdLocal()) {
+                        labelErreur.setText("Code existe déja");
+                        return false;
+                    }
+                    if (cpt.getLib().equals(mobilier.getLib()) && !cpt.getId().equals(mobilier.getId()) && cpt.getIdLocal() == mobilier.getIdLocal()) {
+                        labelErreur.setText("Libillé existe déja");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void addMobilier() {
+        initMobilier();
+        if (verified()) {
+            try {
+                if (localSelected != null && localSelected.getId() != null) {
+                    crudMobilier.insertMobilier(mobilier);
+                    fermerButton();
+                } else {
+                    labelErreur.setText("Erreur : Local obligatoire!!!!");
+                }
+            } catch (Exception ex) {
+                labelErreur.setText(ex.getMessage());
+                Logger.getLogger(ReadMobilier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     private void updateMobilier() {
-        try {
-            if (localSelected != null && localSelected.getId() != null) {
-                mobilier.setCode(jTextFieldCode.getText());
-                mobilier.setTypeMobilier(jTextFieldType.getText());
-                mobilier.setLib(jTextFieldLib.getText());               
-                mobilier.setIdLocal(localSelected.getId());
+        initMobilier();
+        if (verified()) {
+            try {
                 crudMobilier.updateMobilier(mobilier);
                 fermerButton();
-            } else {
-                labelErreur.setText("Erreur : Local obligatoire!!!!");
-            }  
-        } catch (Exception ex) {
-            Logger.getLogger(ReadMobilier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ReadMobilier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fermerButton();
         }
-        fermerButton();
     }
-    
+
     private void fermerButton() {
         mobilierFrame.refrechMobilier();
         this.dispose();

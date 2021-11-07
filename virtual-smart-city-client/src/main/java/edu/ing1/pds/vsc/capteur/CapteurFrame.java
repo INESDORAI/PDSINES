@@ -23,7 +23,7 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
 
-    private List<Capteur> capteurList;
+    public List<Capteur> capteurList;
     private Capteur capteurSelected;
     private CrudCapteur crudCapteur;
 

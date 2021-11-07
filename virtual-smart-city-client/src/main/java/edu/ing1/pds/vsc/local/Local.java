@@ -11,13 +11,13 @@ public class Local {
     private String batiment;
     private String etage;
     private String numero;
-    private int nbrePlace;
-    private int nbrePlaceOccupe;
+    private Integer nbrePlace;
+    private Integer nbrePlaceOccupe;
     private double tauxOccupation;
     private int nbreCapteur;
     private int nbreMateriel;
     private int nbreMobilier;
-    private int idEnterprise;
+    private Integer idEnterprise;
 
     public Local() {
     }
@@ -62,27 +62,27 @@ public class Local {
         this.numero = numero;
     }
 
-    public int getNbrePlace() {
+    public Integer getNbrePlace() {
         return nbrePlace;
     }
 
-    public void setNbrePlace(int nbrePlace) {
+    public void setNbrePlace(Integer nbrePlace) {
         this.nbrePlace = nbrePlace;
     }
 
-    public int getNbrePlaceOccupe() {
+    public Integer getNbrePlaceOccupe() {
         return nbrePlaceOccupe;
     }
 
-    public void setNbrePlaceOccupe(int nbrePlaceOccupe) {
+    public void setNbrePlaceOccupe(Integer nbrePlaceOccupe) {
         this.nbrePlaceOccupe = nbrePlaceOccupe;
     }
 
-    public int getIdEnterprise() {
+    public Integer getIdEnterprise() {
         return idEnterprise;
     }
 
-    public void setIdEnterprise(int idEnterprise) {
+    public void setIdEnterprise(Integer idEnterprise) {
         this.idEnterprise = idEnterprise;
     }
 

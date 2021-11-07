@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,15 +17,17 @@ import java.util.Map;
  */
 public class Enterprise {
 
+    private final static Logger logger = Logger.getLogger(Enterprise.class);
+
     public Enterprise() {
     }
 
     public String add(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "INSERT INTO public.enterprise(code, lib, adresse, code_postal, pays) VALUES('" + (String) dataLoading.get("code") + "', '" +(String) dataLoading.get("lib") + "', '" + (String) dataLoading.get("adresse") + "', '" + (String) dataLoading.get("code_postal") + "', '" + (String) dataLoading.get("pays") + "');";
-        System.out.println("req---" + req);        
+        String req = "INSERT INTO public.enterprise(code, lib, adresse, code_postal, pays) VALUES('" + (String) dataLoading.get("code") + "', '" + (String) dataLoading.get("lib") + "', '" + (String) dataLoading.get("adresse") + "', '" + (String) dataLoading.get("code_postal") + "', '" + (String) dataLoading.get("pays") + "');";
+        logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
-        System.out.println("reponse insert----" + i);
+        logger.info("reponse insert----" + i);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("nameRequest", requestName);
         response.put("data", "Opération réussite, nombre ajouter = " + i);
@@ -34,9 +37,9 @@ public class Enterprise {
     public String edit(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
         String req = "UPDATE public.enterprise SET code ='" + (String) dataLoading.get("code") + "', lib='" + (String) dataLoading.get("lib") + "', adresse='" + (String) dataLoading.get("adresse") + "', code_postal='" + (String) dataLoading.get("code_postal") + "', pays='" + (String) dataLoading.get("pays") + "' WHERE id=" + (Integer) dataLoading.get("id") + ";";
-        System.out.println("req---" + req);
+        logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
-        System.out.println("reponse insert----" + i);
+        logger.info("reponse insert----" + i);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("nameRequest", requestName);
         response.put("data", "Opération réussite, nombre modifier = " + i);

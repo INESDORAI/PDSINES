@@ -22,7 +22,7 @@ public class LocalFrame extends javax.swing.JInternalFrame {
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
 
-    private List<Local> localList;
+    public List<Local> localList;
     private Local localSelected;
     private Enterprise enterprise;
     private CrudLocal crudLocal;

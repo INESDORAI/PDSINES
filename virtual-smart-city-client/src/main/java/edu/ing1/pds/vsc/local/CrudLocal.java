@@ -6,16 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author compt
  */
 public class CrudLocal {
-
-    private final static Logger logger = LoggerFactory.getLogger(CrudLocal.class.getName());
 
     public CrudLocal() {
     }
@@ -111,9 +107,6 @@ public class CrudLocal {
         param.put("id_enterprise", local.getIdEnterprise());
         param.put("nbre_place", local.getNbrePlace());
         param.put("nbre_place_occupe", local.getNbrePlaceOccupe());
-        for (Map.Entry<String, Object> entry : param.entrySet()) {
-            System.out.println(entry.getKey()+" -- "+entry.getValue());            
-        }
         request.setData(param);
         Request response = connection.sendRequest(request);
         msg = (String) response.getData();

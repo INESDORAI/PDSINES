@@ -12,7 +12,7 @@ public class Capteur {
     private String batiment;
     private String etage;
     private String numero;
-    private int idLocal;
+    private Integer idLocal;
     private int idEnterprise;
 
     public Capteur() {
@@ -50,11 +50,11 @@ public class Capteur {
         this.valeurCapteur = valeurCapteur;
     }
 
-    public int getIdLocal() {
+    public Integer getIdLocal() {
         return idLocal;
     }
 
-    public void setIdLocal(int idLocal) {
+    public void setIdLocal(Integer idLocal) {
         this.idLocal = idLocal;
     }
 

@@ -14,18 +14,17 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.si.ing1.pds.vsc.connectionPool.DataSource;
 import edu.si.ing1.pds.vsc.connectionPool.Request;
 import edu.si.ing1.pds.vsc.service.ServerToClient;
+import org.apache.log4j.Logger;
 
 public class SmartCityAppServer extends Thread {
 
-    private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
+    private final static Logger logger = Logger.getLogger(SmartCityAppServer.class);
 
     private static int nbreConnexion;
     public static int maxConnectionInit = 20;
@@ -49,22 +48,22 @@ public class SmartCityAppServer extends Thread {
         nbreConnexion++;
         BufferedReader in = null;
         PrintWriter out = null;
-        System.out.println("Accepted Client Address - " + client.getInetAddress().getHostName());
+        logger.info("Accepted Client Address - " + client.getInetAddress().getHostName());
         try {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
-            
+
             while (ds.getUsedConnection() < maxConnectionInit) {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 if (in.ready()) {
                     String operation = in.readLine();
                     ObjectMapper mapper = new ObjectMapper();
-                    System.out.println(operation);
+                    logger.info(operation);
                     Request request = mapper.readValue(operation, Request.class);
                     String response = connection.sendResponse(request);
                     out = new PrintWriter(client.getOutputStream(), true);
                     out.println(response);
-                    System.out.println("*******\n ");
+                    logger.info("*******\n ");
                 }
             }
         } catch (Exception e) {
@@ -74,9 +73,9 @@ public class SmartCityAppServer extends Thread {
                 in.close();
                 out.close();
                 client.close();
-                System.out.println("......Stopped");
+                logger.info("......Stopped");
                 nbreConnexion--;
-                System.out.println("nbreConnexion: " + nbreConnexion);
+                logger.info("nbreConnexion: " + nbreConnexion);
             } catch (IOException ioe) {
                 logger.error("Erreur...finally SmartCityAppServer...");
             }
@@ -110,14 +109,14 @@ public class SmartCityAppServer extends Thread {
             connectionDurationInit = Integer.parseInt(commandLine.getOptionValue("connectionDuration"));
         }
 
-        System.out.println("VSC Application is running, maximal_connection= " + maxConnectionInit + " & connectionDuration = " + connectionDurationInit + ".");
+        logger.info("VSC Application is running, maximal_connection= " + maxConnectionInit + " & connectionDuration = " + connectionDurationInit + ".");
 
         //connection pool created
         ds = new DataSource(maxConnectionInit, connectionDurationInit);
 
         try {
             myServerSocket = new ServerSocket(1099);
-            System.out.println("port: " + myServerSocket.getLocalPort());
+            logger.info("port: " + myServerSocket.getLocalPort());
         } catch (IOException ioe) {
             logger.error("Could not create server socket on port " + myServerSocket.getLocalPort() + ". Quitting.");
             System.exit(-1);
@@ -132,25 +131,23 @@ public class SmartCityAppServer extends Thread {
                 SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket, ds.getUsedConnection());
                 if (ds.getUsedConnection() < maxConnectionInit) {
                     cliThread.start();
-                    System.out.println("nbreConnexion : " + (ds.getUsedConnection() + 1));
-                    System.out.println("Serveur est en ecoute .......");
+                    logger.info("nbreConnexion : " + (ds.getUsedConnection() + 1));
+                    logger.info("Serveur est en ecoute .......");
                 } else {
                     cliThread.client.close();
-                    System.out.println("nbreConnexion : " + ds.getUsedConnection());
-                    System.out.println("Serveur est maximum de connection");
+                    logger.info("nbreConnexion : " + ds.getUsedConnection());
+                    logger.info("Serveur est maximum de connection");
                 }
             } catch (IOException ioe) {
-
                 logger.error("Exception found on accept. Ignoring. Stack Trace :" + ioe.getMessage());
             }
 
         }
         try {
             myServerSocket.close();
-            System.out.println("Server Stopped...");
+            logger.info("Server Stopped...");
         } catch (Exception ioe) {
             logger.error("Error Found stopping server socket");
-
             System.exit(-1);
         }
     }

@@ -241,8 +241,16 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPlace">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldPlaceKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldPlaceKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPlaceOccupe">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldPlaceOccupeKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldPlaceOccupeKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPlaceOccupe">
           <Properties>

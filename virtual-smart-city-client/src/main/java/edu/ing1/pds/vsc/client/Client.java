@@ -9,14 +9,13 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class Client {
 
-    private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());
+    private final static Logger logger = Logger.getLogger(Client.class);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 //        TestPersonne testPresonne = new TestPersonne();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         logger.info("Starting Election ---->" + formater.format(new Date()));
@@ -34,7 +33,12 @@ public class Client {
             @Override
             public void run() {
                 Locale.setDefault(new Locale("fr", "FR", ""));
-                new FenetrePricipale().setVisible(true);
+                try {
+                    new FenetrePricipale().setVisible(true);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    JOptionPane.showMessageDialog(null, "Erreur de connexion au serveur...", "ERREUR ", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }

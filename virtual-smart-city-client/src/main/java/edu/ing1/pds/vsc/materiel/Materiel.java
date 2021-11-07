@@ -9,13 +9,13 @@ public class Materiel {
     private Integer id;
     private String code;
     private String lib;
-    private String typeMobilier;
+    private String typeMateriel;
     private Double consommation;
     private String uniteConsommation;
     private String batiment;
     private String etage;
     private String numero;
-    private int idLocal;
+    private Integer idLocal;
     private int idEnterprise;
 
     public Materiel() {
@@ -37,12 +37,12 @@ public class Materiel {
         this.code = code;
     }
 
-    public String getTypeMobilier() {
-        return typeMobilier;
+    public String getTypeMateriel() {
+        return typeMateriel;
     }
 
-    public void setTypeMobilier(String typeMobilier) {
-        this.typeMobilier = typeMobilier;
+    public void setTypeMateriel(String typeMateriel) {
+        this.typeMateriel = typeMateriel;
     }
 
     public String getLib() {
@@ -53,11 +53,11 @@ public class Materiel {
         this.lib = lib;
     }
 
-    public int getIdLocal() {
+    public Integer getIdLocal() {
         return idLocal;
     }
 
-    public void setIdLocal(int idLocal) {
+    public void setIdLocal(Integer idLocal) {
         this.idLocal = idLocal;
     }
 

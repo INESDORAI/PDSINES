@@ -19,34 +19,34 @@ import javax.swing.table.DefaultTableModel;
 public class MaterielFrame extends javax.swing.JInternalFrame {
 
     private Enterprise enterprise;
-    private String[] titreMobilier;
+    private String[] titreMateriel;
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
 
-    private List<Materiel> materielList;
+    public List<Materiel> materielList;
     private Materiel materielSelected;
-    private CrudMateriel crudMobilier;
+    private CrudMateriel crudMateriel;
 
-    private ReadMateriel readMobilier;
-    private ConsulterMateriel consulterMobilier;
-    private SupprimerMateriel supprimerMobilier;
+    private ReadMateriel readMateriel;
+    private ConsulterMateriel consulterMateriel;
+    private SupprimerMateriel supprimerMateriel;
 
     /**
-     * Creates new form MobilierFrame
+     * Creates new form MaterielFrame
      */
     public MaterielFrame(Enterprise enterprise) {
         this.enterprise = enterprise;
         initFrame();
-        initTableMobilier();
+        initTableMateriel();
         initComponents();
     }
 
     private void initFrame() {
-        crudMobilier = new CrudMateriel();
+        crudMateriel = new CrudMateriel();
 
     }
 
-    private void initTableMobilier() {
+    private void initTableMateriel() {
         if (defaultTableModel == null) {
             defaultTableModel = new DefaultTableModel() {
                 @Override
@@ -59,19 +59,19 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 }
             ;
             };
-            titreMobilier = "Code,Type,Libillé,Consommation,Local,Etage,Batiment".split(",");
-            defaultTableModel.setColumnIdentifiers(titreMobilier);
+            titreMateriel = "Code,Type,Libillé,Consommation,Local,Etage,Batiment".split(",");
+            defaultTableModel.setColumnIdentifiers(titreMateriel);
         }
         selectedRow = -1;
         if (!(materielSelected == null)) {
             materielSelected = new Materiel();
         }
-        initTableModelMobilier();
+        initTableModelMateriel();
     }
 
-    public void initTableModelMobilier() {
+    public void initTableModelMateriel() {
         try {
-            materielList = crudMobilier.findByIdEnterprise(enterprise.getId());
+            materielList = crudMateriel.findByIdEnterprise(enterprise.getId());
         } catch (Exception ex) {
             Logger.getLogger(MaterielFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,7 +79,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             for (Materiel materiel : materielList) {
                 Vector<Object> ligne = new Vector<Object>();
                 ligne.add(materiel.getCode());
-                ligne.add(materiel.getTypeMobilier());
+                ligne.add(materiel.getTypeMateriel());
                 ligne.add(materiel.getLib());
                 ligne.add(materiel.getConsommation() + " " + materiel.getUniteConsommation());
                 ligne.add(materiel.getNumero());
@@ -225,32 +225,32 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
 
     private void buttonFermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFermerActionPerformed
         // TODO add your handling code here:
-        closeMobilierFrame();
+        closeMaterielFrame();
     }//GEN-LAST:event_buttonFermerActionPerformed
 
     private void buttonActualisierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualisierActionPerformed
         // TODO add your handling code here:
-        refrechMobilier();
+        refrechMateriel();
     }//GEN-LAST:event_buttonActualisierActionPerformed
 
     private void buttonConsulterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConsulterActionPerformed
         // TODO add your handling code here:
-        afficherMobilier();
+        afficherMateriel();
     }//GEN-LAST:event_buttonConsulterActionPerformed
 
     private void buttonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModifierActionPerformed
         // TODO add your handling code here:
-        modifierMobilier();
+        modifierMateriel();
     }//GEN-LAST:event_buttonModifierActionPerformed
 
     private void buttonNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNouveauActionPerformed
         // TODO add your handling code here:
-        addMobilier();
+        addMateriel();
     }//GEN-LAST:event_buttonNouveauActionPerformed
 
     private void buttonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupprimerActionPerformed
         // TODO add your handling code here:
-        deleteMobilier();
+        deleteMateriel();
     }//GEN-LAST:event_buttonSupprimerActionPerformed
 
     private void tableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMousePressed
@@ -265,26 +265,26 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         buttonSupprimer.setEnabled(true);
     }//GEN-LAST:event_tableMousePressed
 
-    private void closeMobilierFrame() {
+    private void closeMaterielFrame() {
         this.dispose();
     }
 
-    public void refrechMobilier() {
+    public void refrechMateriel() {
         if (materielList != null) {
             materielList.clear();
         }
-        removeAllTableMobilier();
-        initTableModelMobilier();
+        removeAllTableMateriel();
+        initTableModelMateriel();
     }
 
-    private void afficherMobilier() {
+    private void afficherMateriel() {
         if (selectedRow != -1) {
             try {
                 buttonModifier.setEnabled(false);
                 buttonConsulter.setEnabled(false);
                 buttonSupprimer.setEnabled(false);
-                consulterMobilier = new ConsulterMateriel(null, true, materielSelected);
-                closeConsulterMobilier();
+                consulterMateriel = new ConsulterMateriel(null, true, materielSelected);
+                closeConsulterMateriel();
                 initSelectRow();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -293,14 +293,14 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    private void modifierMobilier() {
+    private void modifierMateriel() {
         if (selectedRow != -1) {
             try {
                 buttonModifier.setEnabled(false);
                 buttonConsulter.setEnabled(false);
                 buttonSupprimer.setEnabled(false);
-                readMobilier = new ReadMateriel(null, true, this, enterprise, materielSelected, "upd", crudMobilier);
-                closeAjouterMobilier();
+                readMateriel = new ReadMateriel(null, true, this, enterprise, materielSelected, "upd", crudMateriel);
+                closeAjouterMateriel();
                 initSelectRow();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -310,19 +310,19 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    private void addMobilier() {
-        readMobilier = new ReadMateriel(new JFrame(), true, this, enterprise, null, "add", crudMobilier);
-        closeAjouterMobilier();
+    private void addMateriel() {
+        readMateriel = new ReadMateriel(new JFrame(), true, this, enterprise, null, "add", crudMateriel);
+        closeAjouterMateriel();
     }
 
-    private void deleteMobilier() {
+    private void deleteMateriel() {
         if (selectedRow != -1) {
             try {
                 buttonModifier.setEnabled(false);
                 buttonSupprimer.setEnabled(false);
                 buttonConsulter.setEnabled(false);
-                supprimerMobilier = new SupprimerMateriel(null, true, this, materielSelected, crudMobilier);
-                closeSupprimerMobilier();
+                supprimerMateriel = new SupprimerMateriel(null, true, this, materielSelected, crudMateriel);
+                closeSupprimerMateriel();
 
                 initSelectRow();
             } catch (HeadlessException e) {
@@ -332,34 +332,34 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    private void closeAjouterMobilier() {
-        readMobilier.addWindowListener(new WindowAdapter() {
+    private void closeAjouterMateriel() {
+        readMateriel.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                readMobilier.dispose();
+                readMateriel.dispose();
             }
         });
     }
 
-    private void closeConsulterMobilier() {
-        consulterMobilier.addWindowListener(new WindowAdapter() {
+    private void closeConsulterMateriel() {
+        consulterMateriel.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                consulterMobilier.dispose();
+                consulterMateriel.dispose();
             }
         });
     }
 
-    private void closeSupprimerMobilier() {
-        supprimerMobilier.addWindowListener(new WindowAdapter() {
+    private void closeSupprimerMateriel() {
+        supprimerMateriel.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                supprimerMobilier.dispose();
+                supprimerMateriel.dispose();
             }
         });
     }
 
-    private void removeAllTableMobilier() {
+    private void removeAllTableMateriel() {
         for (int i = defaultTableModel.getRowCount() - 1; i >= 0; --i) {
             defaultTableModel.removeRow(i);
         }

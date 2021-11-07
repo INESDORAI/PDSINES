@@ -23,7 +23,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
 
-    private List<Mobilier> mobilierList;
+    public List<Mobilier> mobilierList;
     private Mobilier mobilierSelected;
     private CrudMobilier crudMobilier;
 

@@ -77,8 +77,8 @@ public class ReadLocal extends javax.swing.JDialog {
         jTextFieldBatiment.setText(local.getBatiment());
         jTextFieldEtage.setText(local.getEtage());
         jTextFieldNumero.setText(local.getNumero());
-        jTextFieldPlace.setText(local.getNbrePlace()+"");
-        jTextFieldPlaceOccupe.setText(local.getNbrePlaceOccupe()+"");
+        jTextFieldPlace.setText(local.getNbrePlace() + "");
+        jTextFieldPlaceOccupe.setText(local.getNbrePlaceOccupe() + "");
     }
 
     /**
@@ -181,6 +181,24 @@ public class ReadLocal extends javax.swing.JDialog {
         jLabelBatiment.setText("Batiment");
 
         jLabelEtage.setText("Etage");
+
+        jTextFieldPlace.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldPlaceKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldPlaceKeyReleased(evt);
+            }
+        });
+
+        jTextFieldPlaceOccupe.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldPlaceOccupeKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldPlaceOccupeKeyReleased(evt);
+            }
+        });
 
         jLabelPlaceOccupe.setText("Place occupée");
 
@@ -285,55 +303,135 @@ public class ReadLocal extends javax.swing.JDialog {
         fermerButton();
     }//GEN-LAST:event_buttonFermerActionPerformed
 
+    private void jTextFieldPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPlaceKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
+            jTextFieldPlace.setEditable(true);
+        } else {
+            jTextFieldPlace.setEditable(false);
+        }
+    }//GEN-LAST:event_jTextFieldPlaceKeyPressed
+
+    private void jTextFieldPlaceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPlaceKeyReleased
+        // TODO add your handling code here:
+        jTextFieldPlace.setEditable(true);
+    }//GEN-LAST:event_jTextFieldPlaceKeyReleased
+
+    private void jTextFieldPlaceOccupeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPlaceOccupeKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
+            jTextFieldPlaceOccupe.setEditable(true);
+        } else {
+            jTextFieldPlaceOccupe.setEditable(false);
+        }
+    }//GEN-LAST:event_jTextFieldPlaceOccupeKeyPressed
+
+    private void jTextFieldPlaceOccupeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPlaceOccupeKeyReleased
+        // TODO add your handling code here:
+        jTextFieldPlaceOccupe.setEditable(true);
+    }//GEN-LAST:event_jTextFieldPlaceOccupeKeyReleased
+
     private void initButton() {
         buttonAjouter.setEnabled(true);
     }
 
-    private void addLocal() {
-        try {
-            local.setLib(jTextFieldLib.getText());
-            local.setBatiment(jTextFieldBatiment.getText());
-            local.setEtage(jTextFieldEtage.getText());
-            local.setNumero(jTextFieldNumero.getText());
-            local.setIdEnterprise(enterprise.getId());
-            if (jTextFieldPlace.getText().isEmpty()) {
-                local.setNbrePlace(0);
-            } else {
-                local.setNbrePlace(Integer.valueOf(jTextFieldPlace.getText()));
-            }
-            if (jTextFieldPlaceOccupe.getText().isEmpty()) {
-                local.setNbrePlaceOccupe(0);
-            } else {
-                local.setNbrePlaceOccupe(Integer.valueOf(jTextFieldPlaceOccupe.getText()));
-            }
-            crudLocal.insertLocal(local);
-        } catch (Exception ex) {
-            Logger.getLogger(ReadLocal.class.getName()).log(Level.SEVERE, null, ex);
+    private void initLocal() {
+        local.setLib(jTextFieldLib.getText());
+        local.setBatiment(jTextFieldBatiment.getText());
+        local.setEtage(jTextFieldEtage.getText());
+        local.setNumero(jTextFieldNumero.getText());
+        if (jTextFieldPlace.getText().isEmpty()) {
+            local.setNbrePlace(0);
+        } else {
+            local.setNbrePlace(Integer.valueOf(jTextFieldPlace.getText()));
         }
-        fermerButton();
+        if (jTextFieldPlaceOccupe.getText().isEmpty()) {
+            local.setNbrePlaceOccupe(0);
+        } else {
+            local.setNbrePlaceOccupe(Integer.valueOf(jTextFieldPlaceOccupe.getText()));
+        }
+        local.setIdEnterprise(enterprise.getId());
+    }
+
+    private boolean verified() {
+        if (local.getNumero() == null || (local.getNumero() != null && local.getNumero().isEmpty())) {
+            labelErreur.setText("Numéro est vide");
+            return false;
+        }
+        if (local.getBatiment() == null || (local.getBatiment() != null && local.getBatiment().isEmpty())) {
+            labelErreur.setText("Batiment est vide");
+            return false;
+        }
+        if (local.getEtage() == null || (local.getEtage() != null && local.getEtage().isEmpty())) {
+            labelErreur.setText("Etage est vide");
+            return false;
+        }
+        if (local.getLib() == null || (local.getLib() != null && local.getLib().isEmpty())) {
+            labelErreur.setText("Etage est vide");
+            return false;
+        }
+        if (local.getNbrePlace() == null || (local.getNbrePlace() != null && local.getNbrePlace() == 0)) {
+            labelErreur.setText("Nombre Place est vide");
+            return false;
+        }
+        if (local.getIdEnterprise() == null) {
+            labelErreur.setText("Enterprise est vide");
+            return false;
+        }
+        if (localFrame.localList != null && !localFrame.localList.isEmpty()) {
+            if (local.getId() == null) {
+                for (Local lcl : localFrame.localList) {
+                    if (lcl.getNumero().equals(local.getNumero()) && lcl.getIdEnterprise() == local.getIdEnterprise()) {
+                        labelErreur.setText("Numéro existe déja");
+                        return false;
+                    }
+                    if (lcl.getLib().equals(local.getLib()) && lcl.getIdEnterprise() == local.getIdEnterprise()) {
+                        labelErreur.setText("Libillé existe déja");
+                        return false;
+                    }
+                }
+            } else {
+                for (Local lcl : localFrame.localList) {
+                    if (lcl.getNumero().equals(local.getNumero()) && !lcl.getId().equals(local.getId()) && lcl.getIdEnterprise() == local.getIdEnterprise()) {
+                        labelErreur.setText("Numero existe déja");
+                        return false;
+                    }
+                    if (lcl.getLib().equals(local.getLib()) && !lcl.getId().equals(local.getId()) && lcl.getIdEnterprise() == local.getIdEnterprise()) {
+                        labelErreur.setText("Libillé existe déja");
+                        return false;
+                    }
+                }
+            }
+        }
+        if (local.getNbrePlace() < local.getNbrePlaceOccupe()) {
+            labelErreur.setText("Nombre de place occupé superieur à nombre de place");
+            return false;
+        }
+        return true;
+    }
+
+    private void addLocal() {
+        initLocal();
+        if (verified()) {
+            try {
+                crudLocal.insertLocal(local);
+            } catch (Exception ex) {
+                Logger.getLogger(ReadLocal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fermerButton();
+        }
     }
 
     private void updateLocal() {
-        try {
-            local.setLib(jTextFieldLib.getText());
-            local.setBatiment(jTextFieldBatiment.getText());
-            local.setEtage(jTextFieldEtage.getText());
-            local.setNumero(jTextFieldNumero.getText());
-            if (jTextFieldPlace.getText().isEmpty()) {
-                local.setNbrePlace(0);
-            } else {
-                local.setNbrePlace(Integer.valueOf(jTextFieldPlace.getText()));
+        initLocal();
+        if (verified()) {
+            try {
+                crudLocal.updateLocal(local);
+            } catch (Exception ex) {
+                Logger.getLogger(ReadLocal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (jTextFieldPlaceOccupe.getText().isEmpty()) {
-                local.setNbrePlaceOccupe(0);
-            } else {
-                local.setNbrePlaceOccupe(Integer.valueOf(jTextFieldPlaceOccupe.getText()));
-            }
-            crudLocal.updateLocal(local);
-        } catch (Exception ex) {
-            Logger.getLogger(ReadLocal.class.getName()).log(Level.SEVERE, null, ex);
+            fermerButton();
         }
-        fermerButton();
     }
 
     private void fermerButton() {

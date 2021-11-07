@@ -14,7 +14,7 @@ import java.awt.Frame;
 public class SupprimerMateriel extends javax.swing.JDialog {
 
     private final MaterielFrame materielFrame;
-    private CrudMateriel crudMobilier;
+    private CrudMateriel crudMateriel;
     private Materiel materiel;
 
     /**
@@ -25,9 +25,9 @@ public class SupprimerMateriel extends javax.swing.JDialog {
      * @param materielFrame
      * @param materiel
      */
-    public SupprimerMateriel(Frame parent, boolean modal, MaterielFrame materielFrame, Materiel materiel, CrudMateriel crudMobilier) {
+    public SupprimerMateriel(Frame parent, boolean modal, MaterielFrame materielFrame, Materiel materiel, CrudMateriel crudMateriel) {
         super(parent, modal);
-        this.crudMobilier = crudMobilier;
+        this.crudMateriel = crudMateriel;
         this.materielFrame = materielFrame;
         this.materiel = materiel;
         initComponents();
@@ -42,12 +42,12 @@ public class SupprimerMateriel extends javax.swing.JDialog {
     }
 
     private void initConsulter(Materiel materiel) {
-        initMobilier(materiel);
+        initMateriel(materiel);
     }
 
-    private void initMobilier(Materiel materiel) {
+    private void initMateriel(Materiel materiel) {
         jTextFieldCode.setText(materiel.getCode());
-        jTextFieldType.setText(materiel.getTypeMobilier());
+        jTextFieldType.setText(materiel.getTypeMateriel());
         jTextFieldLib.setText(materiel.getLib());
         jTextFieldConsomation.setText(materiel.getConsommation()+"");
         jTextFieldUnite.setText(materiel.getUniteConsommation());
@@ -282,8 +282,8 @@ public class SupprimerMateriel extends javax.swing.JDialog {
 
     private void deleteButton() {
         try {
-            crudMobilier.deleteMobilier(materiel.getId());
-            materielFrame.refrechMobilier();
+            crudMateriel.deleteMateriel(materiel.getId());
+            materielFrame.refrechMateriel();
             this.dispose();
         } catch (Exception  ex) {
             ex.printStackTrace();

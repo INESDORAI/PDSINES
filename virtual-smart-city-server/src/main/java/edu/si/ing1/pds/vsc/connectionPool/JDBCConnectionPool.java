@@ -2,12 +2,11 @@ package edu.si.ing1.pds.vsc.connectionPool;
 
 import java.sql.SQLException;
 import java.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class JDBCConnectionPool {
 
-    private final static Logger logger = LoggerFactory.getLogger(JDBCConnectionPool.class.getName());
+    private final static Logger logger = Logger.getLogger(JDBCConnectionPool.class);
 
     //les attributs
     private ArrayList<ConnectionDB> collection = new ArrayList<ConnectionDB>();

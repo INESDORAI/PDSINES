@@ -7,14 +7,12 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 
 public class ClientRequestManager implements Runnable {
 
-    private final static Logger logger = LoggerFactory.getLogger(ServerConfig.class.getName());
+    private final static Logger logger = Logger.getLogger(ClientRequestManager.class);
 
     private InputStream inputStream = null;
     private OutputStream outputStream = null;
@@ -37,7 +35,7 @@ public class ClientRequestManager implements Runnable {
         try {
             inputData = new byte[inputStream.available()];
             inputStream.read(inputData);
-            logger.debug("data length is {} and data content={}", inputData.length, new String(inputData));
+            logger.debug("data length is " + inputData.length + "and data content=" + new String(inputData));
 
             final ObjectMapper mapper = new ObjectMapper();
             final Map<String, String> result = new HashMap<>();
