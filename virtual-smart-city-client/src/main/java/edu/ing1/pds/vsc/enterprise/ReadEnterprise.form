@@ -212,14 +212,14 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelCode">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Code"/>
+            <Property name="text" type="java.lang.String" value="Code *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCode">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelLib">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Libill&#xe9;"/>
+            <Property name="text" type="java.lang.String" value="Libill&#xe9; *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldLib">

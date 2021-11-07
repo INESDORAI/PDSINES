@@ -194,9 +194,9 @@ public class ReadCapteur extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabelCode.setText("Code");
+        jLabelCode.setText("Code *");
 
-        jLabelType.setText("Type ");
+        jLabelType.setText("Type * ");
 
         jLabelvaleur.setText("Valeur");
 
@@ -209,7 +209,7 @@ public class ReadCapteur extends javax.swing.JDialog {
             }
         });
 
-        jLabelLocal.setText("Local");
+        jLabelLocal.setText("Local *");
 
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
         jPanelEnterprise.setLayout(jPanelEnterpriseLayout);
@@ -228,7 +228,7 @@ public class ReadCapteur extends javax.swing.JDialog {
                 .addComponent(jLabelType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(jLabelvaleur)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)

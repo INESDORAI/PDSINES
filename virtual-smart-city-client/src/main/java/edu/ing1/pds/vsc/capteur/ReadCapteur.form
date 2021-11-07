@@ -158,7 +158,7 @@
                   <Component id="jLabelType" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextFieldType" min="-2" pref="160" max="-2" attributes="0"/>
-                  <EmptySpace pref="72" max="32767" attributes="0"/>
+                  <EmptySpace pref="83" max="32767" attributes="0"/>
                   <Component id="jLabelvaleur" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextFieldvaleur" min="-2" pref="164" max="-2" attributes="0"/>
@@ -198,14 +198,14 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelCode">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Code"/>
+            <Property name="text" type="java.lang.String" value="Code *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCode">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelType">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Type "/>
+            <Property name="text" type="java.lang.String" value="Type * "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldType">
@@ -238,7 +238,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelLocal">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Local"/>
+            <Property name="text" type="java.lang.String" value="Local *"/>
           </Properties>
         </Component>
       </SubComponents>

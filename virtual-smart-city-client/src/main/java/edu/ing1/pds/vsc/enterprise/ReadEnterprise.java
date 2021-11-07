@@ -168,9 +168,9 @@ public class ReadEnterprise extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabelCode.setText("Code");
+        jLabelCode.setText("Code *");
 
-        jLabelLib.setText("Libillé");
+        jLabelLib.setText("Libillé *");
 
         jLabelAdresse.setText("Adresse");
 

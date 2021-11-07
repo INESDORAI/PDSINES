@@ -200,11 +200,11 @@ public class ReadMateriel extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabelCode.setText("Code");
+        jLabelCode.setText("Code *");
 
-        jLabelType.setText("Type ");
+        jLabelType.setText("Type * ");
 
-        jLabelLib.setText("Libillé");
+        jLabelLib.setText("Libillé *");
 
         jComboBoxlibLocal.setModel(comboBoxModelLocal);
         jComboBoxlibLocal.setMaximumSize(new java.awt.Dimension(250, 40));
@@ -215,7 +215,7 @@ public class ReadMateriel extends javax.swing.JDialog {
             }
         });
 
-        jLabelLocal.setText("Local");
+        jLabelLocal.setText("Local *");
 
         jTextFieldConsomation.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -235,11 +235,11 @@ public class ReadMateriel extends javax.swing.JDialog {
         jPanelEnterpriseLayout.setHorizontalGroup(
             jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(21, 21, 21)
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                         .addComponent(jLabelCode)
-                        .addGap(70, 70, 70)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(58, 58, 58)
                         .addComponent(jLabelType)
@@ -253,7 +253,7 @@ public class ReadMateriel extends javax.swing.JDialog {
                         .addComponent(jLabelUnite)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldUnite, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelLocal, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelLib, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -270,14 +270,15 @@ public class ReadMateriel extends javax.swing.JDialog {
                     .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCode)
                             .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelLib)
                             .addComponent(jTextFieldLib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelType)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCode))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -288,7 +289,7 @@ public class ReadMateriel extends javax.swing.JDialog {
                         .addComponent(jTextFieldConsomation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextFieldUnite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelUnite)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

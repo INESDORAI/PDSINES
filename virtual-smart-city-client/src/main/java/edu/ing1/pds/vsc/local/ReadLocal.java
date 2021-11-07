@@ -174,13 +174,13 @@ public class ReadLocal extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabelNumero.setText("Numéro");
+        jLabelNumero.setText("Numéro *");
 
-        jLabelLib.setText("Libillé");
+        jLabelLib.setText("Libillé *");
 
-        jLabelBatiment.setText("Batiment");
+        jLabelBatiment.setText("Batiment *");
 
-        jLabelEtage.setText("Etage");
+        jLabelEtage.setText("Etage *");
 
         jTextFieldPlace.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -202,7 +202,7 @@ public class ReadLocal extends javax.swing.JDialog {
 
         jLabelPlaceOccupe.setText("Place occupée");
 
-        jLabelPlace.setText("Place");
+        jLabelPlace.setText("Place *");
 
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
         jPanelEnterprise.setLayout(jPanelEnterpriseLayout);
@@ -223,7 +223,7 @@ public class ReadLocal extends javax.swing.JDialog {
                                 .addComponent(jLabelBatiment)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldBatiment, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                                 .addComponent(jLabelEtage)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldEtage, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
