@@ -132,7 +132,9 @@ public class SmartCityAppServer extends Thread {
                 if (ds.getUsedConnection() < maxConnectionInit) {
                     cliThread.start();
                     logger.info("nbreConnexion : " + (ds.getUsedConnection() + 1));
+                    System.out.println("nbreConnexion : " + ds.getUsedConnection());
                     logger.info("Serveur est en ecoute .......");
+                    System.out.println("Serveur est en ecoute .......");
                 } else {
                     cliThread.client.close();
                     logger.info("nbreConnexion : " + ds.getUsedConnection());
