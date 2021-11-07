@@ -111,6 +111,8 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
         table = new javax.swing.JTable();
 
         setClosable(true);
+        setResizable(true);
+        setTitle("Enterprise");
         setVisible(true);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

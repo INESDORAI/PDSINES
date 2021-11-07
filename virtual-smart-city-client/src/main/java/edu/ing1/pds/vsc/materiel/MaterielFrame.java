@@ -111,6 +111,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         table = new javax.swing.JTable();
 
         setClosable(true);
+        setTitle("Liste des matérials");
         setVisible(true);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

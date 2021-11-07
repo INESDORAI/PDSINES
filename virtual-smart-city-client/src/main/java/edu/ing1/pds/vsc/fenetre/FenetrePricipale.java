@@ -43,6 +43,7 @@ public class FenetrePricipale extends javax.swing.JFrame {
         initFrame();
         initComboBoxModel();
         initComponents();
+        
     }
 
     private void initFrame() {
@@ -67,6 +68,7 @@ public class FenetrePricipale extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         separatorBar1 = new javax.swing.JToolBar.Separator();
+        jLabel2 = new javax.swing.JLabel();
         jComboBoxlibEnterprise = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -88,6 +90,7 @@ public class FenetrePricipale extends javax.swing.JFrame {
         jMenuItemCapteur = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Analyser d'indicateur");
         setPreferredSize(new java.awt.Dimension(1800, 900));
 
         jToolBar1.setRollover(true);
@@ -95,6 +98,9 @@ public class FenetrePricipale extends javax.swing.JFrame {
         jToolBar1.setMinimumSize(new java.awt.Dimension(77, 50));
         jToolBar1.setPreferredSize(new java.awt.Dimension(100, 40));
         jToolBar1.add(separatorBar1);
+
+        jLabel2.setText("Enterprise    ");
+        jToolBar1.add(jLabel2);
 
         jComboBoxlibEnterprise.setModel(comboBoxModelLibEnterprise);
         jComboBoxlibEnterprise.setMaximumSize(new java.awt.Dimension(250, 40));
@@ -260,9 +266,9 @@ public class FenetrePricipale extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE)
             .addComponent(jPanelPied, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(desktopPane, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,6 +497,7 @@ public class FenetrePricipale extends javax.swing.JFrame {
     private javax.swing.JButton jButtonMobilier;
     private javax.swing.JComboBox<String> jComboBoxlibEnterprise;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuFichier;
