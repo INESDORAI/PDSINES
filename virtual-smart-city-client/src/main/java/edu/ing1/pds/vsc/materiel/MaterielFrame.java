@@ -102,7 +102,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
 
         panelBouton = new javax.swing.JPanel();
         buttonFermer = new javax.swing.JButton();
-        buttonActualisier = new javax.swing.JButton();
+        buttonActualiser = new javax.swing.JButton();
         buttonConsulter = new javax.swing.JButton();
         buttonModifier = new javax.swing.JButton();
         buttonNouveau = new javax.swing.JButton();
@@ -121,11 +121,11 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonActualisier.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        buttonActualisier.setText("Actualisier");
-        buttonActualisier.addActionListener(new java.awt.event.ActionListener() {
+        buttonActualiser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonActualiser.setText("Actualiser");
+        buttonActualiser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonActualisierActionPerformed(evt);
+                buttonActualiserActionPerformed(evt);
             }
         });
 
@@ -178,7 +178,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(buttonConsulter, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
-                .addComponent(buttonActualisier, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonActualiser, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonFermer)
                 .addContainerGap())
@@ -192,7 +192,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                     .addComponent(buttonModifier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonFermer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonConsulter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonActualisier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonActualiser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonSupprimer))
                 .addContainerGap())
         );
@@ -228,10 +228,10 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         closeMaterielFrame();
     }//GEN-LAST:event_buttonFermerActionPerformed
 
-    private void buttonActualisierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualisierActionPerformed
+    private void buttonActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualiserActionPerformed
         // TODO add your handling code here:
         refrechMateriel();
-    }//GEN-LAST:event_buttonActualisierActionPerformed
+    }//GEN-LAST:event_buttonActualiserActionPerformed
 
     private void buttonConsulterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConsulterActionPerformed
         // TODO add your handling code here:
@@ -371,7 +371,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonActualisier;
+    private javax.swing.JButton buttonActualiser;
     private javax.swing.JButton buttonConsulter;
     private javax.swing.JButton buttonFermer;
     private javax.swing.JButton buttonModifier;

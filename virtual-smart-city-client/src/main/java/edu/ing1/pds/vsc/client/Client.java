@@ -18,7 +18,7 @@ public class Client {
     public static void main(String[] args) {
 //        TestPersonne testPresonne = new TestPersonne();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-        logger.info("Starting Election ---->" + formater.format(new Date()));
+        logger.info("Starting VSC ---->" + formater.format(new Date()));
         UIManager.getDefaults().setDefaultLocale(new Locale("fr", "FR", ""));
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
