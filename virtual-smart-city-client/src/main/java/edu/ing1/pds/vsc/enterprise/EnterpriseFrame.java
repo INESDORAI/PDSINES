@@ -61,7 +61,7 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
                 }
             ;
             };
-            titreEnterprise = "Code,Libillé,Adresse,Code postal,Pays".split(",");
+            titreEnterprise = "Code,Libillé,Adresse,Code postal,Pays,Local,Capteur,Mobilier,Matérial".split(",");
             defaultTableModel.setColumnIdentifiers(titreEnterprise);
         }
         selectedRow = -1;
@@ -84,7 +84,10 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
                 ligne.add(enterprise.getLib());
                 ligne.add(enterprise.getAdresse());
                 ligne.add(enterprise.getCodePostal());
-                ligne.add(enterprise.getPays());
+                ligne.add(enterprise.getNbreLocal());
+                ligne.add(enterprise.getNbreCapteur());
+                ligne.add(enterprise.getNbreMobilier());
+                ligne.add(enterprise.getNbreMateriel());
 
                 defaultTableModel.addRow(ligne);
             }

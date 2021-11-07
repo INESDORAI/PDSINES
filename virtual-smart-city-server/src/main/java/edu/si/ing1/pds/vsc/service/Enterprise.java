@@ -58,7 +58,7 @@ public class Enterprise {
 
     public String findAll(Connection connection, String requestName) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT id, code, lib, adresse, code_postal, pays FROM public.enterprise;");
+        ResultSet rs = connection.createStatement().executeQuery("SELECT id, code, lib, adresse, code_postal, pays, (SELECT COUNT (b1.id) FROM public.local b1 INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_local , (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_capteur, (SELECT COUNT (a1.id) FROM public.mobilier a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_mobilier, (SELECT COUNT (a1.id) FROM public.materiel a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_materiel FROM public.enterprise e;");
         List<Map> enterprises = new ArrayList<Map>();
         while (rs.next()) {
             Map<String, Object> hm = new HashMap<String, Object>();
@@ -67,7 +67,10 @@ public class Enterprise {
             hm.put("lib", rs.getString("lib"));
             hm.put("adresse", rs.getString("adresse"));
             hm.put("code_postal", rs.getString("code_postal"));
-            hm.put("pays", rs.getString("pays"));
+            hm.put("nbre_local", rs.getString("nbre_local"));
+            hm.put("nbre_capteur", rs.getString("nbre_capteur"));
+            hm.put("nbre_materiel", rs.getString("nbre_materiel"));
+            hm.put("nbre_mobilier", rs.getString("nbre_mobilier"));
             enterprises.add(hm);
         }
         rs.close();
@@ -79,14 +82,18 @@ public class Enterprise {
 
     public String findById(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT id, code, lib, adresse, code_postal, pays FROM public.enterprise WHERE id=" + (Integer) dataLoading.get("id") + ";");
-
+        ResultSet rs = connection.createStatement().executeQuery("SELECT id, code, lib, adresse, code_postal, pays, (SELECT COUNT (b1.id) FROM public.local b1 INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_local , (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_capteur, (SELECT COUNT (a1.id) FROM public.mobilier a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_mobilier, (SELECT COUNT (a1.id) FROM public.materiel a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_materiel FROM public.enterprise e WHERE id=" + (Integer) dataLoading.get("id")+";");
+        
         Map<String, Object> hm = new HashMap<String, Object>();
         hm.put("id", rs.getInt("id"));
         hm.put("lib", rs.getString("lib"));
         hm.put("adresse", rs.getString("adresse"));
         hm.put("code_postal", rs.getString("code_postal"));
         hm.put("pays", rs.getString("pays"));
+        hm.put("nbre_local", rs.getString("nbre_local"));
+        hm.put("nbre_capteur", rs.getString("nbre_capteur"));
+        hm.put("nbre_materiel", rs.getString("nbre_materiel"));
+        hm.put("nbre_mobilier", rs.getString("nbre_mobilier"));
         rs.close();
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("nameRequest", requestName);

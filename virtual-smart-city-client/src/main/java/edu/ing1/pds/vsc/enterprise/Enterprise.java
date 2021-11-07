@@ -11,6 +11,10 @@ public class Enterprise {
     private String adresse;
     private String codePostal;
     private String pays;
+    private Integer nbreLocal;
+    private Integer nbreCapteur;
+    private Integer nbreMateriel;
+    private Integer nbreMobilier;
 
     public Enterprise() {
     }
@@ -61,6 +65,38 @@ public class Enterprise {
 
     public void setPays(String pays) {
         this.pays = pays;
+    }
+
+    public Integer getNbreLocal() {
+        return nbreLocal;
+    }
+
+    public void setNbreLocal(Integer nbreLocal) {
+        this.nbreLocal = nbreLocal;
+    }
+
+    public Integer getNbreCapteur() {
+        return nbreCapteur;
+    }
+
+    public void setNbreCapteur(Integer nbreCapteur) {
+        this.nbreCapteur = nbreCapteur;
+    }
+
+    public Integer getNbreMateriel() {
+        return nbreMateriel;
+    }
+
+    public void setNbreMateriel(Integer nbreMateriel) {
+        this.nbreMateriel = nbreMateriel;
+    }
+
+    public Integer getNbreMobilier() {
+        return nbreMobilier;
+    }
+
+    public void setNbreMobilier(Integer nbreMobilier) {
+        this.nbreMobilier = nbreMobilier;
     }
 
     @Override

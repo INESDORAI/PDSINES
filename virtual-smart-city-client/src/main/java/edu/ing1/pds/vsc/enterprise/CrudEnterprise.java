@@ -38,6 +38,10 @@ public class CrudEnterprise {
             enterprise.setAdresse((String) map.get("adresse"));
             enterprise.setCodePostal((String) map.get("code_postal"));
             enterprise.setPays((String) map.get("pays"));
+            enterprise.setPays((String) map.get("nbre_local"));
+            enterprise.setPays((String) map.get("nbre_capteur"));
+            enterprise.setPays((String) map.get("nbre_mobilier"));
+            enterprise.setPays((String) map.get("nbre_materiel"));
             enterpriseList.add(enterprise);
         }
         return enterpriseList;
@@ -59,6 +63,10 @@ public class CrudEnterprise {
         enterprise.setAdresse((String) attrib.get("adresse"));
         enterprise.setCodePostal((String) attrib.get("code_postal"));
         enterprise.setPays((String) attrib.get("pays"));
+        enterprise.setPays((String) attrib.get("nbre_local"));
+        enterprise.setPays((String) attrib.get("nbre_capteur"));
+        enterprise.setPays((String) attrib.get("nbre_mobilier"));
+        enterprise.setPays((String) attrib.get("nbre_materiel"));
         return enterprise;
     }
 
