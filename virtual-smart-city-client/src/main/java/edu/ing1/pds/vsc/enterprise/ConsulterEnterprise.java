@@ -12,7 +12,6 @@ import java.awt.Frame;
  */
 public class ConsulterEnterprise extends javax.swing.JDialog {
 
-
     /**
      * Creates new form AjouterUser
      *
@@ -43,8 +42,11 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
         jTextFieldAdresse.setText(enterprise.getAdresse());
         jTextFieldCodePostal.setText(enterprise.getCodePostal());
         jTextFieldPays.setText(enterprise.getPays());
+        jTextFieldLocal.setText(enterprise.getNbreLocal() + "");
+        jTextFieldCapteur.setText(enterprise.getNbreCapteur() + "");
+        jTextFieldMatiriel.setText(enterprise.getNbreMateriel() + "");
+        jTextFieldMobilier.setText(enterprise.getNbreMobilier() + "");
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,6 +70,14 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
         jLabelCodePostal = new javax.swing.JLabel();
         jTextFieldPays = new javax.swing.JTextField();
         jLabelPays = new javax.swing.JLabel();
+        jLabelLocal = new javax.swing.JLabel();
+        jTextFieldLocal = new javax.swing.JTextField();
+        jLabelCapteur = new javax.swing.JLabel();
+        jTextFieldCapteur = new javax.swing.JTextField();
+        jTextFieldMatiriel = new javax.swing.JTextField();
+        jLabelMatiriel = new javax.swing.JLabel();
+        jLabelMobilier = new javax.swing.JLabel();
+        jTextFieldMobilier = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulter wilaya");
@@ -88,7 +98,7 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
         panelButtonLayout.setHorizontalGroup(
             panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelButtonLayout.createSequentialGroup()
-                .addContainerGap(572, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonFermer)
                 .addGap(18, 18, 18))
         );
@@ -120,6 +130,22 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
 
         jLabelPays.setText("Pays");
 
+        jLabelLocal.setText("Local");
+
+        jTextFieldLocal.setEnabled(false);
+
+        jLabelCapteur.setText("Capteur");
+
+        jTextFieldCapteur.setEnabled(false);
+
+        jTextFieldMatiriel.setEnabled(false);
+
+        jLabelMatiriel.setText("Matireil");
+
+        jLabelMobilier.setText("Mobilier");
+
+        jTextFieldMobilier.setEnabled(false);
+
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
         jPanelEnterprise.setLayout(jPanelEnterpriseLayout);
         jPanelEnterpriseLayout.setHorizontalGroup(
@@ -137,17 +163,37 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
                             .addComponent(jTextFieldCode)))
                     .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                         .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelCodePostal)
-                            .addComponent(jLabelAdresse))
-                        .addGap(28, 28, 28)
+                            .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelCodePostal)
+                                    .addComponent(jLabelAdresse))
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
+                                .addComponent(jLabelLocal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldAdresse)
+                            .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                                .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelCapteur)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldCapteur, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabelMatiriel)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldMatiriel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabelMobilier)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                                 .addComponent(jTextFieldCodePostal, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(56, 56, 56)
                                 .addComponent(jLabelPays)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldPays)))))
+                                .addComponent(jTextFieldPays))
+                            .addComponent(jTextFieldAdresse))))
                 .addContainerGap())
         );
         jPanelEnterpriseLayout.setVerticalGroup(
@@ -171,6 +217,17 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
                     .addComponent(jTextFieldCodePostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPays)
                     .addComponent(jTextFieldPays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelLocal)
+                    .addComponent(jLabelCapteur)
+                    .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCapteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelMatiriel)
+                        .addComponent(jLabelMobilier)
+                        .addComponent(jTextFieldMatiriel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -184,8 +241,8 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanelEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -204,15 +261,23 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonFermer;
     private javax.swing.JLabel jLabelAdresse;
+    private javax.swing.JLabel jLabelCapteur;
     private javax.swing.JLabel jLabelCode;
     private javax.swing.JLabel jLabelCodePostal;
     private javax.swing.JLabel jLabelLib;
+    private javax.swing.JLabel jLabelLocal;
+    private javax.swing.JLabel jLabelMatiriel;
+    private javax.swing.JLabel jLabelMobilier;
     private javax.swing.JLabel jLabelPays;
     private javax.swing.JPanel jPanelEnterprise;
     private javax.swing.JTextField jTextFieldAdresse;
+    private javax.swing.JTextField jTextFieldCapteur;
     private javax.swing.JTextField jTextFieldCode;
     private javax.swing.JTextField jTextFieldCodePostal;
     private javax.swing.JTextField jTextFieldLib;
+    private javax.swing.JTextField jTextFieldLocal;
+    private javax.swing.JTextField jTextFieldMatiriel;
+    private javax.swing.JTextField jTextFieldMobilier;
     private javax.swing.JTextField jTextFieldPays;
     private javax.swing.JPanel panelButton;
     // End of variables declaration//GEN-END:variables

@@ -28,6 +28,7 @@ public class CrudEnterprise {
         HashMap<String, Object> param = new HashMap<String, Object>();
         request.setData(param);
         Request response = connection.sendRequest(request);
+        System.out.println("---"+response.getData());
         enterpriseMap = (ArrayList<Map>) response.getData();
         List<Enterprise> enterpriseList = new ArrayList<>();
         for (Map map : enterpriseMap) {
@@ -38,10 +39,10 @@ public class CrudEnterprise {
             enterprise.setAdresse((String) map.get("adresse"));
             enterprise.setCodePostal((String) map.get("code_postal"));
             enterprise.setPays((String) map.get("pays"));
-            enterprise.setPays((String) map.get("nbre_local"));
-            enterprise.setPays((String) map.get("nbre_capteur"));
-            enterprise.setPays((String) map.get("nbre_mobilier"));
-            enterprise.setPays((String) map.get("nbre_materiel"));
+            enterprise.setNbreLocal((Integer) map.get("nbre_local"));
+            enterprise.setNbreCapteur((Integer) map.get("nbre_capteur"));
+            enterprise.setNbreMobilier((Integer) map.get("nbre_mobilier"));
+            enterprise.setNbreMateriel((Integer) map.get("nbre_materiel"));
             enterpriseList.add(enterprise);
         }
         return enterpriseList;
@@ -63,10 +64,10 @@ public class CrudEnterprise {
         enterprise.setAdresse((String) attrib.get("adresse"));
         enterprise.setCodePostal((String) attrib.get("code_postal"));
         enterprise.setPays((String) attrib.get("pays"));
-        enterprise.setPays((String) attrib.get("nbre_local"));
-        enterprise.setPays((String) attrib.get("nbre_capteur"));
-        enterprise.setPays((String) attrib.get("nbre_mobilier"));
-        enterprise.setPays((String) attrib.get("nbre_materiel"));
+        enterprise.setNbreLocal((Integer) attrib.get("nbre_local"));
+        enterprise.setNbreCapteur((Integer) attrib.get("nbre_capteur"));
+        enterprise.setNbreMobilier((Integer) attrib.get("nbre_mobilier"));
+        enterprise.setNbreMateriel((Integer) attrib.get("nbre_materiel"));
         return enterprise;
     }
 

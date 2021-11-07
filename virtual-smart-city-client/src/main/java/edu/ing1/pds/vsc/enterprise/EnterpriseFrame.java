@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class EnterpriseFrame extends javax.swing.JInternalFrame {
 
     public FenetrePricipale fenetrePricipale;
-    
+
     private String[] titreEnterprise;
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
@@ -41,8 +41,6 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
         initTableEnterprise();
         initComponents();
     }
-    
-    
 
     private void initFrame() {
         crudEnterprise = new CrudEnterprise();
@@ -53,13 +51,12 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
             defaultTableModel = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int row, int col) {
-                    if (col == 0 || col == 1 || col == 2 || col == 3 || col == 4) {
+                    if (col == 0 || col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 6 || col == 7 || col == 8) {
                         return false;
                     } else {
                         return true;
                     }
                 }
-            ;
             };
             titreEnterprise = "Code,Libillé,Adresse,Code postal,Pays,Local,Capteur,Mobilier,Matérial".split(",");
             defaultTableModel.setColumnIdentifiers(titreEnterprise);
@@ -74,6 +71,9 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
     public void initTableModelEnterprise() {
         try {
             enterpriseList = crudEnterprise.findAll();
+            for (Enterprise a : enterpriseList) {
+                System.out.println("+++"+a.getPays());
+            }
         } catch (Exception ex) {
             Logger.getLogger(EnterpriseFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,7 +83,8 @@ public class EnterpriseFrame extends javax.swing.JInternalFrame {
                 ligne.add(enterprise.getCode());
                 ligne.add(enterprise.getLib());
                 ligne.add(enterprise.getAdresse());
-                ligne.add(enterprise.getCodePostal());
+                ligne.add(enterprise.getCodePostal());                
+                ligne.add(enterprise.getPays());
                 ligne.add(enterprise.getNbreLocal());
                 ligne.add(enterprise.getNbreCapteur());
                 ligne.add(enterprise.getNbreMobilier());

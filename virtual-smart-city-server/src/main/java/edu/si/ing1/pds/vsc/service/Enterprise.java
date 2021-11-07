@@ -70,6 +70,7 @@ public class Enterprise {
             hm.put("lib", rs.getString("lib"));
             hm.put("adresse", rs.getString("adresse"));
             hm.put("code_postal", rs.getString("code_postal"));
+            hm.put("pays", rs.getString("pays"));
             hm.put("nbre_local", rs.getLong("nbre_local"));
             hm.put("nbre_capteur", rs.getLong("nbre_capteur"));
             hm.put("nbre_materiel", rs.getLong("nbre_materiel"));
@@ -89,6 +90,7 @@ public class Enterprise {
         ResultSet rs = connection.createStatement().executeQuery(req);
         Map<String, Object> hm = new HashMap<String, Object>();
         hm.put("id", rs.getInt("id"));
+        hm.put("code", rs.getString("code"));
         hm.put("lib", rs.getString("lib"));
         hm.put("adresse", rs.getString("adresse"));
         hm.put("code_postal", rs.getString("code_postal"));
