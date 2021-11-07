@@ -58,7 +58,10 @@ public class Enterprise {
 
     public String findAll(Connection connection, String requestName) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT id, code, lib, adresse, code_postal, pays, (SELECT COUNT (b1.id) FROM public.local b1 INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_local , (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_capteur, (SELECT COUNT (a1.id) FROM public.mobilier a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_mobilier, (SELECT COUNT (a1.id) FROM public.materiel a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_materiel FROM public.enterprise e;");
+        String req = "SELECT id, code, lib, adresse, code_postal, pays, (SELECT COUNT (b1.id) FROM public.local b1 INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_local , (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_capteur, (SELECT COUNT (a1.id) FROM public.mobilier a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_mobilier, (SELECT COUNT (a1.id) FROM public.materiel a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_materiel FROM public.enterprise e;";
+        System.out.println("select enterprise--"+req);
+        ResultSet rs = connection.createStatement().executeQuery(req);
+        
         List<Map> enterprises = new ArrayList<Map>();
         while (rs.next()) {
             Map<String, Object> hm = new HashMap<String, Object>();
@@ -82,8 +85,8 @@ public class Enterprise {
 
     public String findById(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT id, code, lib, adresse, code_postal, pays, (SELECT COUNT (b1.id) FROM public.local b1 INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_local , (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_capteur, (SELECT COUNT (a1.id) FROM public.mobilier a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_mobilier, (SELECT COUNT (a1.id) FROM public.materiel a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_materiel FROM public.enterprise e WHERE id=" + (Integer) dataLoading.get("id")+";");
-        
+        String req = "SELECT id, code, lib, adresse, code_postal, pays, (SELECT COUNT (b1.id) FROM public.local b1 INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_local , (SELECT COUNT (a1.id) FROM public.capteur a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_capteur, (SELECT COUNT (a1.id) FROM public.mobilier a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_mobilier, (SELECT COUNT (a1.id) FROM public.materiel a1 INNER JOIN public.local b1 ON b1.id = a1.id_local INNER JOIN public.enterprise e1 ON e1.id = b1.id_enterprise WHERE e1.id =e.id ) AS nbre_materiel FROM public.enterprise e WHERE id=" + (Integer) dataLoading.get("id")+";";
+        ResultSet rs = connection.createStatement().executeQuery(req);
         Map<String, Object> hm = new HashMap<String, Object>();
         hm.put("id", rs.getInt("id"));
         hm.put("lib", rs.getString("lib"));
