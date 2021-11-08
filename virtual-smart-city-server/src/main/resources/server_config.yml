@@ -6,5 +6,5 @@ username: "postgres"
 
 listenPort: 3344
 soTimeout: 2000
-ip: 172.31.249.246
+ip: 172.31.249.198
 #ip: 127.0.0.1
