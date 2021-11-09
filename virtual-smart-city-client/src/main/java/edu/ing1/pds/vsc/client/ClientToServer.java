@@ -31,8 +31,8 @@ public class ClientToServer {
 
     public ClientToServer() {
         try {
-//            String serverAdress = "172.31.249.246"; //InetAddress.getLocalHost();
-            String serverAdress = "127.0.0.1"; //InetAddress.getLocalHost();
+         String serverAdress = "172.31.249.246"; //InetAddress.getLocalHost();
+            //         String serverAdress = "127.0.0.1"; //InetAddress.getLocalHost();
             client = new Socket(serverAdress, 1099);
         } catch (Exception e) {
             logger.error("erreur");
