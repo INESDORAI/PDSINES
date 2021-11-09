@@ -54,7 +54,6 @@ public class SmartCityAppServer extends Thread {
             out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
 
             while (ds.getUsedConnection() < maxConnectionInit) {
-                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 if (in.ready()) {
                     String operation = in.readLine();
                     ObjectMapper mapper = new ObjectMapper();
