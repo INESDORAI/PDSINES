@@ -7,7 +7,10 @@ package edu.ing1.pds.vsc.mobilier;
 import java.awt.Color;
 import java.awt.Frame;
 
-
+/**
+ *
+ * @author aggoun.abdelkrim
+ */
 public class SupprimerMobilier extends javax.swing.JDialog {
 
     private final MobilierFrame mobilierFrame;
@@ -79,7 +82,7 @@ public class SupprimerMobilier extends javax.swing.JDialog {
         jLabelBatiment = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Supprimer Mobilier");
+        setTitle("Supprimer wilaya");
         setResizable(false);
 
         buttonFerme.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 public class ServerToClient {
 
     private final static Logger logger = Logger.getLogger(ServerToClient.class);
-
+    
     private DataSource dataSource;
     private Personne personne = new Personne();
     private Enterprise enterprise = new Enterprise();
@@ -20,7 +20,6 @@ public class ServerToClient {
     private Local local = new Local();
     private Mobilier mobilier = new Mobilier();
     private Materiel materiel = new Materiel();
-    private ConsommationMateriel consommationMateriel = new ConsommationMateriel();
 
     public String sendResponse(Request request) {
         ConnectionDB con = dataSource.takeCon();
@@ -28,7 +27,7 @@ public class ServerToClient {
         String requestName = request.getNameRequest();
         Map data = (Map) request.getData();
         String responseString = "";
-        logger.info("requestName---" + requestName);
+       logger.info("requestName---" + requestName);
         try {
             switch (requestName) {
                 case "insert_personne":
@@ -133,31 +132,13 @@ public class ServerToClient {
                 case "select_materiel_by_id_enterprise":
                     responseString = materiel.findByIdEnterprise(connection, requestName, data);
                     break;
-                case "insert_consommation_materiel":
-                    responseString = consommationMateriel.add(connection, requestName, data);
-                    break;
-                case "update_consommation_materiel":
-                    responseString = consommationMateriel.edit(connection, requestName, data);
-                    break;
-                case "delete_consommation_materiel":
-                    responseString = consommationMateriel.delete(connection, requestName, data);
-                    break;
-                case "select_consommation_materiel_id":
-                    responseString = consommationMateriel.findById(connection, requestName, data);
-                    break;
-                case "select_consommation_materiel":
-                    responseString = consommationMateriel.findAll(connection, requestName);
-                    break;
-                case "select_consommation_materiel_by_id_materiel":
-                    responseString = consommationMateriel.findByIdMateriel(connection, requestName, data);
-                    break;
                 default:
                     break;
             }
 
             //End Coumba's part
             dataSource.returnCon(con);
-            logger.info("response---" + responseString);
+           logger.info("response---" + responseString);
             return responseString;
         } catch (JsonProcessingException ex) {
             ex.printStackTrace();

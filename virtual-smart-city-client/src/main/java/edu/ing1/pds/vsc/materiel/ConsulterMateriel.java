@@ -14,7 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-
+/**
+ *
+ * @author aggoun.abdelkrim
+ */
 public class ConsulterMateriel extends javax.swing.JDialog {
 
     private Materiel materiel;
@@ -219,7 +222,7 @@ public class ConsulterMateriel extends javax.swing.JDialog {
         jButtonSupprimer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter Materiel");
+        setTitle("Consulter wilaya");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

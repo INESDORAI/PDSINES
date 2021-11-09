@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 
+/**
+ *
+ * @author aggoun.abdelkrim
+ */
 public class ReadMateriel extends javax.swing.JDialog {
 
     private final String type;

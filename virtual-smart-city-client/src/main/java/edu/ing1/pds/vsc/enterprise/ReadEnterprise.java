@@ -8,7 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
-
+/**
+ *
+ * @author aggoun.abdelkrim
+ */
 public class ReadEnterprise extends javax.swing.JDialog {
 
     private final String type;
