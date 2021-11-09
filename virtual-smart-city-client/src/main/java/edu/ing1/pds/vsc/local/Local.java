@@ -2,7 +2,7 @@ package edu.ing1.pds.vsc.local;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class Local {
 

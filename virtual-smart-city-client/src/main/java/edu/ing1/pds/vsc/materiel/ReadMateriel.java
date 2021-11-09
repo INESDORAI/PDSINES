@@ -102,7 +102,6 @@ public class ReadMateriel extends javax.swing.JDialog {
         jTextFieldCode.setText(materiel.getCode());
         jTextFieldType.setText(materiel.getTypeMateriel());
         jTextFieldLib.setText(materiel.getLib());
-        jTextFieldConsomation.setText(materiel.getConsommation() + "");
         jTextFieldUnite.setText(materiel.getUniteConsommation());
         jComboBoxlibLocal.setSelectedItem(materiel.getNumero());
     }
@@ -130,8 +129,6 @@ public class ReadMateriel extends javax.swing.JDialog {
         jTextFieldLib = new javax.swing.JTextField();
         jComboBoxlibLocal = new javax.swing.JComboBox<>();
         jLabelLocal = new javax.swing.JLabel();
-        jTextFieldConsomation = new javax.swing.JTextField();
-        jLabelConsomation = new javax.swing.JLabel();
         jTextFieldUnite = new javax.swing.JTextField();
         jLabelUnite = new javax.swing.JLabel();
 
@@ -178,7 +175,7 @@ public class ReadMateriel extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelButtonLayout.createSequentialGroup()
-                        .addGap(0, 390, Short.MAX_VALUE)
+                        .addGap(0, 431, Short.MAX_VALUE)
                         .addComponent(buttonInit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonAjouter)
@@ -217,17 +214,6 @@ public class ReadMateriel extends javax.swing.JDialog {
 
         jLabelLocal.setText("Local *");
 
-        jTextFieldConsomation.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldConsomationKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldConsomationKeyReleased(evt);
-            }
-        });
-
-        jLabelConsomation.setText("Consomation");
-
         jLabelUnite.setText("Unité");
 
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
@@ -236,31 +222,27 @@ public class ReadMateriel extends javax.swing.JDialog {
             jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelCode)
+                    .addComponent(jLabelUnite))
+                .addGap(53, 53, 53)
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldUnite)
+                    .addComponent(jTextFieldCode, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                        .addComponent(jLabelCode)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
                         .addComponent(jLabelType)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                        .addComponent(jLabelConsomation)
-                        .addGap(22, 22, 22)
-                        .addComponent(jTextFieldConsomation, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabelUnite)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldUnite, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelLocal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxlibLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelLocal, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelLib, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(jLabelLib)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBoxlibLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldLib, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                .addComponent(jTextFieldLib, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelEnterpriseLayout.setVerticalGroup(
@@ -279,17 +261,15 @@ public class ReadMateriel extends javax.swing.JDialog {
                         .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelCode))))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBoxlibLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelLocal))
-                    .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelConsomation)
-                        .addComponent(jTextFieldConsomation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextFieldUnite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelUnite)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabelUnite))
+                    .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxlibLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelLocal)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -349,20 +329,6 @@ public class ReadMateriel extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jComboBoxlibLocalItemStateChanged
 
-    private void jTextFieldConsomationKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldConsomationKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
-            jTextFieldConsomation.setEditable(true);
-        } else {
-            jTextFieldConsomation.setEditable(false);
-        }
-    }//GEN-LAST:event_jTextFieldConsomationKeyPressed
-
-    private void jTextFieldConsomationKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldConsomationKeyReleased
-        // TODO add your handling code here:
-        jTextFieldConsomation.setEditable(true);
-    }//GEN-LAST:event_jTextFieldConsomationKeyReleased
-
     private void initButton() {
         buttonAjouter.setEnabled(true);
     }
@@ -371,11 +337,6 @@ public class ReadMateriel extends javax.swing.JDialog {
         materiel.setCode(jTextFieldCode.getText());
         materiel.setTypeMateriel(jTextFieldType.getText());
         materiel.setLib(jTextFieldLib.getText());
-        if (!jTextFieldConsomation.getText().isEmpty()) {
-            materiel.setConsommation(Double.valueOf(jTextFieldConsomation.getText()));
-        } else {
-            materiel.setConsommation(Double.valueOf(0));
-        }
         materiel.setUniteConsommation(jTextFieldUnite.getText());
         if (jComboBoxlibLocal.getSelectedItem() == null) {
             materiel.setIdLocal(null);
@@ -467,14 +428,12 @@ public class ReadMateriel extends javax.swing.JDialog {
     private javax.swing.JButton buttonInit;
     private javax.swing.JComboBox<String> jComboBoxlibLocal;
     private javax.swing.JLabel jLabelCode;
-    private javax.swing.JLabel jLabelConsomation;
     private javax.swing.JLabel jLabelLib;
     private javax.swing.JLabel jLabelLocal;
     private javax.swing.JLabel jLabelType;
     private javax.swing.JLabel jLabelUnite;
     private javax.swing.JPanel jPanelEnterprise;
     private javax.swing.JTextField jTextFieldCode;
-    private javax.swing.JTextField jTextFieldConsomation;
     private javax.swing.JTextField jTextFieldLib;
     private javax.swing.JTextField jTextFieldType;
     private javax.swing.JTextField jTextFieldUnite;

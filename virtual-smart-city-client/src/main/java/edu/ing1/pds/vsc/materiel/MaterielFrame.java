@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class MaterielFrame extends javax.swing.JInternalFrame {
 
@@ -43,7 +43,6 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
 
     private void initFrame() {
         crudMateriel = new CrudMateriel();
-
     }
 
     private void initTableMateriel() {
@@ -51,7 +50,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             defaultTableModel = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int row, int col) {
-                    if (col == 0 || col == 1 || col == 2 || col == 3 || col == 4 || col == 5) {
+                    if (col == 0 || col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 6 || col == 7) {
                         return false;
                     } else {
                         return true;
@@ -59,7 +58,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 }
             ;
             };
-            titreMateriel = "Code,Type,Libillé,Consommation,Local,Etage,Batiment".split(",");
+            titreMateriel = "Code,Type,Libillé,Consommation moyenne, Consommation total,Local,Etage,Batiment".split(",");
             defaultTableModel.setColumnIdentifiers(titreMateriel);
         }
         selectedRow = -1;
@@ -81,7 +80,8 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 ligne.add(materiel.getCode());
                 ligne.add(materiel.getTypeMateriel());
                 ligne.add(materiel.getLib());
-                ligne.add(materiel.getConsommation() + " " + materiel.getUniteConsommation());
+                ligne.add(materiel.getMoyenneConsommation());
+                ligne.add(materiel.getSommeConsommation());
                 ligne.add(materiel.getNumero());
                 ligne.add(materiel.getEtage());
                 ligne.add(materiel.getBatiment());

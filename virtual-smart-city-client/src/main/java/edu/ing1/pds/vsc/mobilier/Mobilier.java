@@ -2,7 +2,7 @@ package edu.ing1.pds.vsc.mobilier;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class Mobilier {
     private Integer id;

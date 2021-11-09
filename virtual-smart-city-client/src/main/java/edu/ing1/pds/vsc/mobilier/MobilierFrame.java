@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class MobilierFrame extends javax.swing.JInternalFrame {
 

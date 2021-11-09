@@ -39,8 +39,9 @@ public class CrudMateriel {
                 materiel.setCode((String) map.get("code"));
                 materiel.setTypeMateriel((String) map.get("type_materiel"));
                 materiel.setLib((String) map.get("lib"));
-                materiel.setConsommation((Double) map.get("consommation"));
                 materiel.setUniteConsommation((String) map.get("unite_consommation"));
+                materiel.setMoyenneConsommation((Double) map.get("moy_consom"));
+                materiel.setSommeConsommation((Double) map.get("sum_consom"));
                 materiel.setNumero((String) map.get("numero"));
                 materiel.setEtage((String) map.get("etage"));
                 materiel.setBatiment((String) map.get("batiment"));
@@ -68,7 +69,6 @@ public class CrudMateriel {
             materiel.setCode((String) map.get("code"));
             materiel.setTypeMateriel((String) map.get("type_materiel"));
             materiel.setLib((String) map.get("lib"));
-            materiel.setConsommation((Double) map.get("consommation"));
             materiel.setUniteConsommation((String) map.get("unite_consommation"));
             materiel.setNumero((String) map.get("numero"));
             materiel.setEtage((String) map.get("etage"));
@@ -94,7 +94,6 @@ public class CrudMateriel {
         materiel.setCode((String) map.get("code"));
         materiel.setTypeMateriel((String) map.get("type_materiel"));
         materiel.setLib((String) map.get("lib"));
-        materiel.setConsommation((Double) map.get("consommation"));
         materiel.setUniteConsommation((String) map.get("unite_consommation"));
         materiel.setIdLocal((Integer) map.get("id_local"));
         return materiel;
@@ -109,7 +108,6 @@ public class CrudMateriel {
         param.put("code", materiel.getCode());
         param.put("type_materiel", materiel.getTypeMateriel());
         param.put("lib", materiel.getLib());
-        param.put("consommation", materiel.getConsommation());
         param.put("unite_consommation", materiel.getUniteConsommation());
         param.put("id_local", materiel.getIdLocal());
         request.setData(param);
@@ -128,7 +126,6 @@ public class CrudMateriel {
         param.put("code", materiel.getCode());
         param.put("type_materiel", materiel.getTypeMateriel());
         param.put("lib", materiel.getLib());
-        param.put("consommation", materiel.getConsommation());
         param.put("unite_consommation", materiel.getUniteConsommation());
         param.put("id_local", materiel.getIdLocal());
         request.setData(param);

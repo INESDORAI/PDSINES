@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class TestPersonne {
 

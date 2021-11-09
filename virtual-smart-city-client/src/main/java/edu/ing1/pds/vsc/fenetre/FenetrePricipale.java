@@ -11,7 +11,6 @@ import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -19,7 +18,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class FenetrePricipale extends javax.swing.JFrame {
 
@@ -36,6 +35,7 @@ public class FenetrePricipale extends javax.swing.JFrame {
     private List<Enterprise> enterpriseList;
     private Enterprise enterpriseSelected;
     private DefaultComboBoxModel comboBoxModelLibEnterprise;
+
     /**
      * Creates new form FenetrePricipale
      */
@@ -43,7 +43,7 @@ public class FenetrePricipale extends javax.swing.JFrame {
         initFrame();
         initComboBoxModel();
         initComponents();
-        
+
     }
 
     private void initFrame() {
@@ -354,17 +354,14 @@ public class FenetrePricipale extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxlibEnterpriseItemStateChanged
 
     private void showEnterprse() {
-        boolean executer = true;
-        for (JInternalFrame internalFrame : desktopPane.getAllFrames()) {
-            if (internalFrame instanceof EnterpriseFrame) {
-                executer = false;
-                break;
+        if (desktopPane.getAllFrames().length > 1) {
+            for (JInternalFrame frame : desktopPane.getAllFrames()) {
+                frame.dispose();
             }
+            desktopPane.removeAll();
         }
-        if (executer) {
-            enterpriseFrame = new EnterpriseFrame(this);
-            desktopPane.add(enterpriseFrame);
-        }
+        enterpriseFrame = new EnterpriseFrame(this);
+        desktopPane.add(enterpriseFrame);
         try {
             enterpriseFrame.setMaximum(true);
         } catch (PropertyVetoException ex) {
@@ -374,17 +371,15 @@ public class FenetrePricipale extends javax.swing.JFrame {
 
     private void showCapteur() {
         if (enterpriseSelected != null && enterpriseSelected.getId() != null) {
-            boolean executer = true;
-            for (JInternalFrame internalFrame : desktopPane.getAllFrames()) {
-                if (internalFrame instanceof CapteurFrame) {
-                    executer = false;
-                    break;
+            if (desktopPane.getAllFrames().length > 1) {
+                for (JInternalFrame frame : desktopPane.getAllFrames()) {
+                    frame.dispose();
                 }
+                desktopPane.removeAll();
             }
-            if (executer) {
-                capteurFrame = new CapteurFrame(enterpriseSelected);
-                desktopPane.add(capteurFrame);
-            }
+            capteurFrame = new CapteurFrame(enterpriseSelected);
+            desktopPane.add(capteurFrame);
+
             try {
                 capteurFrame.setMaximum(true);
             } catch (PropertyVetoException ex) {
@@ -397,21 +392,18 @@ public class FenetrePricipale extends javax.swing.JFrame {
 
     private void showMateriel() {
         if (enterpriseSelected != null && enterpriseSelected.getId() != null) {
-            boolean executer = true;
-            for (JInternalFrame internalFrame : desktopPane.getAllFrames()) {
-                if (internalFrame instanceof MaterielFrame) {
-                    executer = false;
-                    break;
+            if (desktopPane.getAllFrames().length > 1) {
+                for (JInternalFrame frame : desktopPane.getAllFrames()) {
+                    frame.dispose();
                 }
+                desktopPane.removeAll();
             }
-            if (executer) {
-                materielFrame = new MaterielFrame(enterpriseSelected);
-                desktopPane.add(materielFrame);
-                try {
-                    materielFrame.setMaximum(true);
-                } catch (PropertyVetoException ex) {
-                    JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-                }
+            materielFrame = new MaterielFrame(enterpriseSelected);
+            desktopPane.add(materielFrame);
+            try {
+                materielFrame.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Choisir enterprise", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -420,21 +412,18 @@ public class FenetrePricipale extends javax.swing.JFrame {
 
     private void showMobilier() {
         if (enterpriseSelected != null && enterpriseSelected.getId() != null) {
-            boolean executer = true;
-            for (JInternalFrame internalFrame : desktopPane.getAllFrames()) {
-                if (internalFrame instanceof MobilierFrame) {
-                    executer = false;
-                    break;
+            if (desktopPane.getAllFrames().length > 1) {
+                for (JInternalFrame frame : desktopPane.getAllFrames()) {
+                    frame.dispose();
                 }
+                desktopPane.removeAll();
             }
-            if (executer) {
-                mobilierFrame = new MobilierFrame(enterpriseSelected);
-                desktopPane.add(mobilierFrame);
-                try {
-                    mobilierFrame.setMaximum(true);
-                } catch (PropertyVetoException ex) {
-                    JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-                }
+            mobilierFrame = new MobilierFrame(enterpriseSelected);
+            desktopPane.add(mobilierFrame);
+            try {
+                mobilierFrame.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Choisir enterprise", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -443,21 +432,18 @@ public class FenetrePricipale extends javax.swing.JFrame {
 
     private void showLocal() {
         if (enterpriseSelected != null && enterpriseSelected.getId() != null) {
-            boolean executer = true;
-            for (JInternalFrame internalFrame : desktopPane.getAllFrames()) {
-                if (internalFrame instanceof LocalFrame) {
-                    executer = false;
-                    break;
+            if (desktopPane.getAllFrames().length > 1) {
+                for (JInternalFrame frame : desktopPane.getAllFrames()) {
+                    frame.dispose();
                 }
+                desktopPane.removeAll();
             }
-            if (executer) {
-                localFrame = new LocalFrame(enterpriseSelected);
-                desktopPane.add(localFrame);
-                try {
-                    localFrame.setMaximum(true);
-                } catch (PropertyVetoException ex) {
-                    JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-                }
+            localFrame = new LocalFrame(enterpriseSelected);
+            desktopPane.add(localFrame);
+            try {
+                localFrame.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Choisir enterprise", "Erreur", JOptionPane.ERROR_MESSAGE);

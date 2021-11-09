@@ -1,8 +1,11 @@
 package edu.ing1.pds.vsc.materiel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class Materiel {
 
@@ -10,13 +13,15 @@ public class Materiel {
     private String code;
     private String lib;
     private String typeMateriel;
-    private Double consommation;
     private String uniteConsommation;
+    private Double moyenneConsommation;
+    private Double sommeConsommation;
     private String batiment;
     private String etage;
     private String numero;
     private Integer idLocal;
     private int idEnterprise;
+    private List<ConsommationMateriel> consommationMaterielList;
 
     public Materiel() {
     }
@@ -93,23 +98,39 @@ public class Materiel {
         this.numero = numero;
     }
 
-    public Double getConsommation() {
-        if (consommation == null) {
-            consommation = 0.0;
-        }
-        return consommation;
-    }
-
-    public void setConsommation(Double consommation) {
-        this.consommation = consommation;
-    }
-
     public String getUniteConsommation() {
         return uniteConsommation;
     }
 
     public void setUniteConsommation(String uniteConsommation) {
         this.uniteConsommation = uniteConsommation;
+    }
+
+    public List<ConsommationMateriel> getConsommationMaterielList() {
+        if (consommationMaterielList == null) {
+            consommationMaterielList = new ArrayList<>();
+        }
+        return consommationMaterielList;
+    }
+
+    public void setConsommationMaterielList(List<ConsommationMateriel> consommationMaterielList) {
+        this.consommationMaterielList = consommationMaterielList;
+    }
+
+    public Double getMoyenneConsommation() {
+        return moyenneConsommation;
+    }
+
+    public void setMoyenneConsommation(Double moyenneConsommation) {
+        this.moyenneConsommation = moyenneConsommation;
+    }
+
+    public Double getSommeConsommation() {
+        return sommeConsommation;
+    }
+
+    public void setSommeConsommation(Double sommeConsommation) {
+        this.sommeConsommation = sommeConsommation;
     }
 
     @Override

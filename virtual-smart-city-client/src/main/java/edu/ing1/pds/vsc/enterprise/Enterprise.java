@@ -2,7 +2,7 @@ package edu.ing1.pds.vsc.enterprise;
 
 /**
  *
- * @author Karim
+ * @author Ines
  */
 public class Enterprise {
     private Integer id;

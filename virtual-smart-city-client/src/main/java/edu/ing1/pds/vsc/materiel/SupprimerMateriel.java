@@ -49,7 +49,6 @@ public class SupprimerMateriel extends javax.swing.JDialog {
         jTextFieldCode.setText(materiel.getCode());
         jTextFieldType.setText(materiel.getTypeMateriel());
         jTextFieldLib.setText(materiel.getLib());
-        jTextFieldConsomation.setText(materiel.getConsommation()+"");
         jTextFieldUnite.setText(materiel.getUniteConsommation());
         jTextFieldLocal.setText(materiel.getNumero());
         jTextFieldBatiment.setText(materiel.getBatiment());
@@ -84,8 +83,6 @@ public class SupprimerMateriel extends javax.swing.JDialog {
         jLabelBatiment = new javax.swing.JLabel();
         jTextFieldUnite = new javax.swing.JTextField();
         jLabelUnite = new javax.swing.JLabel();
-        jTextFieldConsomation = new javax.swing.JTextField();
-        jLabelConsomation = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Supprimer wilaya");
@@ -166,8 +163,6 @@ public class SupprimerMateriel extends javax.swing.JDialog {
 
         jLabelUnite.setText("Unité");
 
-        jLabelConsomation.setText("Consomation");
-
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
         jPanelEnterprise.setLayout(jPanelEnterpriseLayout);
         jPanelEnterpriseLayout.setHorizontalGroup(
@@ -175,10 +170,18 @@ public class SupprimerMateriel extends javax.swing.JDialog {
             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelCode)
-                    .addComponent(jLabelLocal))
-                .addGap(60, 60, 60)
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
+                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCode)
+                            .addComponent(jLabelLocal))
+                        .addGap(60, 60, 60))
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jLabelUnite)
+                        .addGap(51, 51, 51)))
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jTextFieldUnite)
+                        .addGap(50, 50, 50))
                     .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                         .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -202,15 +205,6 @@ public class SupprimerMateriel extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldBatiment, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                .addComponent(jLabelConsomation)
-                .addGap(22, 22, 22)
-                .addComponent(jTextFieldConsomation, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelUnite)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldUnite, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelEnterpriseLayout.setVerticalGroup(
             jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,13 +230,11 @@ public class SupprimerMateriel extends javax.swing.JDialog {
                     .addComponent(jTextFieldEtage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelBatiment)
                     .addComponent(jTextFieldBatiment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelConsomation)
-                    .addComponent(jTextFieldConsomation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldUnite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelUnite))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,7 +289,6 @@ public class SupprimerMateriel extends javax.swing.JDialog {
     private javax.swing.JButton buttonSupprimer;
     private javax.swing.JLabel jLabelBatiment;
     private javax.swing.JLabel jLabelCode;
-    private javax.swing.JLabel jLabelConsomation;
     private javax.swing.JLabel jLabelEtage;
     private javax.swing.JLabel jLabelLib;
     private javax.swing.JLabel jLabelLocal;
@@ -306,7 +297,6 @@ public class SupprimerMateriel extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelEnterprise;
     private javax.swing.JTextField jTextFieldBatiment;
     private javax.swing.JTextField jTextFieldCode;
-    private javax.swing.JTextField jTextFieldConsomation;
     private javax.swing.JTextField jTextFieldEtage;
     private javax.swing.JTextField jTextFieldLib;
     private javax.swing.JTextField jTextFieldLocal;
