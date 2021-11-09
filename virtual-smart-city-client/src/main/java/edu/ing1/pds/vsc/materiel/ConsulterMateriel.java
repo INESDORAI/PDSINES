@@ -109,7 +109,7 @@ public class ConsulterMateriel extends javax.swing.JDialog {
     private void initConsommationMateriel() {
         consommationMaterielSelected = new ConsommationMateriel();
         consommationMaterielSelected.setIdMateriel(materiel.getId());
-        if (jTextFieldValuer.getText() == null || (jTextFieldValuer.getText() != null && !jTextFieldValuer.getText().isEmpty())) {
+        if (jTextFieldValuer.getText() == null || (jTextFieldValuer.getText() != null && jTextFieldValuer.getText().isEmpty())) {
             consommationMaterielSelected.setValeur(0.0);
         } else {
             consommationMaterielSelected.setValeur(Double.valueOf(jTextFieldValuer.getText()));
