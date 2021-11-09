@@ -78,7 +78,7 @@ public class SupprimerEnterprise extends javax.swing.JDialog {
         jLabelPays = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Supprimer wilaya");
+        setTitle("Supprimer entreprise");
         setResizable(false);
 
         buttonFerme.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

@@ -85,7 +85,7 @@ public class ConsulterLocal extends javax.swing.JDialog {
         jTextFieldMobilier = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter wilaya");
+        setTitle("Consulter local");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

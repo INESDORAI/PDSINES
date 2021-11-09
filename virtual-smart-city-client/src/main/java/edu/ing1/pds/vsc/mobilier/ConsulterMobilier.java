@@ -73,7 +73,7 @@ public class ConsulterMobilier extends javax.swing.JDialog {
         jLabelBatiment = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter wilaya");
+        setTitle("Consulter mobilier");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
