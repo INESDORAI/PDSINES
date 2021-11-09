@@ -6,10 +6,7 @@ package edu.ing1.pds.vsc.mobilier;
 
 import java.awt.Frame;
 
-/**
- *
- * @author aggoun.abdelkrim
- */
+
 public class ConsulterMobilier extends javax.swing.JDialog {
 
 
@@ -73,7 +70,7 @@ public class ConsulterMobilier extends javax.swing.JDialog {
         jLabelBatiment = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter wilaya");
+        setTitle("Consulter Mobilier");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

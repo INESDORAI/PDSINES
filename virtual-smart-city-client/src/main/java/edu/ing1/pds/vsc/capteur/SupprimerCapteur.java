@@ -7,10 +7,7 @@ package edu.ing1.pds.vsc.capteur;
 import java.awt.Color;
 import java.awt.Frame;
 
-/**
- *
- * @author aggoun.abdelkrim
- */
+
 public class SupprimerCapteur extends javax.swing.JDialog {
 
     private final CapteurFrame capteurFrame;
@@ -82,7 +79,7 @@ public class SupprimerCapteur extends javax.swing.JDialog {
         jLabelBatiment = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Supprimer wilaya");
+        setTitle("Supprimer capteur");
         setResizable(false);
 
         buttonFerme.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

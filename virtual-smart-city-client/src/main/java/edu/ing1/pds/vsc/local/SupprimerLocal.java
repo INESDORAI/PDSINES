@@ -7,10 +7,7 @@ package edu.ing1.pds.vsc.local;
 import java.awt.Color;
 import java.awt.Frame;
 
-/**
- *
- * @author aggoun.abdelkrim
- */
+
 public class SupprimerLocal extends javax.swing.JDialog {
 
     private final LocalFrame localFrame;
@@ -94,7 +91,7 @@ public class SupprimerLocal extends javax.swing.JDialog {
         jLabelCapteur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Supprimer wilaya");
+        setTitle("Supprimer local");
         setResizable(false);
 
         buttonFerme.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

@@ -6,20 +6,11 @@ package edu.ing1.pds.vsc.local;
 
 import java.awt.Frame;
 
-/**
- *
- * @author aggoun.abdelkrim
- */
+
 public class ConsulterLocal extends javax.swing.JDialog {
 
 
-    /**
-     * Creates new form AjouterUser
-     *
-     * @param parent
-     * @param modal
-     * @param local
-     */
+
     public ConsulterLocal(Frame parent, boolean modal, Local local) {
         super(parent, modal);
         initComponents();
@@ -85,7 +76,7 @@ public class ConsulterLocal extends javax.swing.JDialog {
         jTextFieldMobilier = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter wilaya");
+        setTitle("Consulter local");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

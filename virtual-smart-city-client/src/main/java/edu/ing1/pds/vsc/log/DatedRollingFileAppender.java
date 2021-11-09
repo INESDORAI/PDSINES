@@ -12,11 +12,7 @@ import java.util.Date;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.spi.LoggingEvent;
 
-/**
- *
- * @author aggoun.abdelkrim
- *
- */
+
 public class DatedRollingFileAppender extends FileAppender {
 
     /**

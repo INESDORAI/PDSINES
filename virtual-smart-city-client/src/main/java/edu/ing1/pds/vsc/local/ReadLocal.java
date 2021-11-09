@@ -9,10 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
-/**
- *
- * @author aggoun.abdelkrim
- */
+
 public class ReadLocal extends javax.swing.JDialog {
 
     private final String type;

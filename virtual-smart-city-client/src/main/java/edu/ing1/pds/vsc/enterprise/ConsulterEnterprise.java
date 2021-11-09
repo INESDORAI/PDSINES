@@ -5,11 +5,6 @@
 package edu.ing1.pds.vsc.enterprise;
 
 import java.awt.Frame;
-
-/**
- *
- * @author aggoun.abdelkrim
- */
 public class ConsulterEnterprise extends javax.swing.JDialog {
 
     /**
@@ -80,7 +75,7 @@ public class ConsulterEnterprise extends javax.swing.JDialog {
         jTextFieldMobilier = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter wilaya");
+        setTitle("Consulter Entreprise");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

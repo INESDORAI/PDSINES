@@ -7,10 +7,7 @@ package edu.ing1.pds.vsc.enterprise;
 import java.awt.Color;
 import java.awt.Frame;
 
-/**
- *
- * @author aggoun.abdelkrim
- */
+
 public class SupprimerEnterprise extends javax.swing.JDialog {
     private final EnterpriseFrame enterpriseFrame;
     private CrudEnterprise crudEnterprise;
@@ -78,7 +75,7 @@ public class SupprimerEnterprise extends javax.swing.JDialog {
         jLabelPays = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Supprimer wilaya");
+        setTitle("Supprimer Entreprise");
         setResizable(false);
 
         buttonFerme.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
