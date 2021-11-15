@@ -162,7 +162,7 @@ public class SupprimerLocal extends javax.swing.JDialog {
 
         jLabelEtage.setText("Etage");
 
-        jLabelTauxOccupe.setText("Place occupée");
+        jLabelTauxOccupe.setText("Taux occupation");
 
         jLabelMobilier.setText("Mobilier");
 

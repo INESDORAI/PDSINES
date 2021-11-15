@@ -47,6 +47,7 @@ public class SupprimerCapteur extends javax.swing.JDialog {
 
     private void initCapteur(Capteur capteur) {
         jTextFieldCode.setText(capteur.getCode());
+        jTextFieldDate.setText(capteur.getDateCapteur());
         jTextFieldType.setText(capteur.getTypeCapteur());
         jTextFieldvaleur.setText(capteur.getValeurCapteur()+"");
         jTextFieldLocal.setText(capteur.getNumero());
@@ -80,9 +81,11 @@ public class SupprimerCapteur extends javax.swing.JDialog {
         jLabelEtage = new javax.swing.JLabel();
         jTextFieldBatiment = new javax.swing.JTextField();
         jLabelBatiment = new javax.swing.JLabel();
+        jLabelDate = new javax.swing.JLabel();
+        jTextFieldDate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Supprimer capteur");
+        setTitle("Supprimer wilaya");
         setResizable(false);
 
         buttonFerme.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -158,39 +161,50 @@ public class SupprimerCapteur extends javax.swing.JDialog {
 
         jLabelBatiment.setText("Batiment");
 
+        jLabelDate.setText("Date");
+
+        jTextFieldDate.setEnabled(false);
+
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
         jPanelEnterprise.setLayout(jPanelEnterpriseLayout);
         jPanelEnterpriseLayout.setHorizontalGroup(
             jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelCode)
-                    .addComponent(jLabelLocal))
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCode)
+                            .addComponent(jLabelLocal))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                                .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55)
+                                .addComponent(jLabelEtage))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelEnterpriseLayout.createSequentialGroup()
+                                .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelDate))))
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jLabelType)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabelvaleur)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                        .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabelEtage))
-                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                        .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelType)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
-                        .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelvaleur)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                         .addComponent(jTextFieldEtage, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelBatiment)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldBatiment, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldBatiment, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldDate, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelEnterpriseLayout.setVerticalGroup(
@@ -201,14 +215,21 @@ public class SupprimerCapteur extends javax.swing.JDialog {
                         .addGap(16, 16, 16)
                         .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCode)
-                            .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelvaleur)
-                            .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabelType)))
-                .addGap(18, 18, 18)
+                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelDate)
+                            .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelvaleur)
+                        .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelType, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelLocal)
@@ -232,8 +253,8 @@ public class SupprimerCapteur extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanelEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -271,6 +292,7 @@ public class SupprimerCapteur extends javax.swing.JDialog {
     private javax.swing.JButton buttonSupprimer;
     private javax.swing.JLabel jLabelBatiment;
     private javax.swing.JLabel jLabelCode;
+    private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelEtage;
     private javax.swing.JLabel jLabelLocal;
     private javax.swing.JLabel jLabelType;
@@ -278,6 +300,7 @@ public class SupprimerCapteur extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelEnterprise;
     private javax.swing.JTextField jTextFieldBatiment;
     private javax.swing.JTextField jTextFieldCode;
+    private javax.swing.JTextField jTextFieldDate;
     private javax.swing.JTextField jTextFieldEtage;
     private javax.swing.JTextField jTextFieldLocal;
     private javax.swing.JTextField jTextFieldType;

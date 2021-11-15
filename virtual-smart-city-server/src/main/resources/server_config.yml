@@ -1,7 +1,7 @@
 driver: "org.postgresql.Driver"
 password: "postgres"
-url: "jdbc:postgresql://172.31.249.242:5432/vscdb"
-#url: "jdbc:postgresql://localhost:5432/vscdb"
+#url: "jdbc:postgresql://172.31.249.242:5432/vscdb"
+url: "jdbc:postgresql://localhost:5432/vscdb"
 username: "postgres"
 
 listenPort: 3344

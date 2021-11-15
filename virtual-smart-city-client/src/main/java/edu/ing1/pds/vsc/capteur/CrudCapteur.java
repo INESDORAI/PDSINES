@@ -35,6 +35,7 @@ public class CrudCapteur {
             Capteur capteur = new Capteur();
             capteur.setId((Integer) map.get("id"));
             capteur.setCode((String) map.get("code"));
+            capteur.setDateCapteur((String) map.get("date_capteur"));
             capteur.setTypeCapteur((String) map.get("type_capteur"));
             capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
             capteur.setNumero((String) map.get("numero"));
@@ -46,7 +47,7 @@ public class CrudCapteur {
         }
         return capteurList;
     }
-    
+
     public List<Capteur> findAll() throws Exception {
         ClientToServer connection = new ClientToServer();
         ArrayList<Map> capteurMap = new ArrayList<Map>();
@@ -61,6 +62,7 @@ public class CrudCapteur {
             Capteur capteur = new Capteur();
             capteur.setId((Integer) map.get("id"));
             capteur.setCode((String) map.get("code"));
+            capteur.setDateCapteur((String) map.get("date_capteur.31.249.246"));
             capteur.setTypeCapteur((String) map.get("type_capteur"));
             capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
             capteur.setNumero((String) map.get("numero"));
@@ -84,10 +86,11 @@ public class CrudCapteur {
         Map map = (Map) response.getData();
         Capteur capteur = new Capteur();
         capteur.setId((Integer) map.get("id"));
-            capteur.setCode((String) map.get("code"));
-            capteur.setTypeCapteur((String) map.get("type_capteur"));
-            capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
-            capteur.setIdLocal((Integer) map.get("id_local"));
+        capteur.setCode((String) map.get("code"));
+        capteur.setDateCapteur((String) map.get("date_capteur"));
+        capteur.setTypeCapteur((String) map.get("type_capteur"));
+        capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
+        capteur.setIdLocal((Integer) map.get("id_local"));
         return capteur;
     }
 
@@ -98,6 +101,7 @@ public class CrudCapteur {
         request.setNameRequest("insert_capteur");
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("code", capteur.getCode());
+        param.put("date_capteur", capteur.getDateCapteur());
         param.put("type_capteur", capteur.getTypeCapteur());
         param.put("valeur_capteur", capteur.getValeurCapteur());
         param.put("id_local", capteur.getIdLocal());
@@ -115,6 +119,7 @@ public class CrudCapteur {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("id", capteur.getId());
         param.put("code", capteur.getCode());
+        param.put("date_capteur", capteur.getDateCapteur());
         param.put("type_capteur", capteur.getTypeCapteur());
         param.put("valeur_capteur", capteur.getValeurCapteur());
         param.put("id_local", capteur.getIdLocal());

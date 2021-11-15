@@ -6,6 +6,7 @@ package edu.ing1.pds.vsc.capteur;
  */
 public class Capteur {
     private Integer id;
+    private String dateCapteur;
     private String typeCapteur;
     private Double valeurCapteur;
     private String code;    
@@ -28,6 +29,14 @@ public class Capteur {
 
     public String getCode() {
         return code;
+    }
+
+    public String getDateCapteur() {
+        return dateCapteur;
+    }
+
+    public void setDateCapteur(String dateCapteur) {
+        this.dateCapteur = dateCapteur;
     }
 
     public void setCode(String code) {

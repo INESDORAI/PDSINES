@@ -51,7 +51,7 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
             defaultTableModel = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int row, int col) {
-                    if (col == 0 || col == 1 || col == 2 || col == 3 || col == 4 || col == 5) {
+                    if (col == 0 || col == 1 || col == 2 || col == 3 || col == 4 || col == 5 || col == 6) {
                         return false;
                     } else {
                         return true;
@@ -59,7 +59,7 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
                 }
             ;
             };
-            titreCapteur = "Code,Type,Valeur,Local,Etage,Batiment".split(",");
+            titreCapteur = "Date,Code,Type,Valeur,Local,Etage,Batiment".split(",");
             defaultTableModel.setColumnIdentifiers(titreCapteur);
         }
         selectedRow = -1;
@@ -78,7 +78,8 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         if (capteurList != null && !capteurList.isEmpty()) {
             for (Capteur capteur : capteurList) {
                 Vector<Object> ligne = new Vector<Object>();
-                ligne.add(capteur.getCode());
+                ligne.add(capteur.getDateCapteur());
+                ligne.add(capteur.getCode());                
                 ligne.add(capteur.getTypeCapteur());
                 ligne.add(capteur.getValeurCapteur());
                 ligne.add(capteur.getNumero());

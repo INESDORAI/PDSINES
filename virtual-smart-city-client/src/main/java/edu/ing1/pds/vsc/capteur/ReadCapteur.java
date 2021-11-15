@@ -7,6 +7,9 @@ package edu.ing1.pds.vsc.capteur;
 import edu.ing1.pds.vsc.enterprise.Enterprise;
 import edu.ing1.pds.vsc.local.CrudLocal;
 import edu.ing1.pds.vsc.local.Local;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -30,6 +33,7 @@ public class ReadCapteur extends javax.swing.JDialog {
     private List<Local> localList;
     private Local localSelected;
     private DefaultComboBoxModel comboBoxModelLocal;
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     //
     private boolean activButton;
 
@@ -98,11 +102,16 @@ public class ReadCapteur extends javax.swing.JDialog {
     }
 
     private void initCapteur(Capteur capteur) {
-        buttonInit.setVisible(false);
-        jTextFieldCode.setText(capteur.getCode());
-        jTextFieldType.setText(capteur.getTypeCapteur());
-        jTextFieldvaleur.setText(capteur.getValeurCapteur() + "");
-        jComboBoxlibLocal.setSelectedItem(capteur.getNumero());
+        try {
+            buttonInit.setVisible(false);
+            jTextFieldCode.setText(capteur.getCode());
+            dateChooserDate.setDate(dateFormat.parse(capteur.getDateCapteur()));
+            jTextFieldType.setText(capteur.getTypeCapteur());
+            jTextFieldvaleur.setText(capteur.getValeurCapteur() + "");
+            jComboBoxlibLocal.setSelectedItem(capteur.getNumero());
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -128,6 +137,8 @@ public class ReadCapteur extends javax.swing.JDialog {
         jTextFieldvaleur = new javax.swing.JTextField();
         jComboBoxlibLocal = new javax.swing.JComboBox<>();
         jLabelLocal = new javax.swing.JLabel();
+        jLabelCode1 = new javax.swing.JLabel();
+        dateChooserDate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(titre);
@@ -172,7 +183,7 @@ public class ReadCapteur extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelButtonLayout.createSequentialGroup()
-                        .addGap(0, 390, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(buttonInit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonAjouter)
@@ -211,49 +222,61 @@ public class ReadCapteur extends javax.swing.JDialog {
 
         jLabelLocal.setText("Local *");
 
+        jLabelCode1.setText("Date *");
+
+        dateChooserDate.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout jPanelEnterpriseLayout = new javax.swing.GroupLayout(jPanelEnterprise);
         jPanelEnterprise.setLayout(jPanelEnterpriseLayout);
         jPanelEnterpriseLayout.setHorizontalGroup(
             jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelCode)
-                    .addComponent(jLabelLocal))
-                .addGap(20, 20, 20)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBoxlibLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldCode, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
-                .addGap(60, 60, 60)
-                .addComponent(jLabelType)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addComponent(jLabelvaleur)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jLabelvaleur)
+                        .addGap(22, 22, 22)
+                        .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jLabelCode1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dateChooserDate, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jLabelCode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabelType)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
+                        .addComponent(jLabelLocal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxlibLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanelEnterpriseLayout.setVerticalGroup(
             jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelEnterpriseLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCode)
-                            .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelvaleur)
-                            .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnterpriseLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelType)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
+                .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelCode)
+                        .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelCode1)
+                        .addComponent(jLabelType))
+                    .addComponent(dateChooserDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelEnterpriseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxlibLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelLocal))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jLabelLocal)
+                    .addComponent(jLabelvaleur)
+                    .addComponent(jTextFieldvaleur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,7 +284,7 @@ public class ReadCapteur extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,6 +342,7 @@ public class ReadCapteur extends javax.swing.JDialog {
 
     private void initCatpeur() {
         capteur.setCode(jTextFieldCode.getText());
+        capteur.setDateCapteur(dateFormat.format(dateChooserDate.getDate()));
         capteur.setTypeCapteur(jTextFieldType.getText());
         if (!jTextFieldvaleur.getText().isEmpty()) {
             capteur.setValeurCapteur(Double.valueOf(jTextFieldvaleur.getText()));
@@ -333,6 +357,10 @@ public class ReadCapteur extends javax.swing.JDialog {
     }
 
     private boolean verified() {
+        if (capteur.getDateCapteur()== null || (capteur.getDateCapteur()!= null && capteur.getDateCapteur().isEmpty())) {
+            labelErreur.setText("Date est vide");
+            return false;
+        }
         if (capteur.getCode() == null || (capteur.getCode() != null && capteur.getCode().isEmpty())) {
             labelErreur.setText("Code est vide");
             return false;
@@ -405,8 +433,10 @@ public class ReadCapteur extends javax.swing.JDialog {
     private javax.swing.JButton buttonAjouter;
     private javax.swing.JButton buttonFermer;
     private javax.swing.JButton buttonInit;
+    private com.toedter.calendar.JDateChooser dateChooserDate;
     private javax.swing.JComboBox<String> jComboBoxlibLocal;
     private javax.swing.JLabel jLabelCode;
+    private javax.swing.JLabel jLabelCode1;
     private javax.swing.JLabel jLabelLocal;
     private javax.swing.JLabel jLabelType;
     private javax.swing.JLabel jLabelvaleur;

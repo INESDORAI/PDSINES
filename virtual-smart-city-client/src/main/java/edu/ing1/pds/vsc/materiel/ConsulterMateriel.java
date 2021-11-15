@@ -222,7 +222,7 @@ public class ConsulterMateriel extends javax.swing.JDialog {
         jButtonSupprimer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulter wilaya");
+        setTitle("Consulter materiel");
         setResizable(false);
 
         buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

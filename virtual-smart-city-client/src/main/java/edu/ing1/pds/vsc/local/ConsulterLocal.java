@@ -141,7 +141,7 @@ public class ConsulterLocal extends javax.swing.JDialog {
 
         jTextFieldTauxOccupe.setEnabled(false);
 
-        jLabelTauxOccupe.setText("Place occupée");
+        jLabelTauxOccupe.setText("Taux occupation");
 
         jTextFieldCapteur.setEnabled(false);
 
