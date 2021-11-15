@@ -97,6 +97,15 @@ public class ServerToClient {
                 case "select_capteur_by_id_enterprise":
                     responseString = capteur.findByIdEnterprise(connection, requestName, data);
                     break;
+                case "select_capteur_by_id_enterprise_id_local":
+                    responseString = capteur.findByIdEnterpriseIdLocal(connection, requestName, data);
+                    break;
+                case "select_capteur_by_id_enterprise_id_local_mois_annee":
+                    responseString = capteur.findByIdEnterpriseIdLocalMoisAnnee(connection, requestName, data);
+                    break;
+                case "select_capteur_by_id_enterprise_mois_annee":
+                    responseString = capteur.findByIdEnterpriseMoisAnnee(connection, requestName, data);
+                    break;
                 case "insert_mobilier":
                     responseString = mobilier.add(connection, requestName, data);
                     break;

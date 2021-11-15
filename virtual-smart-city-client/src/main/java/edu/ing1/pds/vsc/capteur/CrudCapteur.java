@@ -47,6 +47,96 @@ public class CrudCapteur {
         }
         return capteurList;
     }
+    
+    public List<Capteur> findByIdEnterpriseIdLocal(int idEnterprise, int idLocal) throws Exception {
+        ClientToServer connection = new ClientToServer();
+        ArrayList<Map> capteurMap = new ArrayList<Map>();
+        Request request = new Request();
+        request.setNameRequest("select_capteur_by_id_enterprise_id_local");
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        param.put("id_enterprise", idEnterprise);
+        param.put("id_local", idLocal);
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        capteurMap = (ArrayList<Map>) response.getData();
+        List<Capteur> capteurList = new ArrayList<>();
+        for (Map map : capteurMap) {
+            Capteur capteur = new Capteur();
+            capteur.setId((Integer) map.get("id"));
+            capteur.setCode((String) map.get("code"));
+            capteur.setDateCapteur((String) map.get("date_capteur"));
+            capteur.setTypeCapteur((String) map.get("type_capteur"));
+            capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
+            capteur.setNumero((String) map.get("numero"));
+            capteur.setEtage((String) map.get("etage"));
+            capteur.setBatiment((String) map.get("batiment"));
+            capteur.setIdLocal((Integer) map.get("id_local"));
+            capteur.setIdEnterprise((Integer) map.get("id_enterprise"));
+            capteurList.add(capteur);
+        }
+        return capteurList;
+    }
+    
+    public List<Capteur> findByIdEnterpriseIdLocalMoisAnnee(int idEnterprise, int idLocal, int mois, int annee) throws Exception {
+        ClientToServer connection = new ClientToServer();
+        ArrayList<Map> capteurMap = new ArrayList<Map>();
+        Request request = new Request();
+        request.setNameRequest("select_capteur_by_id_enterprise_id_local_mois_annee");
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        param.put("id_enterprise", idEnterprise);
+        param.put("id_local", idLocal);
+        param.put("mois", mois);
+        param.put("annee", annee);
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        capteurMap = (ArrayList<Map>) response.getData();
+        List<Capteur> capteurList = new ArrayList<>();
+        for (Map map : capteurMap) {
+            Capteur capteur = new Capteur();
+            capteur.setId((Integer) map.get("id"));
+            capteur.setCode((String) map.get("code"));
+            capteur.setDateCapteur((String) map.get("date_capteur"));
+            capteur.setTypeCapteur((String) map.get("type_capteur"));
+            capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
+            capteur.setNumero((String) map.get("numero"));
+            capteur.setEtage((String) map.get("etage"));
+            capteur.setBatiment((String) map.get("batiment"));
+            capteur.setIdLocal((Integer) map.get("id_local"));
+            capteur.setIdEnterprise((Integer) map.get("id_enterprise"));
+            capteurList.add(capteur);
+        }
+        return capteurList;
+    }
+    
+    public List<Capteur> findByIdEnterpriseMoisAnnee(int idEnterprise, int mois, int annee) throws Exception {
+        ClientToServer connection = new ClientToServer();
+        ArrayList<Map> capteurMap = new ArrayList<Map>();
+        Request request = new Request();
+        request.setNameRequest("select_capteur_by_id_enterprise_mois_annee");
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        param.put("id_enterprise", idEnterprise);
+        param.put("mois", mois);
+        param.put("annee", annee);
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        capteurMap = (ArrayList<Map>) response.getData();
+        List<Capteur> capteurList = new ArrayList<>();
+        for (Map map : capteurMap) {
+            Capteur capteur = new Capteur();
+            capteur.setId((Integer) map.get("id"));
+            capteur.setCode((String) map.get("code"));
+            capteur.setDateCapteur((String) map.get("date_capteur"));
+            capteur.setTypeCapteur((String) map.get("type_capteur"));
+            capteur.setValeurCapteur((Double) map.get("valeur_capteur"));
+            capteur.setNumero((String) map.get("numero"));
+            capteur.setEtage((String) map.get("etage"));
+            capteur.setBatiment((String) map.get("batiment"));
+            capteur.setIdLocal((Integer) map.get("id_local"));
+            capteur.setIdEnterprise((Integer) map.get("id_enterprise"));
+            capteurList.add(capteur);
+        }
+        return capteurList;
+    }
 
     public List<Capteur> findAll() throws Exception {
         ClientToServer connection = new ClientToServer();

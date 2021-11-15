@@ -107,6 +107,87 @@ public class Capteur {
         return mapper.writeValueAsString(response);
     }
 
+    public String findByIdEnterpriseIdLocal(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
+        ObjectMapper mapper = new ObjectMapper();
+        String req = "SELECT c.id AS id, date_capteur, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id WHERE l.id= " + (Integer) dataLoading.get("id_local") + " AND e.id=" + (Integer) dataLoading.get("id_enterprise") + " ORDER BY date_capteur ASC;";
+        logger.info("req---" + req);
+        ResultSet rs = connection.createStatement().executeQuery(req);
+        List<Map> enterprises = new ArrayList<Map>();
+        while (rs.next()) {
+            Map<String, Object> hm = new HashMap<String, Object>();
+            hm.put("id", rs.getInt("id"));
+            hm.put("date_capteur", rs.getString("date_capteur"));
+            hm.put("code", rs.getString("code"));
+            hm.put("type_capteur", rs.getString("type_capteur"));
+            hm.put("valeur_capteur", rs.getDouble("valeur_capteur"));
+            hm.put("batiment", rs.getString("batiment"));
+            hm.put("etage", rs.getString("etage"));
+            hm.put("numero", rs.getString("numero"));
+            hm.put("id_local", rs.getInt("id_local"));
+            hm.put("id_enterprise", rs.getInt("id_enterprise"));
+            enterprises.add(hm);
+        }
+        rs.close();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("nameRequest", requestName);
+        response.put("data", enterprises);
+        return mapper.writeValueAsString(response);
+    }
+
+    public String findByIdEnterpriseIdLocalMoisAnnee(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
+        ObjectMapper mapper = new ObjectMapper();
+        String req = "SELECT c.id AS id, date_capteur, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id WHERE date_part('month'::text, date_capteur) =" + (Integer) dataLoading.get("mois") + " AND date_part('year'::text, date_capteur) =" + (Integer) dataLoading.get("annee") + " AND l.id= " + (Integer) dataLoading.get("id_local") + " AND e.id=" + (Integer) dataLoading.get("id_enterprise") + " ORDER BY date_capteur ASC;";
+        logger.info("req---" + req);
+        ResultSet rs = connection.createStatement().executeQuery(req);
+        List<Map> enterprises = new ArrayList<Map>();
+        while (rs.next()) {
+            Map<String, Object> hm = new HashMap<String, Object>();
+            hm.put("id", rs.getInt("id"));
+            hm.put("date_capteur", rs.getString("date_capteur"));
+            hm.put("code", rs.getString("code"));
+            hm.put("type_capteur", rs.getString("type_capteur"));
+            hm.put("valeur_capteur", rs.getDouble("valeur_capteur"));
+            hm.put("batiment", rs.getString("batiment"));
+            hm.put("etage", rs.getString("etage"));
+            hm.put("numero", rs.getString("numero"));
+            hm.put("id_local", rs.getInt("id_local"));
+            hm.put("id_enterprise", rs.getInt("id_enterprise"));
+            enterprises.add(hm);
+        }
+        rs.close();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("nameRequest", requestName);
+        response.put("data", enterprises);
+        return mapper.writeValueAsString(response);
+    }
+    
+    public String findByIdEnterpriseMoisAnnee(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
+        ObjectMapper mapper = new ObjectMapper();
+        String req = "SELECT c.id AS id, date_capteur, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id WHERE date_part('month'::text, date_capteur) =" + (Integer) dataLoading.get("mois") + " AND date_part('year'::text, date_capteur) =" + (Integer) dataLoading.get("annee") + " AND e.id=" + (Integer) dataLoading.get("id_enterprise") + " ORDER BY date_capteur ASC;";
+        logger.info("req---" + req);
+        ResultSet rs = connection.createStatement().executeQuery(req);
+        List<Map> enterprises = new ArrayList<Map>();
+        while (rs.next()) {
+            Map<String, Object> hm = new HashMap<String, Object>();
+            hm.put("id", rs.getInt("id"));
+            hm.put("date_capteur", rs.getString("date_capteur"));
+            hm.put("code", rs.getString("code"));
+            hm.put("type_capteur", rs.getString("type_capteur"));
+            hm.put("valeur_capteur", rs.getDouble("valeur_capteur"));
+            hm.put("batiment", rs.getString("batiment"));
+            hm.put("etage", rs.getString("etage"));
+            hm.put("numero", rs.getString("numero"));
+            hm.put("id_local", rs.getInt("id_local"));
+            hm.put("id_enterprise", rs.getInt("id_enterprise"));
+            enterprises.add(hm);
+        }
+        rs.close();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("nameRequest", requestName);
+        response.put("data", enterprises);
+        return mapper.writeValueAsString(response);
+    }
+
     public String findById(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
         ResultSet rs = connection.createStatement().executeQuery("SELECT id, date_capteur, type_capteur, valeur_capteur, id_local, code FROM public.capteur WHERE id=" + (Integer) dataLoading.get("id") + ";");
