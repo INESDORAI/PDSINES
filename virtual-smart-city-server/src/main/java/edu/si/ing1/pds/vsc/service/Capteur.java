@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
  * @author Ines
  */
 public class Capteur {
+
     private final static Logger logger = Logger.getLogger(Capteur.class);
 
     public Capteur() {
@@ -23,7 +24,7 @@ public class Capteur {
 
     public String add(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "INSERT INTO public.capteur(type_capteur, valeur_capteur, code, id_local) VALUES('" + (String) dataLoading.get("type_capteur") + "', '" + (Double) dataLoading.get("valeur_capteur") + "', '" + (String) dataLoading.get("code") + "', " + (Integer) dataLoading.get("id_local") + ");";
+        String req = "INSERT INTO public.capteur(date_capteur, type_capteur, valeur_capteur, code, id_local) VALUES('" + (String) dataLoading.get("date_capteur") + "', '" + (String) dataLoading.get("type_capteur") + "', '" + (Double) dataLoading.get("valeur_capteur") + "', '" + (String) dataLoading.get("code") + "', " + (Integer) dataLoading.get("id_local") + ");";
         logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
         Map<String, Object> response = new HashMap<String, Object>();
@@ -34,7 +35,7 @@ public class Capteur {
 
     public String edit(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "UPDATE public.capteur SET code ='" + (String) dataLoading.get("code") + "', valeur_capteur=" + (Double) dataLoading.get("valeur_capteur") + ", type_capteur='" + (String) dataLoading.get("type_capteur") + "', id_local=" + (Integer) dataLoading.get("id_local") + " WHERE id=" + (Integer) dataLoading.get("id") + ";";
+        String req = "UPDATE public.capteur SET date_capteur ='" + (String) dataLoading.get("date_capteur") + "', code ='" + (String) dataLoading.get("code") + "', valeur_capteur=" + (Double) dataLoading.get("valeur_capteur") + ", type_capteur='" + (String) dataLoading.get("type_capteur") + "', id_local=" + (Integer) dataLoading.get("id_local") + " WHERE id=" + (Integer) dataLoading.get("id") + ";";
         logger.info("req---" + req);
         int i = connection.createStatement().executeUpdate(req);
         Map<String, Object> response = new HashMap<String, Object>();
@@ -55,12 +56,13 @@ public class Capteur {
 
     public String findAll(Connection connection, String requestName) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "SELECT c.id AS id, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id ;";
+        String req = "SELECT c.id AS id, date_capteur, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id ORDER BY date_capteur ASC;";
         ResultSet rs = connection.createStatement().executeQuery(req);
         List<Map> enterprises = new ArrayList<Map>();
         while (rs.next()) {
             Map<String, Object> hm = new HashMap<String, Object>();
             hm.put("id", rs.getInt("id"));
+            hm.put("date_capteur", rs.getString("date_capteur"));
             hm.put("code", rs.getString("code"));
             hm.put("type_capteur", rs.getString("type_capteur"));
             hm.put("valeur_capteur", rs.getDouble("valeur_capteur"));
@@ -80,13 +82,14 @@ public class Capteur {
 
     public String findByIdEnterprise(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        String req = "SELECT c.id AS id, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id WHERE  e.id=" + (Integer) dataLoading.get("id_enterprise") + ";";
+        String req = "SELECT c.id AS id, date_capteur, c.code AS code, type_capteur, valeur_capteur, id_local, l.numero AS numero, l.etage As etage, l.batiment AS batiment, e.id AS id_enterprise FROM public.capteur AS c INNER JOIN public.local AS l ON c.id_local = l.id INNER JOIN public.enterprise AS e ON l.id_enterprise = e.id WHERE  e.id=" + (Integer) dataLoading.get("id_enterprise") + " ORDER BY date_capteur ASC;";
         logger.info("req---" + req);
         ResultSet rs = connection.createStatement().executeQuery(req);
         List<Map> enterprises = new ArrayList<Map>();
         while (rs.next()) {
             Map<String, Object> hm = new HashMap<String, Object>();
             hm.put("id", rs.getInt("id"));
+            hm.put("date_capteur", rs.getString("date_capteur"));
             hm.put("code", rs.getString("code"));
             hm.put("type_capteur", rs.getString("type_capteur"));
             hm.put("valeur_capteur", rs.getDouble("valeur_capteur"));
@@ -106,10 +109,11 @@ public class Capteur {
 
     public String findById(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT id, type_capteur, valeur_capteur, id_local, code FROM public.capteur WHERE id=" + (Integer) dataLoading.get("id") + ";");
+        ResultSet rs = connection.createStatement().executeQuery("SELECT id, date_capteur, type_capteur, valeur_capteur, id_local, code FROM public.capteur WHERE id=" + (Integer) dataLoading.get("id") + ";");
 
         Map<String, Object> hm = new HashMap<String, Object>();
         hm.put("id", rs.getInt("id"));
+        hm.put("date_capteur", rs.getString("date_capteur"));
         hm.put("code", rs.getString("code"));
         hm.put("type_capteur", rs.getString("type_capteur"));
         hm.put("valeur_capteur", rs.getDouble("valeur_capteur"));
