@@ -31,9 +31,9 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <Component id="jScrollPaneTable" min="-2" pref="274" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="panelTotal" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="panelBouton" min="-2" max="-2" attributes="0"/>
@@ -178,7 +178,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="756" max="32767" attributes="0"/>
+                  <EmptySpace pref="732" max="32767" attributes="0"/>
                   <Component id="jLabelNbreMobilier" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jTextFieldMobilier" min="-2" pref="53" max="-2" attributes="0"/>
@@ -194,7 +194,7 @@
                       <Component id="jLabelNbreMobilier" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="jTextFieldMobilier" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -202,7 +202,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelNbreMobilier">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mat&#xe9;riel"/>
+            <Property name="text" type="java.lang.String" value="Total mobiliers"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldMobilier">

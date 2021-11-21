@@ -209,7 +209,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         });
         jScrollPaneTable.setViewportView(table);
 
-        jLabelNbreMobilier.setText("Matériel");
+        jLabelNbreMobilier.setText("Total mobiliers");
 
         jTextFieldMobilier.setEnabled(false);
 
@@ -218,7 +218,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         panelTotalLayout.setHorizontalGroup(
             panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTotalLayout.createSequentialGroup()
-                .addContainerGap(756, Short.MAX_VALUE)
+                .addContainerGap(732, Short.MAX_VALUE)
                 .addComponent(jLabelNbreMobilier)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,7 +231,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
                 .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNbreMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
