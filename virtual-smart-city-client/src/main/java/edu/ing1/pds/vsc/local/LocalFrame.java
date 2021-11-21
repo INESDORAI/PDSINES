@@ -4,6 +4,7 @@ import edu.ing1.pds.vsc.enterprise.Enterprise;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -39,10 +40,31 @@ public class LocalFrame extends javax.swing.JInternalFrame {
         initFrame();
         initTableLocal();
         initComponents();
+        initNbreTotal();
     }
 
     private void initFrame() {
         crudLocal = new CrudLocal();
+    }
+
+    private void initNbreTotal() {
+
+        int place = 0;
+        int placeOccupee = 0;
+        double taux = 0;
+        for (Local local : localList) {
+            place = place + local.getNbrePlace();
+            placeOccupee = placeOccupee + local.getNbrePlaceOccupe();
+        }
+        if (place != 0) {
+            taux = (placeOccupee * 100.0 / place);
+        }
+        System.out.println("Taux " + taux);
+        jTextFieldLocal.setText("" + localList.size());
+        jTextFieldPlace.setText("" + place);
+        jTextFieldPlaceOccupee.setText("" + placeOccupee);
+        DecimalFormat df = new DecimalFormat("0.00");
+        jTextFieldTauxOccupation.setText(df.format(taux));
     }
 
     private void initTableLocal() {
@@ -109,8 +131,17 @@ public class LocalFrame extends javax.swing.JInternalFrame {
         buttonModifier = new javax.swing.JButton();
         buttonNouveau = new javax.swing.JButton();
         buttonSupprimer = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        panelNbreTotal = new javax.swing.JPanel();
+        jLabelNbreLocal = new javax.swing.JLabel();
+        jTextFieldTauxOccupation = new javax.swing.JTextField();
+        jLabelNbreTauxOccupation = new javax.swing.JLabel();
+        jTextFieldPlaceOccupee = new javax.swing.JTextField();
+        jLabelNbrePlaceOccupee = new javax.swing.JLabel();
+        jLabelNbrePlace = new javax.swing.JLabel();
+        jTextFieldPlace = new javax.swing.JTextField();
+        jTextFieldLocal = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Liste des locaux");
@@ -180,7 +211,7 @@ public class LocalFrame extends javax.swing.JInternalFrame {
                 .addComponent(buttonSupprimer)
                 .addGap(18, 18, 18)
                 .addComponent(buttonConsulter, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
                 .addComponent(buttonActualiser, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonFermer)
@@ -206,20 +237,78 @@ public class LocalFrame extends javax.swing.JInternalFrame {
                 tableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(table);
+        jScrollPane.setViewportView(table);
+
+        jLabelNbreLocal.setText("Local");
+
+        jTextFieldTauxOccupation.setEnabled(false);
+
+        jLabelNbreTauxOccupation.setText("Taux occupation");
+
+        jTextFieldPlaceOccupee.setEnabled(false);
+
+        jLabelNbrePlaceOccupee.setText("Place occupée");
+
+        jLabelNbrePlace.setText("Place ");
+
+        jTextFieldPlace.setEnabled(false);
+
+        jTextFieldLocal.setEnabled(false);
+
+        javax.swing.GroupLayout panelNbreTotalLayout = new javax.swing.GroupLayout(panelNbreTotal);
+        panelNbreTotal.setLayout(panelNbreTotalLayout);
+        panelNbreTotalLayout.setHorizontalGroup(
+            panelNbreTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNbreTotalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelNbreLocal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelNbrePlace)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldPlace, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelNbrePlaceOccupee)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldPlaceOccupee, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelNbreTauxOccupation)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldTauxOccupation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelNbreTotalLayout.setVerticalGroup(
+            panelNbreTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNbreTotalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelNbreTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNbreLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNbreTauxOccupation, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTauxOccupation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNbrePlaceOccupee, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPlaceOccupee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNbrePlace, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPlace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane)
+            .addComponent(panelNbreTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelNbreTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBouton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -380,8 +469,17 @@ public class LocalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonModifier;
     private javax.swing.JButton buttonNouveau;
     private javax.swing.JButton buttonSupprimer;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabelNbreLocal;
+    private javax.swing.JLabel jLabelNbrePlace;
+    private javax.swing.JLabel jLabelNbrePlaceOccupee;
+    private javax.swing.JLabel jLabelNbreTauxOccupation;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JTextField jTextFieldLocal;
+    private javax.swing.JTextField jTextFieldPlace;
+    private javax.swing.JTextField jTextFieldPlaceOccupee;
+    private javax.swing.JTextField jTextFieldTauxOccupation;
     private javax.swing.JPanel panelBouton;
+    private javax.swing.JPanel panelNbreTotal;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

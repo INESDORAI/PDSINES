@@ -121,4 +121,36 @@ public class Mobilier {
         response.put("data", hm);
         return mapper.writeValueAsString(response);
     }
+        
+    public String countAll(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
+        ObjectMapper mapper = new ObjectMapper();
+        String req = "SELECT COUNT(id) AS nbre FROM public.mobilier;";
+        logger.info("req---" + req);
+        ResultSet rs = connection.createStatement().executeQuery(req);
+        rs.next();
+        Map<String, Object> hm = new HashMap<String, Object>();
+
+        hm.put("nbre", rs.getInt(1));
+        rs.close();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("nameRequest", requestName);
+        response.put("data", hm);
+        return mapper.writeValueAsString(response);
+    }
+    
+    public String countByIdEnterprise(Connection connection, String requestName, Map<String, Object> dataLoading) throws JsonProcessingException, SQLException {
+        ObjectMapper mapper = new ObjectMapper();
+        String req = "SELECT COUNT(id) AS nbre FROM public.mobilier WHERE id=" + (Integer) dataLoading.get("id") + ";";
+        logger.info("req---" + req);
+        ResultSet rs = connection.createStatement().executeQuery(req);
+        rs.next();
+        Map<String, Object> hm = new HashMap<String, Object>();
+
+        hm.put("nbre", rs.getInt(1));
+        rs.close();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("nameRequest", requestName);
+        response.put("data", hm);
+        return mapper.writeValueAsString(response);
+    }
 }

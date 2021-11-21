@@ -17,16 +17,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Ines
  */
 public class MobilierFrame extends javax.swing.JInternalFrame {
-
+    
     private Enterprise enterprise;
     private String[] titreMobilier;
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
-
+    
     public List<Mobilier> mobilierList;
     private Mobilier mobilierSelected;
     private CrudMobilier crudMobilier;
-
+    
     private ReadMobilier readMobilier;
     private ConsulterMobilier consulterMobilier;
     private SupprimerMobilier supprimerMobilier;
@@ -39,13 +39,14 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         initFrame();
         initTableMobilier();
         initComponents();
+        jTextFieldMobilier.setText("" + mobilierList.size());
     }
-
+    
     private void initFrame() {
         crudMobilier = new CrudMobilier();
-
+        
     }
-
+    
     private void initTableMobilier() {
         if (defaultTableModel == null) {
             defaultTableModel = new DefaultTableModel() {
@@ -68,7 +69,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         }
         initTableModelMobilier();
     }
-
+    
     public void initTableModelMobilier() {
         try {
             mobilierList = crudMobilier.findByIdEnterprise(enterprise.getId());
@@ -84,7 +85,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
                 ligne.add(mobilier.getNumero());
                 ligne.add(mobilier.getEtage());
                 ligne.add(mobilier.getBatiment());
-
+                
                 defaultTableModel.addRow(ligne);
             }
         }
@@ -106,8 +107,11 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         buttonModifier = new javax.swing.JButton();
         buttonNouveau = new javax.swing.JButton();
         buttonSupprimer = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneTable = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        panelTotal = new javax.swing.JPanel();
+        jLabelNbreMobilier = new javax.swing.JLabel();
+        jTextFieldMobilier = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("liste des mobiliers");
@@ -177,7 +181,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
                 .addComponent(buttonSupprimer)
                 .addGap(18, 18, 18)
                 .addComponent(buttonConsulter, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonActualiser, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonFermer)
@@ -203,20 +207,48 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
                 tableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(table);
+        jScrollPaneTable.setViewportView(table);
+
+        jLabelNbreMobilier.setText("Matériel");
+
+        jTextFieldMobilier.setEnabled(false);
+
+        javax.swing.GroupLayout panelTotalLayout = new javax.swing.GroupLayout(panelTotal);
+        panelTotal.setLayout(panelTotalLayout);
+        panelTotalLayout.setHorizontalGroup(
+            panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTotalLayout.createSequentialGroup()
+                .addContainerGap(756, Short.MAX_VALUE)
+                .addComponent(jLabelNbreMobilier)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelTotalLayout.setVerticalGroup(
+            panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTotalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNbreMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMobilier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+            .addComponent(panelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPaneTable, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBouton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -264,11 +296,11 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         buttonConsulter.setEnabled(true);
         buttonSupprimer.setEnabled(true);
     }//GEN-LAST:event_tableMousePressed
-
+    
     private void closeMobilierFrame() {
         this.dispose();
     }
-
+    
     public void refrechMobilier() {
         if (mobilierList != null) {
             mobilierList.clear();
@@ -276,7 +308,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         removeAllTableMobilier();
         initTableModelMobilier();
     }
-
+    
     private void afficherMobilier() {
         if (selectedRow != -1) {
             try {
@@ -292,7 +324,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
             }
         }
     }
-
+    
     private void modifierMobilier() {
         if (selectedRow != -1) {
             try {
@@ -309,12 +341,12 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
         } else {
         }
     }
-
+    
     private void addMobilier() {
         readMobilier = new ReadMobilier(new JFrame(), true, this, enterprise, null, "add", crudMobilier);
         closeAjouterMobilier();
     }
-
+    
     private void deleteMobilier() {
         if (selectedRow != -1) {
             try {
@@ -323,7 +355,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
                 buttonConsulter.setEnabled(false);
                 supprimerMobilier = new SupprimerMobilier(null, true, this, mobilierSelected, crudMobilier);
                 closeSupprimerMobilier();
-
+                
                 initSelectRow();
             } catch (HeadlessException e) {
                 e.printStackTrace();
@@ -331,7 +363,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
             }
         }
     }
-
+    
     private void closeAjouterMobilier() {
         readMobilier.addWindowListener(new WindowAdapter() {
             @Override
@@ -340,7 +372,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     private void closeConsulterMobilier() {
         consulterMobilier.addWindowListener(new WindowAdapter() {
             @Override
@@ -349,7 +381,7 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     private void closeSupprimerMobilier() {
         supprimerMobilier.addWindowListener(new WindowAdapter() {
             @Override
@@ -358,13 +390,13 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     private void removeAllTableMobilier() {
         for (int i = defaultTableModel.getRowCount() - 1; i >= 0; --i) {
             defaultTableModel.removeRow(i);
         }
     }
-
+    
     private void initSelectRow() {
         selectedRow = -1;
         mobilierSelected = null;
@@ -377,8 +409,11 @@ public class MobilierFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonModifier;
     private javax.swing.JButton buttonNouveau;
     private javax.swing.JButton buttonSupprimer;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabelNbreMobilier;
+    private javax.swing.JScrollPane jScrollPaneTable;
+    private javax.swing.JTextField jTextFieldMobilier;
     private javax.swing.JPanel panelBouton;
+    private javax.swing.JPanel panelTotal;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,10 @@ import edu.ing1.pds.vsc.local.Local;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -25,9 +28,12 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
     private Enterprise enterprise;
     private String[] titreCapteur;
     private DefaultTableModel defaultTableModel;
+    private String[] titreCapteurAnnee;
+    private DefaultTableModel defaultTableModelAnnee;
     private int selectedRow;
 
     public List<Capteur> capteurList;
+    public List<CapteurAnnee> capteurAnneeList;
     private Capteur capteurSelected;
     private CrudCapteur crudCapteur;
 
@@ -37,29 +43,65 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
 
     private DefaultComboBoxModel comboBoxModelMois;
     private DefaultComboBoxModel comboBoxModelAnnee;
+    private DefaultComboBoxModel comboBoxModelAnneeMin;
+    private DefaultComboBoxModel comboBoxModelAnneeMax;
     private DefaultComboBoxModel comboBoxModelLocal;
 
     private List<Local> localList;
     private Integer mois;
     private Integer annee;
+    private Integer anneeMax;
+    private Integer anneeMin;
     private Integer idLocal;
+
+    private boolean isAll;
+    private boolean isDernierMois;
+    private boolean isMoisAnnee;
+    private boolean isIntervalAnnee;
 
     /**
      * Creates new form CapteurFrame
      */
     public CapteurFrame(Enterprise enterprise) {
         this.enterprise = enterprise;
-        initComboBoxLocal();
         initComboBoxAnnee();
+        initComboBoxAnneeMin();
+        initComboBoxAnneeMax();
         initComboBoxAMois();
+        initComboBoxLocal();
         initFrame();
         initTableCapteur();
         initComponents();
+        initRadioButton();
+        rechercher();
     }
 
     private void initFrame() {
         crudCapteur = new CrudCapteur();
+    }
 
+    private void initRadioButton() {
+        buttonGroup.add(jRadioButtonIntervalAnnee);
+        buttonGroup.add(jRadioButtonMoisDernier);
+        buttonGroup.add(jRadioButtonMoisAnnee);
+        buttonGroup.add(jRadioButtonTous);
+
+        jRadioButtonTous.setSelected(true);
+        jRadioButtonMoisAnnee.setSelected(false);
+        jRadioButtonMoisDernier.setSelected(false);
+        jRadioButtonIntervalAnnee.setSelected(false);
+
+        jComboBoxAnneeMin.setEnabled(false);
+        jComboBoxAnneeMax.setEnabled(false);
+        jComboBoxMois.setEnabled(false);
+        jComboBoxAnnee.setEnabled(false);
+
+        isAll = true;
+        isMoisAnnee = false;
+        isDernierMois = false;
+        isIntervalAnnee = false;
+
+        table.setModel(defaultTableModel);
     }
 
     private void initTableCapteur() {
@@ -82,7 +124,24 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         if (!(capteurSelected == null)) {
             capteurSelected = new Capteur();
         }
-        initTableModelCapteur();
+    }
+
+    private void initTableCapteurAnnee() {
+        if (defaultTableModelAnnee == null) {
+            defaultTableModelAnnee = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int col) {
+                    if (col == 0 || col == 1) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            ;
+            };
+            titreCapteurAnnee = "Année,Nombre capteur".split(",");
+            defaultTableModelAnnee.setColumnIdentifiers(titreCapteurAnnee);
+        }
     }
 
     public void initTableModelCapteur() {
@@ -107,36 +166,79 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    public void initTableModelCapteurByIdLocalMoisAnnee() {
+    public void rechercher() {
         try {
-            if (idLocal == null && (mois == null && annee == null)) {
-                capteurList = crudCapteur.findByIdEnterprise(enterprise.getId());
-            }
-            if (idLocal != null && (mois == null && annee == null)) {
-                capteurList = crudCapteur.findByIdEnterpriseIdLocal(enterprise.getId(), idLocal);
-            }
-            if (idLocal == null && (mois != null && annee != null)) {
-                capteurList = crudCapteur.findByIdEnterpriseMoisAnnee(enterprise.getId(), mois, annee);
-            }
-            if (idLocal != null && (mois != null && annee != null)) {
-                capteurList = crudCapteur.findByIdEnterpriseIdLocalMoisAnnee(enterprise.getId(), idLocal, mois, annee);
+            if (isAll) {
+                if (idLocal == null) {
+                    capteurList = crudCapteur.findByIdEnterprise(enterprise.getId());
+                } else {
+                    capteurList = crudCapteur.findByIdEnterpriseIdLocal(enterprise.getId(), idLocal);
+                }
+            } else if (isMoisAnnee) {
+                if (idLocal == null && (mois == null && annee == null)) {
+                    capteurList = crudCapteur.findByIdEnterprise(enterprise.getId());
+                } else if (idLocal == null && (mois == null && annee != null)) {
+                    capteurList = crudCapteur.findByIdEnterpriseAnnee(enterprise.getId(), annee);
+                } else if (idLocal != null && (mois == null && annee == null)) {
+                    capteurList = crudCapteur.findByIdEnterpriseIdLocal(enterprise.getId(), idLocal);
+                } else if (idLocal == null && (mois != null && annee != null)) {
+                    capteurList = crudCapteur.findByIdEnterpriseMoisAnnee(enterprise.getId(), mois, annee);
+                } else if (idLocal != null && (mois != null && annee != null)) {
+                    capteurList = crudCapteur.findByIdEnterpriseIdLocalMoisAnnee(enterprise.getId(), idLocal, mois, annee);
+                } else if (idLocal != null && (mois == null && annee != null)) {
+                    capteurList = crudCapteur.findByIdEnterpriseIdLocalAnnee(enterprise.getId(), idLocal, annee);
+                }
+            } else if (isDernierMois) {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar c = Calendar.getInstance();
+                c.setTime(new Date());
+                c.add(Calendar.MONTH, -1);
+                String dateDebutString = dateFormat.format(c.getTime());
+                String dateFinString = dateFormat.format(new Date());
+                if (idLocal != null) {
+                    capteurList = crudCapteur.findByIdEnterpriseIdLocalDate(enterprise.getId(), idLocal, dateDebutString, dateFinString);
+                } else if (idLocal == null) {
+                    capteurList = crudCapteur.findByIdEnterpriseDate(enterprise.getId(), dateDebutString, dateFinString);
+                }
+            } else if (isIntervalAnnee) {
+                capteurAnneeList = crudCapteur.findByIdEnterpriseIntervalAnnee(enterprise.getId(), anneeMin, anneeMax);
             }
         } catch (Exception ex) {
             Logger.getLogger(CapteurFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (capteurList != null && !capteurList.isEmpty()) {
-            for (Capteur capteur : capteurList) {
-                Vector<Object> ligne = new Vector<Object>();
-                ligne.add(capteur.getDateCapteur());
-                ligne.add(capteur.getCode());
-                ligne.add(capteur.getTypeCapteur());
-                ligne.add(capteur.getValeurCapteur());
-                ligne.add(capteur.getNumero());
-                ligne.add(capteur.getEtage());
-                ligne.add(capteur.getBatiment());
+        if (isMoisAnnee || isDernierMois || isAll) {
+            removeAllTableCapteur();
+            if (capteurList != null && !capteurList.isEmpty()) {
+                for (Capteur capteur : capteurList) {
+                    Vector<Object> ligne = new Vector<Object>();
+                    ligne.add(capteur.getDateCapteur());
+                    ligne.add(capteur.getCode());
+                    ligne.add(capteur.getTypeCapteur());
+                    ligne.add(capteur.getValeurCapteur());
+                    ligne.add(capteur.getNumero());
+                    ligne.add(capteur.getEtage());
+                    ligne.add(capteur.getBatiment());
 
-                defaultTableModel.addRow(ligne);
+                    defaultTableModel.addRow(ligne);
+                }
             }
+            table.setModel(defaultTableModel);
+            jTextFieldCapteur.setText("" + capteurList.size());
+        } else if (isIntervalAnnee) {
+            removeAllTableCapteurAnnee();
+            int nbre = 0;
+            if (capteurAnneeList != null && !capteurAnneeList.isEmpty()) {
+                for (CapteurAnnee capteurAnnee : capteurAnneeList) {
+                    Vector<Object> ligne = new Vector<Object>();
+                    ligne.add(capteurAnnee.getAnnee());
+                    ligne.add(capteurAnnee.getNbre());
+                    System.out.println(capteurAnnee);
+                    defaultTableModelAnnee.addRow(ligne);
+                    nbre = nbre + capteurAnnee.getNbre();
+                }
+            }
+            table.setModel(defaultTableModelAnnee);
+            jTextFieldCapteur.setText("" + nbre);
         }
     }
 
@@ -149,6 +251,7 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         panelBouton = new javax.swing.JPanel();
         buttonFermer = new javax.swing.JButton();
         buttonActualiser = new javax.swing.JButton();
@@ -156,17 +259,33 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         buttonModifier = new javax.swing.JButton();
         buttonNouveau = new javax.swing.JButton();
         buttonSupprimer = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jLabelMois = new javax.swing.JLabel();
-        jComboBoxMois = new javax.swing.JComboBox<>();
+        panelRechercher = new javax.swing.JPanel();
+        jLabelMsg = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jRadioButtonIntervalAnnee = new javax.swing.JRadioButton();
+        jLabelAnneeMin = new javax.swing.JLabel();
+        jComboBoxAnneeMin = new javax.swing.JComboBox<>();
+        jLabelAnneeMax = new javax.swing.JLabel();
+        jComboBoxAnneeMax = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
+        jRadioButtonMoisDernier = new javax.swing.JRadioButton();
+        jPanel5 = new javax.swing.JPanel();
+        jRadioButtonMoisAnnee = new javax.swing.JRadioButton();
         jLabelAnnee = new javax.swing.JLabel();
         jComboBoxAnnee = new javax.swing.JComboBox<>();
+        jComboBoxMois = new javax.swing.JComboBox<>();
+        jLabelMois = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonRechercher = new javax.swing.JButton();
         jLabelLocal = new javax.swing.JLabel();
         jComboBoxLocal = new javax.swing.JComboBox<>();
-        jButtonRechercher = new javax.swing.JButton();
-        jLabelMsg = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jRadioButtonTous = new javax.swing.JRadioButton();
+        panelNbreTotal = new javax.swing.JPanel();
+        jTextFieldCapteur = new javax.swing.JTextField();
+        jLabelNbreCapteur = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Liste des capteurs");
@@ -236,7 +355,7 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
                 .addComponent(buttonSupprimer)
                 .addGap(18, 18, 18)
                 .addComponent(buttonConsulter, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonActualiser, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonFermer)
@@ -262,17 +381,100 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
                 tableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(table);
+        jScrollPane.setViewportView(table);
 
-        jLabelMois.setText("Mois");
+        jLabelMsg.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelMsg.setForeground(new java.awt.Color(255, 51, 51));
 
-        jComboBoxMois.setModel(comboBoxModelMois);
-        jComboBoxMois.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxMoisItemStateChanged(evt);
+        jRadioButtonIntervalAnnee.setText("Interval année");
+        jRadioButtonIntervalAnnee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonIntervalAnneeActionPerformed(evt);
             }
         });
 
+        jLabelAnneeMin.setLabelFor(jComboBoxAnneeMin);
+        jLabelAnneeMin.setText("Année min");
+
+        jComboBoxAnneeMin.setModel(comboBoxModelAnneeMin);
+        jComboBoxAnneeMin.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxAnneeMinItemStateChanged(evt);
+            }
+        });
+
+        jLabelAnneeMax.setLabelFor(jComboBoxAnneeMax);
+        jLabelAnneeMax.setText("Année max");
+
+        jComboBoxAnneeMax.setModel(comboBoxModelAnneeMax);
+        jComboBoxAnneeMax.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxAnneeMaxItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonIntervalAnnee)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelAnneeMin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxAnneeMin, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelAnneeMax, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxAnneeMax, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonIntervalAnnee)
+                    .addComponent(jLabelAnneeMax)
+                    .addComponent(jComboBoxAnneeMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAnneeMin)
+                    .addComponent(jComboBoxAnneeMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jRadioButtonMoisDernier.setText("30 jours dernier");
+        jRadioButtonMoisDernier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMoisDernierActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonMoisDernier)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonMoisDernier)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jRadioButtonMoisAnnee.setText("Mois/année");
+        jRadioButtonMoisAnnee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMoisAnneeActionPerformed(evt);
+            }
+        });
+
+        jLabelAnnee.setLabelFor(jComboBoxAnnee);
         jLabelAnnee.setText("Année");
 
         jComboBoxAnnee.setModel(comboBoxModelAnnee);
@@ -282,6 +484,54 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        jComboBoxMois.setModel(comboBoxModelMois);
+        jComboBoxMois.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxMoisItemStateChanged(evt);
+            }
+        });
+
+        jLabelMois.setLabelFor(jComboBoxMois);
+        jLabelMois.setText("Mois");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonMoisAnnee)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelMois, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonMoisAnnee)
+                    .addComponent(jLabelAnnee)
+                    .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMois)
+                    .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jButtonRechercher.setText("Rechercher");
+        jButtonRechercher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRechercherActionPerformed(evt);
+            }
+        });
+
+        jLabelLocal.setLabelFor(jComboBoxLocal);
         jLabelLocal.setText("Local");
 
         jComboBoxLocal.setModel(comboBoxModelLocal);
@@ -291,52 +541,112 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonRechercher.setText("Rechercher");
-        jButtonRechercher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRechercherActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabelMois, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(jLabelAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(jLabelLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonRechercher)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelLocal)
+                    .addComponent(jComboBoxLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRechercher))
+                .addContainerGap())
+        );
+
+        jRadioButtonTous.setText("Tous");
+        jRadioButtonTous.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonTousActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonTous)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonTous)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelRechercherLayout = new javax.swing.GroupLayout(panelRechercher);
+        panelRechercher.setLayout(panelRechercherLayout);
+        panelRechercherLayout.setHorizontalGroup(
+            panelRechercherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRechercherLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRechercherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabelMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRechercherLayout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRechercherLayout.setVerticalGroup(
+            panelRechercherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRechercherLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRechercherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTextFieldCapteur.setEnabled(false);
+
+        jLabelNbreCapteur.setText("Matériel");
+
+        javax.swing.GroupLayout panelNbreTotalLayout = new javax.swing.GroupLayout(panelNbreTotal);
+        panelNbreTotal.setLayout(panelNbreTotalLayout);
+        panelNbreTotalLayout.setHorizontalGroup(
+            panelNbreTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNbreTotalLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelLocal)
-                        .addComponent(jComboBoxLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonRechercher))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelAnnee)
-                        .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelMois)
-                        .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(jLabelNbreCapteur)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldCapteur, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelNbreTotalLayout.setVerticalGroup(
+            panelNbreTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNbreTotalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelNbreTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNbreCapteur, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCapteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -344,16 +654,20 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelNbreTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane)
+            .addComponent(panelRechercher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(panelRechercher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelNbreTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBouton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -367,12 +681,7 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
 
     private void buttonActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualiserActionPerformed
         // TODO add your handling code here:
-        mois = null;
-        annee = null;
-        idLocal = null;
-        jComboBoxAnnee.setSelectedItem("");
-        jComboBoxMois.setSelectedItem("");
-        jComboBoxLocal.setSelectedItem("");
+        initRadioButton();
         refrechCapteur();
     }//GEN-LAST:event_buttonActualiserActionPerformed
 
@@ -410,18 +719,28 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
 
     private void jButtonRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercherActionPerformed
         // TODO add your handling code here:
-        System.out.println("mois---" + mois);
-        System.out.println("annee---" + annee);
-        System.out.println("idLocal---" + idLocal);
-        System.out.println("idEnterprise---" + enterprise.getId());
         boolean rechercher = true;
-        if (mois == null && annee != null) {
-            jLabelMsg.setText("Mois est vide");
-            rechercher = false;
+        jLabelMsg.setText("");
+        if (isMoisAnnee) {
+            if (mois != null && annee == null) {
+                jLabelMsg.setText("Annee est vide");
+                rechercher = false;
+            }
         }
-        if (mois != null && annee == null) {
-            jLabelMsg.setText("Annee est vide");
-            rechercher = false;
+        if (isIntervalAnnee) {
+            if (anneeMin == null && anneeMax != null) {
+                jLabelMsg.setText("Année min est vide");
+                rechercher = false;
+            } else if (anneeMin != null && anneeMax == null) {
+                jLabelMsg.setText("Année max est vide");
+                rechercher = false;
+            } else if (anneeMin == null && anneeMax == null) {
+                jLabelMsg.setText("Année min et max sont vide");
+                rechercher = false;
+            } else if (anneeMin != null && anneeMax != null && anneeMin > anneeMax) {
+                jLabelMsg.setText("Année min est superieur à l'année max");
+                rechercher = false;
+            }
         }
         if (rechercher) {
             refrechCapteur();
@@ -508,6 +827,98 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jComboBoxLocalItemStateChanged
 
+    private void jComboBoxAnneeMinItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxAnneeMinItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == 1) {
+            String anneeString = evt.getItem().toString();
+            if (anneeString != null && !anneeString.isEmpty()) {
+                anneeMin = Integer.valueOf(anneeString);
+            }
+        } else {
+            anneeMin = null;
+        }
+    }//GEN-LAST:event_jComboBoxAnneeMinItemStateChanged
+
+    private void jComboBoxAnneeMaxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxAnneeMaxItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == 1) {
+            String anneeString = evt.getItem().toString();
+            if (anneeString != null && !anneeString.isEmpty()) {
+                anneeMax = Integer.valueOf(anneeString);
+            }
+        } else {
+            anneeMax = null;
+        }
+    }//GEN-LAST:event_jComboBoxAnneeMaxItemStateChanged
+
+    private void jRadioButtonMoisDernierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMoisDernierActionPerformed
+        // TODO add your handling code here:
+        initTableCapteur();
+        table.setModel(defaultTableModel);
+        actionRadioButon();
+    }//GEN-LAST:event_jRadioButtonMoisDernierActionPerformed
+
+    private void jRadioButtonIntervalAnneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonIntervalAnneeActionPerformed
+        // TODO add your handling code here:
+        initTableCapteurAnnee();
+        table.setModel(defaultTableModelAnnee);
+        actionRadioButon();
+    }//GEN-LAST:event_jRadioButtonIntervalAnneeActionPerformed
+
+    private void jRadioButtonMoisAnneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMoisAnneeActionPerformed
+        // TODO add your handling code here:
+        initTableCapteur();
+        table.setModel(defaultTableModel);
+        actionRadioButon();
+    }//GEN-LAST:event_jRadioButtonMoisAnneeActionPerformed
+
+    private void jRadioButtonTousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTousActionPerformed
+        // TODO add your handling code here:
+        initTableCapteur();
+        table.setModel(defaultTableModel);
+        actionRadioButon();
+    }//GEN-LAST:event_jRadioButtonTousActionPerformed
+
+    private void actionRadioButon() {
+        jComboBoxAnneeMin.setSelectedItem("");
+        jComboBoxAnneeMax.setSelectedItem("");
+        jComboBoxAnnee.setSelectedItem("");
+        jComboBoxMois.setSelectedItem("");
+        jComboBoxLocal.setSelectedItem("");
+        jComboBoxAnneeMin.setEnabled(false);
+        jComboBoxAnneeMax.setEnabled(false);
+        jComboBoxMois.setEnabled(false);
+        jComboBoxAnnee.setEnabled(false);
+        jComboBoxLocal.setEnabled(false);
+        isDernierMois = jRadioButtonMoisDernier.isSelected();
+        isMoisAnnee = jRadioButtonMoisAnnee.isSelected();
+        isIntervalAnnee = jRadioButtonIntervalAnnee.isSelected();
+        isAll = jRadioButtonTous.isSelected();
+
+        removeAllTableCapteur();
+
+        if (capteurList != null) {
+            capteurList.clear();
+        }
+        if (capteurAnneeList != null) {
+            capteurAnneeList.clear();
+        }
+        if (isDernierMois || isAll) {
+            jComboBoxLocal.setEnabled(true);
+
+        }
+        if (isMoisAnnee) {
+            jComboBoxMois.setEnabled(true);
+            jComboBoxAnnee.setEnabled(true);
+            jComboBoxLocal.setEnabled(true);
+        }
+        if (isIntervalAnnee) {
+            jComboBoxAnneeMin.setEnabled(true);
+            jComboBoxAnneeMax.setEnabled(true);
+        }
+
+    }
+
     private void closeCapteurFrame() {
         this.dispose();
     }
@@ -516,8 +927,11 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         if (capteurList != null) {
             capteurList.clear();
         }
-        removeAllTableCapteur();
-        initTableModelCapteurByIdLocalMoisAnnee();
+        if (capteurAnneeList != null) {
+            capteurAnneeList.clear();
+        }
+        
+        rechercher();
     }
 
     private void afficherCapteur() {
@@ -608,6 +1022,12 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         }
     }
 
+    private void removeAllTableCapteurAnnee() {
+        for (int i = defaultTableModelAnnee.getRowCount() - 1; i >= 0; --i) {
+            defaultTableModelAnnee.removeRow(i);
+        }
+    }
+
     private void initSelectRow() {
         selectedRow = -1;
         capteurSelected = null;
@@ -633,10 +1053,32 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
         item.add("");
         Calendar calendar = Calendar.getInstance();
         int anneeCourante = calendar.get(Calendar.YEAR);
-        for (int i = 2020; i <= anneeCourante; i++) {
+        for (int i = 2000; i <= anneeCourante; i++) {
             item.add("" + i);
         }
         comboBoxModelAnnee = new DefaultComboBoxModel(item);
+    }
+
+    private void initComboBoxAnneeMin() {
+        Vector<String> item = new Vector<>();
+        item.add("");
+        Calendar calendar = Calendar.getInstance();
+        int anneeCourante = calendar.get(Calendar.YEAR);
+        for (int i = 2000; i <= anneeCourante; i++) {
+            item.add("" + i);
+        }
+        comboBoxModelAnneeMin = new DefaultComboBoxModel(item);
+    }
+
+    private void initComboBoxAnneeMax() {
+        Vector<String> item = new Vector<>();
+        item.add("");
+        Calendar calendar = Calendar.getInstance();
+        int anneeCourante = calendar.get(Calendar.YEAR);
+        for (int i = 2000; i <= anneeCourante; i++) {
+            item.add("" + i);
+        }
+        comboBoxModelAnneeMax = new DefaultComboBoxModel(item);
     }
 
     private void initComboBoxAMois() {
@@ -661,20 +1103,37 @@ public class CapteurFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonActualiser;
     private javax.swing.JButton buttonConsulter;
     private javax.swing.JButton buttonFermer;
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton buttonModifier;
     private javax.swing.JButton buttonNouveau;
     private javax.swing.JButton buttonSupprimer;
     private javax.swing.JButton jButtonRechercher;
     private javax.swing.JComboBox<String> jComboBoxAnnee;
+    private javax.swing.JComboBox<String> jComboBoxAnneeMax;
+    private javax.swing.JComboBox<String> jComboBoxAnneeMin;
     private javax.swing.JComboBox<String> jComboBoxLocal;
     private javax.swing.JComboBox<String> jComboBoxMois;
     private javax.swing.JLabel jLabelAnnee;
+    private javax.swing.JLabel jLabelAnneeMax;
+    private javax.swing.JLabel jLabelAnneeMin;
     private javax.swing.JLabel jLabelLocal;
     private javax.swing.JLabel jLabelMois;
     private javax.swing.JLabel jLabelMsg;
+    private javax.swing.JLabel jLabelNbreCapteur;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JRadioButton jRadioButtonIntervalAnnee;
+    private javax.swing.JRadioButton jRadioButtonMoisAnnee;
+    private javax.swing.JRadioButton jRadioButtonMoisDernier;
+    private javax.swing.JRadioButton jRadioButtonTous;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JTextField jTextFieldCapteur;
     private javax.swing.JPanel panelBouton;
+    private javax.swing.JPanel panelNbreTotal;
+    private javax.swing.JPanel panelRechercher;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

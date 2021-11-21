@@ -1,5 +1,7 @@
 package edu.ing1.pds.vsc.local;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Ines
@@ -13,7 +15,7 @@ public class Local {
     private String numero;
     private Integer nbrePlace;
     private Integer nbrePlaceOccupe;
-    private double tauxOccupation;
+    private String tauxOccupation;
     private int nbreCapteur;
     private int nbreMateriel;
     private int nbreMobilier;
@@ -86,15 +88,17 @@ public class Local {
         this.idEnterprise = idEnterprise;
     }
 
-    public double getTauxOccupation() {
+    public String getTauxOccupation() {
         if (nbrePlace == 0) {
-            tauxOccupation = 0.00;
+            tauxOccupation = "0.00";
         }
-        tauxOccupation = (nbrePlaceOccupe * Double.valueOf(100.00)) / nbrePlace;
+        double taux = (nbrePlaceOccupe * Double.valueOf(100.00)) / nbrePlace;
+        DecimalFormat df = new DecimalFormat("0.00");
+        tauxOccupation = df.format(taux);
         return tauxOccupation;
     }
 
-    public void setTauxOccupation(double tauxOccupation) {
+    public void setTauxOccupation(String tauxOccupation) {
         this.tauxOccupation = tauxOccupation;
     }
 

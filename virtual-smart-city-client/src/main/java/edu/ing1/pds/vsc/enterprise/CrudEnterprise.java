@@ -28,7 +28,7 @@ public class CrudEnterprise {
         HashMap<String, Object> param = new HashMap<String, Object>();
         request.setData(param);
         Request response = connection.sendRequest(request);
-        System.out.println("---"+response.getData());
+        System.out.println("---" + response.getData());
         enterpriseMap = (ArrayList<Map>) response.getData();
         List<Enterprise> enterpriseList = new ArrayList<>();
         for (Map map : enterpriseMap) {
@@ -118,5 +118,49 @@ public class CrudEnterprise {
         Request response = connection.sendRequest(request);
         msg = (String) response.getData();
         return msg;
+    }
+
+    public Integer nbreTotalCapteur() throws Exception {
+        ClientToServer connection = new ClientToServer();
+        Request request = new Request();
+        request.setNameRequest("count_capteur_all_enterprise");
+        Map<String, Object> param = new HashMap<String, Object>();
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        Map attrib = (Map) response.getData();
+        return (Integer) attrib.get("nbre");
+    }
+
+    public Integer nbreTotalLocal() throws Exception {
+        ClientToServer connection = new ClientToServer();
+        Request request = new Request();
+        request.setNameRequest("count_local_all_enterprise");
+        Map<String, Object> param = new HashMap<String, Object>();
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        Map attrib = (Map) response.getData();
+        return (Integer) attrib.get("nbre");
+    }
+
+    public Integer nbreTotalMateriel() throws Exception {
+        ClientToServer connection = new ClientToServer();
+        Request request = new Request();
+        request.setNameRequest("count_materiel_all_enterprise");
+        Map<String, Object> param = new HashMap<String, Object>();
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        Map attrib = (Map) response.getData();
+        return (Integer) attrib.get("nbre");
+    }
+
+    public Integer nbreTotalMobilier() throws Exception {
+        ClientToServer connection = new ClientToServer();
+        Request request = new Request();
+        request.setNameRequest("count_mobilier_all_enterprise");
+        Map<String, Object> param = new HashMap<String, Object>();
+        request.setData(param);
+        Request response = connection.sendRequest(request);
+        Map attrib = (Map) response.getData();
+        return (Integer) attrib.get("nbre");
     }
 }

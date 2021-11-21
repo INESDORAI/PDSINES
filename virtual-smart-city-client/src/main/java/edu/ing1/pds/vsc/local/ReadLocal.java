@@ -367,7 +367,7 @@ public class ReadLocal extends javax.swing.JDialog {
             return false;
         }
         if (local.getLib() == null || (local.getLib() != null && local.getLib().isEmpty())) {
-            labelErreur.setText("Etage est vide");
+            labelErreur.setText("Libélle est vide");
             return false;
         }
         if (local.getNbrePlace() == null || (local.getNbrePlace() != null && local.getNbrePlace() == 0)) {

@@ -79,6 +79,12 @@ public class ServerToClient {
                 case "select_local_by_id_enterprise":
                     responseString = local.findByIdEnterprise(connection, requestName, data);
                     break;
+                case "count_local_all_enterprise":
+                    responseString = local.countAll(connection, requestName, data);
+                    break;
+                case "count_local_by_id_enterprise":
+                    responseString = local.countByIdEnterprise(connection, requestName, data);
+                    break;
                 case "insert_capteur":
                     responseString = capteur.add(connection, requestName, data);
                     break;
@@ -106,6 +112,27 @@ public class ServerToClient {
                 case "select_capteur_by_id_enterprise_mois_annee":
                     responseString = capteur.findByIdEnterpriseMoisAnnee(connection, requestName, data);
                     break;
+                case "select_capteur_by_id_enterprise_id_local_annee":
+                    responseString = capteur.findByIdEnterpriseIdLocalAnnee(connection, requestName, data);
+                    break;
+                case "select_capteur_by_id_enterprise_annee":
+                    responseString = capteur.findByIdEnterpriseAnnee(connection, requestName, data);
+                    break;
+                case "select_capteur_by_id_enterprise_interval_annee":
+                    responseString = capteur.findByIdEnterpriseIntervalAnnee(connection, requestName, data);
+                    break;
+                case "select_capteur_by_id_enterprise_id_local_date":
+                    responseString = capteur.findByIdEnterpriseIdLocalDate(connection, requestName, data);
+                    break;
+                case "select_capteur_by_id_enterprise_date":
+                    responseString = capteur.findByIdEnterpriseDate(connection, requestName, data);
+                    break;
+                case "count_capteur_all_enterprise":
+                    responseString = capteur.countAll(connection, requestName, data);
+                    break;
+                case "count_capteur_by_id_enterprise":
+                    responseString = capteur.countByIdEnterprise(connection, requestName, data);
+                    break;
                 case "insert_mobilier":
                     responseString = mobilier.add(connection, requestName, data);
                     break;
@@ -124,6 +151,12 @@ public class ServerToClient {
                 case "select_mobilier_by_id_enterprise":
                     responseString = mobilier.findByIdEnterprise(connection, requestName, data);
                     break;
+                case "count_mobilier_all_enterprise":
+                    responseString = mobilier.countAll(connection, requestName, data);
+                    break;
+                case "count_mobilier_by_id_enterprise":
+                    responseString = mobilier.countByIdEnterprise(connection, requestName, data);
+                    break;
                 case "insert_materiel":
                     responseString = materiel.add(connection, requestName, data);
                     break;
@@ -141,6 +174,12 @@ public class ServerToClient {
                     break;
                 case "select_materiel_by_id_enterprise":
                     responseString = materiel.findByIdEnterprise(connection, requestName, data);
+                    break;
+                case "count_materiel_all_enterprise":
+                    responseString = materiel.countAll(connection, requestName, data);
+                    break;
+                case "count_materiel_by_id_enterprise":
+                    responseString = materiel.countByIdEnterprise(connection, requestName, data);
                     break;
                 case "insert_consommation_materiel":
                     responseString = consommationMateriel.add(connection, requestName, data);

@@ -17,16 +17,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Ines
  */
 public class MaterielFrame extends javax.swing.JInternalFrame {
-
+    
     private Enterprise enterprise;
     private String[] titreMateriel;
     private DefaultTableModel defaultTableModel;
     private int selectedRow;
-
+    
     public List<Materiel> materielList;
     private Materiel materielSelected;
     private CrudMateriel crudMateriel;
-
+    
     private ReadMateriel readMateriel;
     private ConsulterMateriel consulterMateriel;
     private SupprimerMateriel supprimerMateriel;
@@ -39,12 +39,13 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         initFrame();
         initTableMateriel();
         initComponents();
+        jTextFieldMateriel.setText("" + materielList.size());
     }
-
+    
     private void initFrame() {
         crudMateriel = new CrudMateriel();
     }
-
+    
     private void initTableMateriel() {
         if (defaultTableModel == null) {
             defaultTableModel = new DefaultTableModel() {
@@ -67,7 +68,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         }
         initTableModelMateriel();
     }
-
+    
     public void initTableModelMateriel() {
         try {
             materielList = crudMateriel.findByIdEnterprise(enterprise.getId());
@@ -85,7 +86,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 ligne.add(materiel.getNumero());
                 ligne.add(materiel.getEtage());
                 ligne.add(materiel.getBatiment());
-
+                
                 defaultTableModel.addRow(ligne);
             }
         }
@@ -101,34 +102,21 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         panelBouton = new javax.swing.JPanel();
-        buttonFermer = new javax.swing.JButton();
-        buttonActualiser = new javax.swing.JButton();
         buttonConsulter = new javax.swing.JButton();
-        buttonModifier = new javax.swing.JButton();
         buttonNouveau = new javax.swing.JButton();
         buttonSupprimer = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        buttonActualiser = new javax.swing.JButton();
+        buttonFermer = new javax.swing.JButton();
+        buttonModifier = new javax.swing.JButton();
+        jScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        panelTotal = new javax.swing.JPanel();
+        jLabelNbreMateriel = new javax.swing.JLabel();
+        jTextFieldMateriel = new javax.swing.JTextField();
 
         setClosable(true);
-        setTitle("Liste des matérials");
+        setTitle("Liste des matériels");
         setVisible(true);
-
-        buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        buttonFermer.setText("Fermer");
-        buttonFermer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonFermerActionPerformed(evt);
-            }
-        });
-
-        buttonActualiser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        buttonActualiser.setText("Actualiser");
-        buttonActualiser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonActualiserActionPerformed(evt);
-            }
-        });
 
         buttonConsulter.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         buttonConsulter.setText("Consulter");
@@ -136,15 +124,6 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         buttonConsulter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonConsulterActionPerformed(evt);
-            }
-        });
-
-        buttonModifier.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        buttonModifier.setText("Modifier");
-        buttonModifier.setEnabled(false);
-        buttonModifier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonModifierActionPerformed(evt);
             }
         });
 
@@ -165,11 +144,36 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        buttonActualiser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonActualiser.setText("Actualiser");
+        buttonActualiser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActualiserActionPerformed(evt);
+            }
+        });
+
+        buttonFermer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonFermer.setText("Fermer");
+        buttonFermer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFermerActionPerformed(evt);
+            }
+        });
+
+        buttonModifier.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonModifier.setText("Modifier");
+        buttonModifier.setEnabled(false);
+        buttonModifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonModifierActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBoutonLayout = new javax.swing.GroupLayout(panelBouton);
         panelBouton.setLayout(panelBoutonLayout);
         panelBoutonLayout.setHorizontalGroup(
             panelBoutonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBoutonLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBoutonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(buttonNouveau, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -204,20 +208,48 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 tableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(table);
+        jScrollPane.setViewportView(table);
+
+        jLabelNbreMateriel.setText("Matériel");
+
+        jTextFieldMateriel.setEnabled(false);
+
+        javax.swing.GroupLayout panelTotalLayout = new javax.swing.GroupLayout(panelTotal);
+        panelTotal.setLayout(panelTotalLayout);
+        panelTotalLayout.setHorizontalGroup(
+            panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTotalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelNbreMateriel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldMateriel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelTotalLayout.setVerticalGroup(
+            panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTotalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNbreMateriel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMateriel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane)
+            .addComponent(panelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBouton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -265,11 +297,11 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         buttonConsulter.setEnabled(true);
         buttonSupprimer.setEnabled(true);
     }//GEN-LAST:event_tableMousePressed
-
+    
     private void closeMaterielFrame() {
         this.dispose();
     }
-
+    
     public void refrechMateriel() {
         if (materielList != null) {
             materielList.clear();
@@ -277,7 +309,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         removeAllTableMateriel();
         initTableModelMateriel();
     }
-
+    
     private void afficherMateriel() {
         if (selectedRow != -1) {
             try {
@@ -293,7 +325,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         }
     }
-
+    
     private void modifierMateriel() {
         if (selectedRow != -1) {
             try {
@@ -310,12 +342,12 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
         } else {
         }
     }
-
+    
     private void addMateriel() {
         readMateriel = new ReadMateriel(new JFrame(), true, this, enterprise, null, "add", crudMateriel);
         closeAjouterMateriel();
     }
-
+    
     private void deleteMateriel() {
         if (selectedRow != -1) {
             try {
@@ -324,7 +356,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
                 buttonConsulter.setEnabled(false);
                 supprimerMateriel = new SupprimerMateriel(null, true, this, materielSelected, crudMateriel);
                 closeSupprimerMateriel();
-
+                
                 initSelectRow();
             } catch (HeadlessException e) {
                 e.printStackTrace();
@@ -332,7 +364,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         }
     }
-
+    
     private void closeAjouterMateriel() {
         readMateriel.addWindowListener(new WindowAdapter() {
             @Override
@@ -341,7 +373,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     private void closeConsulterMateriel() {
         consulterMateriel.addWindowListener(new WindowAdapter() {
             @Override
@@ -350,7 +382,7 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     private void closeSupprimerMateriel() {
         supprimerMateriel.addWindowListener(new WindowAdapter() {
             @Override
@@ -359,13 +391,13 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     private void removeAllTableMateriel() {
         for (int i = defaultTableModel.getRowCount() - 1; i >= 0; --i) {
             defaultTableModel.removeRow(i);
         }
     }
-
+    
     private void initSelectRow() {
         selectedRow = -1;
         materielSelected = null;
@@ -378,8 +410,11 @@ public class MaterielFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonModifier;
     private javax.swing.JButton buttonNouveau;
     private javax.swing.JButton buttonSupprimer;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabelNbreMateriel;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JTextField jTextFieldMateriel;
     private javax.swing.JPanel panelBouton;
+    private javax.swing.JPanel panelTotal;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
